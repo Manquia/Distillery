@@ -1,0 +1,156 @@
+Pre-Requisite: Memory.txt Teir 1
+Summary: A basic overview of intrinsic types, and common user types seen in programming languages
+
+Now we will go more in-depth to what the CPU will do foreach different type. The example below will investigate 8 bit integer types. For integer types of larger than 8 bits they work the same with more bits in the middle to represent more numbers.
+
+unsigned integer (8 bit) holding the value of 15: 00001111
+
+
+====================================
+Tier 1: Signed and Unsigned Integers
+====================================
+
+Examples are for 8-bit integers, but apply to 16,32,64,128 bit signed/unsigned integer types just add more value bits.
+
+Unsigned integers are a base 2 number.
+
+Unsigned Operation
+
++ Addition       - Adds 2 unsigned numbers. If one of the 2 numbers is signed, the unsigned number will usually be converted to signed before doing signed addition.
+- Subtraction    - Subracts 1 unsigned number from another unsigned number. Often, programming languages will force a signed result, but both signed and unsigned results are possible.
+* Multiplication - Multiply 2 unsigned numbers together. Results is also unsigned
+/ Division       - Divides 1 usngiend number by another. Result is also unsigned and takes logical floor of the result.
+
+unsigned Integer Memory Layout:
+
+S <- signed bit (most significant) determines if integer is positive or negative.
+V <- value bit in base 2
+
+unsigned 8-bit integer: VVVVVVVV
+signed 8-bit integer:   SVVVVVVV
+
+8 bit unsigned integer examples: 00110110 = 54,   11111100 = 252
+8-bit signed integer examples:   00110110 = 54,   11111100 = -4
+
+Signed Integer's are 2's Compliment: If you want to invert the sign of the number then you flip all bits and add 1. This will give you the same number bit signed changed to match 2's compliment integers.
+
+2's compliment example: 54 = 00110110 -(flip bits)-> 11001001 -(add 1)-> 11001010 = -54
+2's Compliment example: -4 = 11111100 -(flip bits)-> 00000011 -(add 1)-> 00000100 = 4
+
+Notice that negative integers numbers are still basically in base 2, with the the 0 and 1 are flipped and then we just add 1.
+
+===================================
+Teir 1: Floating Point/Real Numbers
+===================================
+
+Floating point or Real numbers have a level of precision proportional to their bit. This means the format has a limited precision based on the number of bits the format uses. For 32-bit IEE floats the precision level is ~7 decimals (ie. 1.234567) near 0-1 values and gets worse as you incrase in size. This means that if we have a number which becomes more precise then !7 decimals durring its calculation that precision will be lost when we store the number back into memory.
+
+Examples will be for 32-bit IEE floating point. 16-bit and 64-bit have different ratios for each secton but follow the game guidelines.
+
+S <- Signed bit (most significant). 0 = positive, 1 = negative.
+E <- Exponent bits. An exponent of 0 is the value 127
+F <- Fraction bit, Holds the fraction value
+
+32-bit IEEE floating point (single-precision floating-point format)
+
+ S EEEEEEEE FFFFFFFFFFFFFFFFFFFFFFF
+ ^ \      / \                     /
+ | exponent  \______fraction_____/
+ |
+ Signed bit
+ 
+actual value = (-1 * sign) * (2^(exponent-127)) * (1 + 1/fraction)
+
+Note: the fraction part is simplified.
+
+(extra) Floats can represent these values which all have different bit-representations: 0, -0, NAN (Not a Number), -Nan, INF (Infinity), -INF. These values may need special handing/checking in your code.
+
+================
+Tier 1: Pointers
+================
+
+Pointers are the simple types in that they are an address and a type. The type they are pointing to determines the stride when doing arithmatic operations and what the memory is intrepreted when the pointer is dereferenced. See Pointers.txt for more details.
+
+============
+Tier 1: void
+============
+
+void (aka nothing) is a type used to indicate that there is not return or input type. Some languages have the input/return types become optional in the syntax so instead of "void" you write nothing. It is not possible to create a void value, it is nothing.
+
+pointer to void however is valid and used frequently. This means that we have an address without any connected type. A void pointer cannot be dereferenced and must be cast to a type for the address to be accessed.
+
+==================================================
+Tier 2: Type Conversion (implicit type conversion)
+==================================================
+
+
+
+
+
+
+@TODO @TODO
+
+===============================================
+Tier 2: Type Casting (exclicit type conversion)
+===============================================
+Pre-Requisite: Pointer.txt Teir 2
+
+Type casting is the process of taking some memory and interpreting it as a different type. The case itself may modify the memory depending on the language and conversion of type. Most languages have 1 casting operator which can do 1 of 3 different basic logical casts. The 3 basic logical casts are static/safe, dynamic/object, and reinterpret/raw.
+
+static/safe cast - This takes a type and logically casts it to another type and may change the underlaying data layout/format. This is the sort of cast you may use to convert a floating point number into an integer since there is a transformation of the bits to represent the information differently.
+
+dynamic/object cast - This cast takes in a pointer/reference to a user-defined type/object and will try and cast it to a pointer/reference to any other user-defined type/object which derives from it. Therefore, we can take a basePointer and cast it to derivedPointer and vise versa.
+
+Reinterpret/raw cast - This cast does no modification to the data and will simply start treating the memory as a different type without consideration for the needs of the conversion. This means a raw cast from 1.234 float to integer will not be 1, but instead 1067316150 since the bit representation for floating point numbers and Integers do not match. Also most languages will force you to to a raw cast via pointer so that if you are moving between types of different size the programer excplicity "gives" the pointer value.
+
+============================
+Tier 2: Operator Overloading
+============================
+
+Operator overloading is a programming language feature whereby a user-defined types can have operators defined on how certain operators interact with other types/operand(s).
+
+Example: Vector2
+
+Vector2 has elements x and y. If I overload binary operator '+' , I can define it to add the left and right operands's x and y values and return the resulting Vector2 value.
+
+Having this operator overloaded enables Vector2, v0 and v1, to be added and then stored into v3: v3 = v0 + v1;
+
+The operand(s) and resulting type do not need to match. Operator Overloading is a fancy way to make a function call
+
+================================
+Tier 3: Generics (aka templates)
+================================
+
+Generics contain a set of functionality specialized to a specific type. The generic has its own set of instructions per function and although it is a specialization, it is also its a unique user-defined type. @See Control for more details on Generics.
+
+===============================================
+Tier 4: Single Instruction Multiple Data (SIMD)
+===============================================
+
+Types often relate directly to specific CPU operations and one such set of CPU operations are Single Instruction Multiple Data (SIMD). SIMD instructions use special wide registers (256/512/1024 bit) and compute a single operation as if that one register held many of a single type. This allows us to run a single instruction on multiple types to quickly transform data.
+
+Because of how wide registers work, there are often requirements on the memory alignment and count of data being used by a given operation. These wide registers cannot do every instruction that smaller registers might, but the list of instructions grows daily.
+
+Example type:
+
+__m256 wideRegisterType;
+
+Example function (turns into a single operations):
+
+__mm256_fadd(__m256 src0, __m256 src1)
+
+This SIMD operation uses a wide register 32-bit floating point number add src0 + src1 and return the results.
+
+
+CPU's
+@ SIMD
+
+
+====================
+Tier 4: Fast Integer
+====================
+
+When compiling a program, the language may allow you to use a "fast" integer type. What this means is that the compiler can choose which integer types would be fastest but must atleast have a minimum specification of length.
+
+Example: "uint_fast16_t" <- This type specifies that the compiler must use atleast a 16 bit unsigned integer, but if using a 32 or 64 bit unsigned integer operations will be faster it will upgrade to the fastest type.
+

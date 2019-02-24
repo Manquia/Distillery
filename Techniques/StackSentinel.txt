@@ -1,0 +1,6 @@
+Summary: Explaination of the utility and purpose of a stack sentinal for the purpose of stack corruption detection
+
+
+@TODO rename this to Sentinal.txt as a series of techniques that can be used for debugging/optimization
+
+@TODO
