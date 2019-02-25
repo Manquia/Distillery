@@ -2,6 +2,7 @@ Pre-Requisite: Memory.txt Tier 1
 Pre-Requisite: Types.txt Tier 1
 Summary: An overview on the usage of pointers from basic to complex in low and high-level programming.
 
+
 ===========================
 Teir 1: Pointers as address
 ===========================

@@ -1,6 +1,8 @@
 Pre-Requisite: types.txt Tier 1, Memory.txt Tier 1, Pointers.txt Tier 1
 Summary: A quick overview of common to exotic containers and their usefulness. This gives a more practical use of the containers whereas DataStructues.txt goes in depth on how the given containers work. This will NOT go into any sorting techniques, see sort.txt.
 
+
+
 =======================
 Tier 1: Why Containers?
 =======================

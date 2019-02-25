@@ -6,6 +6,7 @@ Now we will go more in-depth to what the CPU will do foreach different type. The
 unsigned integer (8 bit) holding the value of 15: 00001111
 
 
+
 ====================================
 Tier 1: Signed and Unsigned Integers
 ====================================
