@@ -25,6 +25,15 @@ Each section of a document has a tier level associated with it roughly correlati
 
 In this folder, you will see that there are sub-folders which are programming language names. In these folders are source files which show the specific details on a topic_section that the distillery summarizes. This will likely take a long time to write and may never be fully completed for most languages. These source files are samples which show a particular topic_section's material being used in a language.
 
+======
+Detail
+======
+
+Programming languages I'd like to add source samples for:
+* C/C++
+* Jai
+* C#
+
 =============
 Contributions
 =============
