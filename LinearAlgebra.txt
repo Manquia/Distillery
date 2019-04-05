@@ -1,6 +1,20 @@
 Linear Algebra
 
 
+==============
+Tier 1: Points
+==============
+
+A point is a position in space (1-n dimensions) relative to some origin or root.
+
+Example: 1D point for points p0(-2) and p1(5)
+
+  -4 -3 -2 -1  0  1  2  3  4  5  6  7
+<--|--|--|--|--|--|--|--|--|--|--|--|-->
+         |     |              |
+        p0     Origin        p1
+
+
 
 ===============
 Tier 1: Vectors
