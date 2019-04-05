@@ -283,7 +283,6 @@ Copy on write is often initiated by a fork operation which clones a program.
 
 
 #4/5
-@Swizzle vec.xxx, vec.xxy, vec.xyzz
 @Runtime code modification - Ask Michael Dorgon for example languages where this is used.
 @Runtime Inheritance (class/Object bundle, Java Script)
 @General Solution for Language binding - Ask Michael Dorgon

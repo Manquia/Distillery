@@ -23,30 +23,40 @@ The main goal of the distillery is to enable the reader to rapidly read through 
 
 Each section of a document has a tier level associated with it roughly correlating to its subjective "depth" into the field of computer science. If you know nothing about computer science, you should read the "tiers" sequentially across all documents because they reference material listed in previous tiers of other documents.
 
-In this folder, you will see that there are sub-folders which are programming language names. In these folders are source files which show the specific details on a topic_section that the distillery summarizes. This will likely take a long time to write and may never be fully completed for all languages. These source files are samples which show a particular topic_section's material being used in a language.
+In this folder, you will see that there are sub-folders which are programming language names. In these folders are code files which show the specific details on a topic_section that the distillery summarizes. This will likely take a long time to write and may never be fully completed for all languages. These source files are samples which show a particular topic_section's material being used in the language.
+
+===========
+How to read
+===========
+It is recommended that you download/clone the repository then open files in a text editor of your choice with word-wrap enabled.
+
+It is recommended that if you are a:
+* Veteran Programmer (2+ years of professional experience): You should already know everything below tier 3. Skim topics which are tier 3 and above and read sample code as needed.
+* Intermediate programmer (college grad, self-taught): Skim topics starting at tier 1. Knowing the many names for certain terms/concepts will be helpful for later tiers even if you know the concepts by a different name. Read the sample code as needed.
+* New programmer: Read everything in each tier of every document before proceeding to the next tier. Read the sample code for every topic when available/applicable.
 
 ======
 Detail
 ======
-Programming languages I'd like to see source samples for:
+Programming languages I'd like to see code samples for:
 * C/C++
 * Jai
 * C#
 
-Operating Systems I'd like to see source samples for:
-* Windows (win32 api)
+Operating Systems I'd like to see code samples for:
+* Windows (win32 API)
 * Posix
 
 =============
 Contributions
 =============
-Contributions are welcome and wanted. I do not have the will nor knowledge to write samples in every languages, nor am I an expert in all things computer science. If you find something factually incorrect, feel the need for a new section, or want to write some source samples please feel free to email me at micahtim@gmail.com and we can see about adding you as a contributor.
+Contributions are welcome and wanted. I do not have the will nor knowledge to write samples in every language, nor am I an expert in all things computer science. If you find something factually incorrect, feel the need for a new section, or want to write some source samples please feel free to email me at micahtim@gmail.com and we can see about adding you as a contributor.
 
 ===========
 Summary NOT
 ===========
 * The distillery is NOT a tutorial series. But does have source samples on a per-language/per-Operating system basis when applicable.
-* The distillery is NOT an in-depth source of information. It is an compilation of summaries to expose computer science ideas and concepts rapidly to its audience.
+* The distillery is NOT an in-depth source of information. It is a compilation of summaries to expose computer science ideas and concepts rapidly to its audience.
 
 =======
 Credits

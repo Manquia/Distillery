@@ -189,6 +189,92 @@ s -(down)--> u: if s >= 0 AND s < u's max value then safe. Otherwise u =  2^s'sb
 
 All floating point number conversions to and from signed or unsigned integers may lose precision if there is no exact fractional representation that can represent the integer value.
 
+
+=======================
+Tier 3: Getters/Setters
+=======================
+
+Getters and Setters use value-like syntax to get and set data within an object. This allow the internal data representation of a value to be modified by many different input/output formats while its internal representation remains the same. It may also be helpful for debugging because we can add breakpoints, asserts, and trace/logging within a get or set function to provide information about who is accessing the value.
+
+Example: C# (simple)
+
+class Temperature
+{
+  private Kelvin k; // internal data representation may be different than the user facing value getter and setter.
+  public float celcius
+  {
+    get { return k.ToCelcius(); }
+    set { k.SetInCelcius(value); }
+  }
+  public float fahrenheit
+  {
+    get { return k.ToFahrenheit(); }
+    set { k.SetInFahrenheit(value); }
+  }
+}
+
+void UpdateWeather(Temperature temp, Weather weather)
+{
+  if(weather == Weather.Cold)
+    temp.celcius -= 3; // I can refer to the celcius getter and setter here to use the "-=" operator
+  if(weather == Weather.Hot)
+    temp.fahrenheit += 10; // I can refer to the fahrenheit getter and setter here to use the "+=" operator
+}
+
+
+Example: C# (complex)
+
+class Clock
+{
+  private Time t;  // Internal data representaion.
+  
+  public int seconds
+  {
+    get{ return t.GetSeconds(); }
+    set
+    {
+      int overflowMinutes = value / 60;
+      t.SetSeconds(value % 60);
+      if(overflowMinutes > 0)
+        minutes += overflowMinutes;   // calls the getter + setter for minutes
+      trace("Clock's seconds set to " + value % 60 + "\n");
+    }
+  }
+  public int minutes // Get and Set the minutes on the clock
+  {
+    get{ return t.GetMinutes(); }
+    set
+    {
+      int overflowHours = value / 60;
+      t.SetMinutes(value % 60);
+      if(overflowHours > 0)
+        hours += overflowHours;
+      trace("Clock's minutes set to " + value % 60 + "\n");
+    }
+  }
+  public int hours
+  {
+    get{ return t.GetHours(); }
+    set
+    {
+      t.SetHours(value % 24); // clock wraps around
+      trace("Clock's hours set to " + value % 24 + "\n");
+    }
+  }
+}
+
+void UpdateClock(Clock clock, int secondsPassed)
+{
+  clock.seconds += secondsPassed;
+  if(Date.current.weekday == Weekday.Monday)
+  {
+    // stop looking at the clock!
+    clock.seconds /= 2;
+  }
+}
+
+(extra) You may choose to not impliment both a Getter and a Setter, or make the Setter private and the Getter public. This gives you some added control over how a value is modified to provide intent to the user of the object.
+
 ===============================================
 Tier 4: Single Instruction Multiple Data (SIMD)
 ===============================================
@@ -238,3 +324,20 @@ Tier 4: Fast Integer
 When compiling a program, the language may allow you to use a "fast" integer type. What this means is that the compiler can choose which integer types would be fastest but must atleast have a minimum specification of length.
 
 Example: "uint_fast16_t" <- This type specifies that the compiler must use atleast a 16 bit unsigned integer, but if using a 32 or 64 bit unsigned integer would be faster it may upgrade to the fastest type.
+
+=================
+Tier 4: Swizzling
+=================
+
+Swizzling is the functionality of rearranging the elements of a vector. This is most commonly seen in computer graphics linear algebra libraries for Vector types.
+
+Example:
+
+Vector4 contains elements: x, y, z, w
+Vector3 contains elements: x, y, z
+Vector2 contains elements: x, y
+
+"v4.ww"   constructs a Vector2 from v4 with elements x,y holding v4's w value.
+"v3.xyy"  constructs a Vector3 from v3 with elements x holding the v3's x value and y,z holding v3's y value.
+"v2.zzzz" constructs a Vector4 from v2 with elements x,y,z,w holding v2's z value.
+"v2.xyxy" constructs a Vector4 from v2 with elements x,z holding v2's x value and y,w holding v2's y value.

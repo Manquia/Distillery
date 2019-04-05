@@ -118,7 +118,7 @@ Pointer's offset is relative to its own address. That is to say, its origin is i
 
 Benefits of using relative pointers
 * They can be serialized/saved to disk/network whereas normal pointers cannot.
-* They do not require 8 bytes, a relative pointer can be any size number of bytes which can dramatically improve performance. This is great so long as you know the limitations of the memory wish to refernce is not too far away from the pointer's origin.
+* They do not require 8 bytes, a relative pointer can be any size number of bytes which can dramatically improve performance. This is great so long as you know the limitations of the memory you wish to refernce is not too far away from the pointer's origin.
 * 
 
 
