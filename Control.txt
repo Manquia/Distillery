@@ -6,7 +6,7 @@ Pre-requisite: Types.txt tier 1,
 Tier 1: Function Calls
 ======================
 
-Functions encapsulate code and take inputs and outputs. Functions can be called in any order enabling linear calls,  recursion, and cycles.
+Functions encapsulate code and take inputs and outputs. Functions can be called in any order enabling linear calls, recursion, and cycles.
 
 Most programs have a special entry point function, often called main, which is the logical starting point of the program.
 
