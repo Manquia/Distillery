@@ -270,9 +270,9 @@ Example: bucket count: 2, bucket size: 3
 
 (extra) A bucket array may contain large amounts of data since we no longer need to worry about exceeding the max allocation size of contiguous memory. This is its main advantage over arrays and that if sorted Adding and removing is O(B) at worst instead of O(n).
 
-=======================
-Tier 4: B-List (hybrid)
-=======================
+=================================
+Tier 4: B-List (hybrid container)
+=================================
 
 B <- array size
 
@@ -349,13 +349,16 @@ Level  n 1 2 0 1 3 1 4 1 0 2 0 5 2 0
 
 Example: node creation
 
-Level|% chance to create
+Level| Percent chance to create
 0    | 50%
 1    | 25%
 2    | 12.5%
 3    | 6.25%
-4    | 3.125%
-...
+...  | ...
+6    | 0.78125%
+...  | ...
+12   | 0.01220703125%
+...  | ...
 
 Example: Find 'I' in skip list: '->' pointers used in the search, '*' node is looked at in search.
 
@@ -369,6 +372,8 @@ Start->|---------------------->|
        | | |   | | | |>|   |   | |
        +=+=+=+=+=+=+=*=*=+=*=+=*=+=+
 value  A B C D E F G H I J K L M N O
+
+(extra) The node creation often has a max level that we can randomly roll for practical reasons and item count.
 
 =================================================
 Tier 5: Trie (aka digital, radix, or prefix tree)
@@ -392,9 +397,9 @@ This tree could find the strings: at, abe, ice, and icbm.
 
 (extra) This container is best when many strings share a common prefix.
 
-============================================
+==================================================
 Tier 5: DFA (aka DFSA, DFSM, finite state machine)
-============================================
+==================================================
 
 deterministic finite automaton (DFA) or deterministic finite state automaton (DFSA) or Deterministic finite state machine (DFSM) is a container used to find strings or symbols within a larger buffer. Unlike a trie, DFAs allow cycles so string recognition does not need to backtrack and can do many logical tricks while traversing with the external state to save even more time and memory.
 
@@ -458,18 +463,18 @@ From the user's perspective, a pinned vector is just a massive array that only h
 (extra) One major benefit of a pinned vector is that pointers are stable and you never need to copy the items once they have been constructed to grow the array which often leads to massive performance gains on large (MBs) collections.
 
 ============================================
-Tier 6: hash table array hybrid (Get a name)
+Tier 6: hash table array hybrid (Find a name) @INCOMPLETE
 ============================================
 
 specs    Sorted   Description
 Find     O(c)     Find item within the hybrid container
 Add      O(n)     Add an item to the container which is large enough to hold the item
 Remove   O(c)     Remove an item from the container.
-Iterate O(n)     Iterate over items in contiguous memory
+Iterate  O(n)     Iterate over items in contiguous memory
 Grow     O(n)     Grow the size of the container
 
 
-@@@@   TODO TODO TODO
+@@@@   TODO TODO TODO @INCOMPLETE
 
 in hashtable 0:  { *value, bucket index }
 in hashtable 1:  { key, bucket index}
@@ -527,6 +532,11 @@ References
 pinned_vector - https://www.youtube.com/watch?v=Ke1mJiGO-pU
 
 
+
+
+
+@TODO @INCOMPLETE
+
 @Array + HashTable hybrid for constant time Everything! @Ask Paul, I really want to have this in here
 @ DONE Pinned_vector (useful for games/ECS, "Infinite" vector on 64-bit OS using Virtual memory) <- https://www.youtube.com/watch?v=Ke1mJiGO-pU
 @Colony (plf::colony) Look at this <- https://www.youtube.com/watch?v=wBER1R8YyGY
@@ -539,4 +549,7 @@ pinned_vector - https://www.youtube.com/watch?v=Ke1mJiGO-pU
 
 
 #6
-@Multiset <- Learn more about this before writing it
+@Multiset
+
+@ Threaded. Local and Global lookup optimization. Use mutexes less
+@ Pools https://www.cs.tau.ac.il/~shanir/concurrent-data-structures.pdf 1.4 Can give perf benefits for threads
