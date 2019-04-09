@@ -1,14 +1,14 @@
 Summary: Description of memory with tiers of complexity from basic to in-depth.
 
-=======================
-Tier 1: Memory is Basic
-=======================
+==========================
+Tier 1.00: Memory is Basic
+==========================
 
 Memory is simply a collection of bits which can be stored and accessed. A single bit can hold the value of 0 or 1. These collections of bits can be viewed in many different ways in which the order of the bits matters to the information which we may derive. In the same way that a series of letters are used to make up words, bits are interpreted in groups which many programming languages refer to as types.
 
-=================================
-Tier 1: Memory as intrinsic types
-=================================
+====================================
+Tier 1.01: Memory as intrinsic types
+====================================
 
 Most CPU's use a set of common interpretations of bits (memory) which a programing language will refer to as intrinsic types.
 
@@ -31,9 +31,9 @@ When you compile a program the type will help determine the possible instruction
 
 
 
-====================================
-Tier 1: Memory as user defined types
-====================================
+=======================================
+Tier 1.02: Memory as user defined types
+=======================================
 
 Not all types within a program have a set of CPU intrinsic operations attached to them. Many programming languages allow for the creation of user-defined types that encapsulate many intrinsic types that logically work together to form a set of functionality. A string can be a user-defined type which is a collection of u8, or u16 types whereby each u8 or u16's number maps to a specific character which can be looked up in ASCII.
 
@@ -41,9 +41,9 @@ Example:
          u8: 01000001                  (binary) = 65       (decimal) = "A"         (ASCII)
 string data: 01000001 01000010 01000101(binary) = 65 66 75 (decimal) = "A" "B" "E" (ASCII)
 
-=================================
-Tier 1: Memory Addresses/pointers
-=================================
+====================================
+Tier 1.03: Memory Addresses/pointers
+====================================
 
 Memory is a collection of bits, and we can look at a specific location in the memory by its address value. An address does not specify a location in bits, but rather its location in bytes. An address is logically just a number that we can use to look into the memory by x number of bytes from some known start point in memory. For this reason any number, both postive and negative, may represent a valid address. (extra) In most cases the known start point is 0, as it is for absolute pointers, but this is not the case for relative pointers.
 
@@ -64,9 +64,9 @@ Looking at address 0 in the memory above, we see the byte "01111110".
 
 A pointer is basically an address location with a type which describes how to interpret that address's memory and move to other addresses of the same type which are next to it in memory. (See Pointers.txt for more details)
 
-=========================
-Tier 2: Memory is Aligned
-=========================
+============================
+Tier 2.00: Memory is Aligned
+============================
 
 The smallest part of memory a CPU can address is a byte. A byte is also usually the smallest part of memory a CPU can run an operation on as well.
 
@@ -84,9 +84,9 @@ Let's say we want to read the memory above as a u16. A CPU may require this read
 
 (extra) Most programming language compilers will resolve the CPU alignment requirements silently. If a program's design goes against the CPU's alignment requirements, the compiler should handle it; but may be forced use ineffecient methods to do so.
 
-=============================================================================
-Tier 2: Memory as Unions/Tagged Unions/Sum Types/Variants and pointer casting
-=============================================================================
+================================================================================
+Tier 2.01: Memory as Unions/Tagged Unions/Sum Types/Variants and pointer casting
+================================================================================
 
 Remember a programming language's type is simply an interpretation of a set number of bits in memory. A type is NOT memory, it is the interpretation we use to derive meaning from the bits of data. For this reason, we have unions/sum types/variants which allow us to view a section of memory as if it were one of many types. 
 
@@ -109,9 +109,9 @@ Tagged Union, Sum Types, Variants:
  * Enforce initialization of relavent data
  * Restrict access to non-relavent data using both compile-time and runtime errors
 
-============================
-Tier 2: Bit Order/Endianness
-============================
+===============================
+Tier 2.02: Bit Order/Endianness
+===============================
 
 Most CPU's read from memory in 1 of 2 ways:
 
@@ -133,18 +133,26 @@ This can also be thought of as the writing most significant bits to least signif
 
 It is important to know this exists for when it comes up, but usually not that important unless you work across CPUs of different archetecure on software such as  networking, compilers, and file I/O.
 
-=================================
-Tier 3: Memory may be constrained
-=================================
+=======================================
+Tier 3.00: Copy on write (optimization)
+=======================================
+
+The Copy on Write (COW) optimization is the idea that an object in memory may be shared by multiple references as 'if' it had been copied to multple places in memeory even if each reference is looking at the same memory. Once we attempt to write to the object, we copy it and then update all references to the newly copied object. If there are multiple references to an object that is being COW, then the new copy may be shared between the remaining references.
+
+(extra) COW can greatly improve memory performance in object oriented programming. However, implimenting COW can be trickly and is especially challenging if your program is multi-threaded.
+
+====================================
+Tier 3.01: Memory may be constrained
+====================================
 
 Not all memory is created equal to the CPU. Memory has 3 basic operations: read, write, and execute. The memory's physical hardware or software may be constrained to only allow 0 or more of the operations above. These limitations are incredibly useful and violating them will often result in the termination of our program.
 
 (extra) When debugging a huge program, adding memory constraints can prove helpful to find the source of the heap or stack corruption. (see @TODO Memory Constraints, StackSentinal.txt)
 
 
-====================================================
-Tier 3: Memory speed heirarchy (General programming)
-====================================================
+=======================================================
+Tier 3.02: Memory speed heirarchy (General programming)
+=======================================================
 
 This is a basic diagram of the general performance to access certain hardware containers of memory. The "|" character division indicates roughly 1 or more orders of magnitude drop in speed from the previous medium. This is a rough approximation and may be incorrect even as I write it, but the general picture of speed to access memory in an application (general programing) environment.
 
@@ -166,9 +174,9 @@ Fastest
     Internet Connection
 Slowest
 
-=============
-Tier 3: Files
-=============
+================
+Tier 3.03: Files
+================
 
 Files are chuncks of memory that normally are accessed through file descriptors. A file descriptor is the operating system's (OS)'s "pointer" like object to the filesystem's storage. Once a file is open a file descriptor also may allow you change where it points to within the file.
 
@@ -182,9 +190,9 @@ Common functionality in filesystems
 
 (extra) File Input/Output (I/O) is very slow so many filesystems allow for a blocking and non-blocking modes. In blocking mode (usually the default) the function call will wait until the operation has been completed before returning. In non-blocking mode the function may return before the operation is completed allowing our program to continue working while the file operation completes.
 
-============================
-Tier 3: Memory may be mapped
-============================
+===============================
+Tier 3.04: Memory may be mapped
+===============================
 
 Memory may be mapped/redirected in many ways between processes and even across physical storage hardware. Most modern operating systems (OS) use memory mapping for a variety of task. Three common tasks you may find are shared memory, virtual memory, memory mapped files.
 
@@ -204,15 +212,15 @@ Memory mapped files is when you map a file into RAM to quickly modify/update its
 
 (extra) A ram drive is basically this idea, but more integrated into filesystem and drivers.
 
-=============
-Teir 3: Cache
-=============
+================
+Teir 3.05: Cache
+================
 
 Caching memory creates a copy of a larger buffer/storage of memory which may be more quickly accessed than the larger buffer. Caching is a main component in performance speedups in recent years and encourages developers to use predictable memory access patterns in contigious memory.
 
-===================
-Teir 3: Cache (CPU)
-===================
+======================
+Teir 3.06: Cache (CPU)
+======================
 
 A program's memory access paterns should be predictable because the CPU will predict and pre-copy into the cache ahead of time to reduce latency.
 
@@ -235,9 +243,9 @@ Level 3 (L3) Cache - Often shared between all CPU cores and is very large, but m
 
 (extra) Because of cache it is generally expensive to synchronize data across theads/cores (See Control.txt Teir 4 for more details)
 
-====================================
-Teir 3: Cache (File Systems/Drivers)
-====================================
+=======================================
+Teir 3.07: Cache (File Systems/Drivers)
+=======================================
 
 When reading from a file system it is extremely ineffective to only read a few bytes at a time so the file system and drivers will read large segments of a file and save it into a buffer/cache in ram for later use.
 
@@ -245,29 +253,29 @@ Depending on the size of the cache this can mean that reading from different par
 
 Depending on your OS, you may be able to provide the memory used for caching in the file system. Providing the cache often happens while mounting the filesystem for your application.
 
-================================
-Teir 3: Cache (Network/Internet)
-================================
+===================================
+Teir 3.08: Cache (Network/Internet)
+===================================
 
 A common way to reduce internet/network trafic and latency is to cache requests and responses and intercept duplicate requests while the response has not expired. For example, if our website updates once every minute with new content, I can post in the responce message that this page will expire every minute but is valid for much longer. The same is true for content on pages. This is one of the ways in which browsers on your computer end up using gigabytes of space even while showing relativly small amount of content.
 
-======================
-Tier 4: Static Library
-======================
+=========================
+Tier 4.00: Static Library
+=========================
 
 A static library is a file containing programing logic that may be linked into a final executable at compile-time.
 
-==============================
-Tier 4: DLL and Shared Library
-==============================
+=================================
+Tier 4.01: DLL and Shared Library
+=================================
 
 A Dynamic Link Library (DLL) or Shared Library (SO) is a file containing programming logic that may be linked to a running program. A program may load zero or more functions, execute zero or more functions, and unload zero or more functions at runtime from a DLL or SO depending on its needs.
 
 Some implimentations of DLL/SO and Operating systems may allow for programming logic sharing between processes which may improve I-cache effeciency.
 
-==========================
-Tier 4: Memory and your OS
-==========================
+=============================
+Tier 4.02: Memory and your OS
+=============================
 
 Unless you are programming at the kernel level, you have an operating system (OS) that is managing the systems memory. The OS manages memory using pages, the OS has a page table for each active program. A page often maps to 4096 bytes of memory and will have its own privalges, modes, ownership, rules, et cetera depending on the OS and hardware. Management of these pages allow for the following features
 
@@ -275,11 +283,13 @@ Memory Modes: Allowing operations or restrictions on a memory page to read, writ
 
 Isolated memory and shared memory: Two programs running on the same machine share physical memory but have different page tables which prevent access into eachother's memory without explicit sharing.
 
-Copy On Write:
+Copy On Write and fork:
 
-Copy on write is a memory optimization which allows two or more programs to share pages of memory in physical hardware so long as they only read. If a program sharing this memory attempts to write to a shared page, at that time the OS will copy the page's content to a new page in memory and modify the page table accordingly. This copy process is hidden from the program but may fail in constrained systems. For programs which share a lot of read only memory (ROM), this can greatly improve effeciency and performance.
+Copy on write is a memory optimization which allows two or more programs to share pages of memory in physical hardware so long as they only read. If a program sharing this memory attempts to write to a shared page, at that time the OS will copy the page's content to a new page in memory and modify the page table accordingly. This copy process is hidden from the program but may fail in a constrained system. For programs which share a lot of read only memory (ROM), this can greatly improve effeciency and performance.
 
-Copy on write is often initiated by a fork operation which clones a program.
+Copy on write is often initiated by a "fork" operation which clones a program.
+
+
 
 
 #4/5

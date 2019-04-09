@@ -1,9 +1,9 @@
 Pre-Requisite: types.txt Tier 1, Memory.txt Tier 1, Pointers.txt Tier 1
 Summary: A quick overview of common to exotic containers and their usefulness. This gives a more practical use of the containers whereas DataStructues.txt goes in depth on how the given containers work. This will NOT go into any sorting techniques, see sort.txt.
 
-=======================
-Tier 1: Why Containers?
-=======================
+==========================
+Tier 1.00: Why Containers?
+==========================
 
 Containers are general solutions to store, sort, and access data in a way to solve problems. In general there are 2 highly used containers because they are the best for most applications, but in reality, there are dozens of valid and potentially more optimal containers for a given task. Tier 1 will go over the most highly used.
 
@@ -15,9 +15,9 @@ O(n)      <- scales with n items in the container
 O(nlogn)  <- scales with n * log(n) items in the container
 O(n^2)    <- scales with n^2 items in the container
 
-=================================
-Tier 1: Array aka: Vector, String
-=================================
+====================================
+Tier 1.01: Array aka: Vector, String
+====================================
 
 specs   Sorted   Unsorted   Description
 Add     O(n)     O(c)       Add an item to an array which is large enough to hold the item
@@ -46,9 +46,9 @@ Example: 'ITEM' <- single item in memory
 In some cases, one layout pattern can be more performant than another, but this highly depends on the task. In general, use AOS. You may consider using SOA if your access patterns only use a small part of the item. see Memory.txt Tier 4 for more details.
 
 
-=======================================
-Tier 1: Hash Table aka: Map, Dictionary
-=======================================
+==========================================
+Tier 1.02: Hash Table aka: Map, Dictionary
+==========================================
 
 specs  Unsorted Description
 Add    O(c)     Add an item to a hash table which is large enough to hold the item.
@@ -78,9 +78,9 @@ Search Array    Nodes in a linked list (see Tier 2: Linked List)
 (extra) A hash function is simply a function which takes either fixed or variable length input of data and outputs a fixed size as a search index. A good hash function will try to distribute all keys to the search space.
 
 
-=============================
-Tier 2: Linked List aka: List
-=============================
+================================
+Tier 2.00: Linked List aka: List
+================================
 
 specs  Sorted Unsorted Description
 Add    O(n)   O(c)     Add an item to a linked list of any size.
@@ -101,9 +101,9 @@ Example: Double/bi-directional linked list layout (2 pointers: previous and next
 Note: the first node of a linked list is called the "head" and the last node is called the "tail"
 (extra) Be aware that a linked list can be circular in that the node item can point to the first node leading to cycles.
 
-=============
-Tier 2: Trees
-=============
+================
+Tier 2.01: Trees
+================
 
 Specs   Sorted (balanced)    Unsorted   Description
 Add     O(logn)              O(c)       Add an item to a tree of any size.
@@ -138,9 +138,9 @@ Binary Tree (2/3 pointers: left, right, parent(optional) )
 
 (extra) A Tree can also be implemented in an array with the left/right nodes being a set offset multiply the level number into the array. This will use more space if the tree is sparse, but for a balanced tree it will be much faster and more efficient for memory overhead since we don't need a left/right pointer since the address of the left/right is calculated by depth.
 
-=============
-Tier 2: Graph
-=============
+================
+Tier 2.02: Graph
+================
 
 A graph is an ordered collection of logically connected nodes which can be traversed. Unlike a tree, a graph can have cycles and will often have a variable number of connections between nodes. Graphs can be used to represent connections, state, and much more.
 
@@ -165,9 +165,9 @@ Item2's connections to  Yes   No    No    Yes
 Item3's connections to  No    Yes   No    No
 
 NOTE: Teir 3 and above are specialization of the containers above whose implimentation solve a specific problem. 
-====================================
-Tier 3: Queue (conceptual container)
-====================================
+=======================================
+Tier 3.00: Queue (conceptual container)
+=======================================
 
 A Queue can logically push/add and pop/remove items whereby an item pushed into the container will be poped from the container in a first-in-first-out (FIFO) ordering. A queue can be implemented with an ordered container.
 
@@ -183,9 +183,9 @@ Pop        |_____|_____|_____|_____|   Removed/Get value Push3
 
 (extra) To traverse a graph in a breadth-first approach a queue can be used.
 
-====================================
-Tier 3: Stack (conceptual container)
-====================================
+=======================================
+Tier 3.01: Stack (conceptual container)
+=======================================
 
 A Stack can logically push/add and pop/remove items whereby an item pushed into the container will be poped from the container in a last-in-first-out (LIFO) ordering. A stack can be implemented in an ordered container.
 
@@ -201,9 +201,9 @@ Pop        |_____|_____|_____|_____|   Removed/Get value Push0
 
 (extra) to traverse a graph in a depth-first approach a stack can be used.
 
-===============================================================
-Tier 3: Circular Buffer (conceptual container) aka: Ring Buffer
-===============================================================
+==================================================================
+Tier 3.02: Circular Buffer (conceptual container) aka: Ring Buffer
+==================================================================
 
 A circular buffer can push/add an infinite number of items but will overwrite items that were added first once the container has reached its capacity. A circular buffer can be implemented in an ordered container.
 
@@ -216,9 +216,9 @@ Push x3    |Push0|Push1|Push2|Push3|   Add value Push1-3
 Push       |Push4|Push1|Push2|Push3|   Add value Push4
 Push x5    |Push8|Push9|Push6|Push7|   Add Value Push5-9
 
-=======================================================
-Tier 3: Heap (conceptual container) aka: Priority Queue 
-=======================================================
+==========================================================
+Tier 3.03: Heap (conceptual container) aka: Priority Queue 
+==========================================================
 
 Specs (best)    Sorted   Description
 Add             O(c)     Add an item to a heap of any size
@@ -243,9 +243,9 @@ Pop Max      Max: 10,   size: 4        Remove/Get current Max: 12
 
 (extra) A heap/priority queue in combination with a calculated cost to the end point (heuristic) is basically how A-star path pathfinding works.
 
-=============================
-Tier 4: Bucket Array (Hybrid)
-=============================
+================================
+Tier 4.00: Bucket Array (Hybrid)
+================================
 
 B <- Max of Bucket Size and Bucket Count
 
@@ -270,9 +270,9 @@ Example: bucket count: 2, bucket size: 3
 
 (extra) A bucket array may contain large amounts of data since we no longer need to worry about exceeding the max allocation size of contiguous memory. This is its main advantage over arrays and that if sorted Adding and removing is O(B) at worst instead of O(n).
 
-=================================
-Tier 4: B-List (hybrid container)
-=================================
+====================================
+Tier 4.01: B-List (hybrid container)
+====================================
 
 B <- array size
 
@@ -296,9 +296,9 @@ Example: array size: 3, node count: 2
 
 (extra) B-List and bucket array are similar. A reason to use a B-List over a bucket array is that a B-List that is being accessed by multiple threads simultaneously will have a lower synchronization cost as a maximum of 3 nodes need to be synchronized to add an item.
 
-====================
-Tier 5: Bloom Filter
-====================
+=======================
+Tier 5.00: Bloom Filter
+=======================
 
 A bloom filter is used to probabilistically determine if a key has been added to a container. The filter can let you know for certain that a key has not been added or maybe has been added. It cannot tell you for certain that key has been added. This data structure is great for file systems which vast quantities of files and text within that may have many different layers of bloom filters which can search for keys to narrow down the search space.
 
@@ -319,9 +319,9 @@ Let's assume that the key has never been added to this tree of bloom filters. At
 
 (extra) The math isn't quite as simple as the example above, but the principle is that we can eliminate vast swaths of data probabilistically from a search or operation.
 
-=================
-Tier 5: Skip List
-=================
+====================
+Tier 5.01: Skip List
+====================
 
 
 specs     Sorted  Description
@@ -375,9 +375,9 @@ value  A B C D E F G H I J K L M N O
 
 (extra) The node creation often has a max level that we can randomly roll for practical reasons and item count.
 
-=================================================
-Tier 5: Trie (aka digital, radix, or prefix tree)
-=================================================
+====================================================
+Tier 5.02: Trie (aka digital, radix, or prefix tree)
+====================================================
 
 Trie is an ordered container and a kind of search tree usually used with strings. Each tree node is a letter which implicitly takes all parent nodes as a prefix.
 
@@ -397,9 +397,9 @@ This tree could find the strings: at, abe, ice, and icbm.
 
 (extra) This container is best when many strings share a common prefix.
 
-==================================================
-Tier 5: DFA (aka DFSA, DFSM, finite state machine)
-==================================================
+=====================================================
+Tier 5.03: DFA (aka DFSA, DFSM, finite state machine)
+=====================================================
 
 deterministic finite automaton (DFA) or deterministic finite state automaton (DFSA) or Deterministic finite state machine (DFSM) is a container used to find strings or symbols within a larger buffer. Unlike a trie, DFAs allow cycles so string recognition does not need to backtrack and can do many logical tricks while traversing with the external state to save even more time and memory.
 
@@ -415,9 +415,9 @@ If not connected nodes have the letter we are looking for we go back to the begi
 
 (extra) DFAs are great when you are trying to find a specific string in a much larger buffer since you never need to look at a character more than once. The costly part for a very small search space is building the DFA which may take longer than the search itself.
 
-==================================================
-Tier 5: Quad and Oct Trees (conceptual containers)
-==================================================
+=====================================================
+Tier 5.04: Quad and Oct Trees (conceptual containers)
+=====================================================
 
 Quad and Oct trees are used for spatial partitioning in 2D and 3D space respectively.
 
@@ -437,9 +437,9 @@ Level 0                1                2
 Octtrees devide 3d space into 8 cubes with each cube being further divided into smaller groups of 8 cubes.
 
 
-=====================
-Tier 6: pinned vector
-=====================
+========================
+Tier 6.00: pinned vector
+========================
 
 specs   Sorted   Unsorted   Description
 Add     O(n)     O(c)       Add an item to an array which is large enough to hold the item
@@ -462,9 +462,9 @@ From the user's perspective, a pinned vector is just a massive array that only h
 (extra) At the application layer, memory is always virtual, so the cost is already paid. The difference is that by explicitly informing the OS you can get contiguous memory. It should also be noted that not all OSs will support explicit virtual memory in such a way to allow for this sort of behavior.
 (extra) One major benefit of a pinned vector is that pointers are stable and you never need to copy the items once they have been constructed to grow the array which often leads to massive performance gains on large (MBs) collections.
 
-============================================
-Tier 6: hash table array hybrid (Find a name) @INCOMPLETE
-============================================
+================================================
+Tier 6.01: hash table array hybrid (Find a name) @INCOMPLETE
+================================================
 
 specs    Sorted   Description
 Find     O(c)     Find item within the hybrid container
@@ -485,9 +485,9 @@ in bucket array: { key + value }
 (extra) A reason why we don't use this everywhere is that even though it is O(c) for everything, it is much more expensive
 
 
-==============================================
-Tier 6: Arena Allocator (aka region allocator)
-==============================================
+=================================================
+Tier 6.02: Arena Allocator (aka region allocator)
+=================================================
 
 An arena or region allocator is a type of rapid allocator which assumes allocated types either have no external allocations or use the same arena allocator for the objects it owns. There are 2 basic operations in an arena allocator:
 
@@ -500,16 +500,16 @@ Common Uses:
 - String construction: Quickly construct dynamically sized strings for file paths or logging both of which are rapidly cleaned up after use using the mark function.
 
 
-=================================
-Tier 6: Intrusive Data Structures
-=================================
+====================================
+Tier 6.03: Intrusive Data Structures
+====================================
 
 An intrusive data structure is a containers in which the elements themself have access the container they are within. This sort of design of common for node based containers such as linked lists, trees, and graphs. A reason why you may want to use an intrusive data structure is for simpler threading synchronization, minimizie iteration over large list of objects/classes, and graph traversal optimizations. (ex. Jump Point Search, deterministic finite automaton (DFA), Game AI Behavior Trees)
 
 
-=================
-Tier 6: Free List
-=================
+====================
+Tier 6.04: Free List
+====================
 
 A free list is a list constructed within a pre-allocated block of memory. The idea is that you can keep track of a list of unallocated/unused items within memory by constructing a list where the item would normally exist in memory. This is great for memory and used by many simple allocators.
 

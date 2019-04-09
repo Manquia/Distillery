@@ -2,9 +2,9 @@ Pre-Requisite: Memory.txt Tier 1
 Pre-Requisite: Types.txt Tier 1
 Summary: An overview on the usage of pointers from basic to complex in low and high-level programming.
 
-===========================
-Teir 1: Pointers as address
-===========================
+==============================
+Teir 1.01: Pointers as address
+==============================
 
 Pointers are a programming language concept which is a number (an address in memory), and a type associated with it. The type determines how the arithmatic operators "add" and "subtract" (+,-, +=, -=, ++, --) modify the address value.
 
@@ -34,17 +34,17 @@ p5 = p4 - 3 (Pointer moves as type of size 3 bytes)  // Math: 38 - (3 * 3)
 
 * The ++ and -- operators are the same as "pointer + 1" and "pointer - 1".
  
-================================
-Teir 1: Pointers and Index/Offset
-================================
+====================================
+Teir 1.02: Pointers and Index/Offset
+====================================
 
 Often you will see pointers used in conjunction with an index of offset integer variable. This plays out the same as above with the pointer arithmatic. One piece
 
 
  
-===================
-Teir 2: Any Pointer
-===================
+======================
+Teir 2.00: Any Pointer
+======================
 
 An Any pointer, is usually 2 pointers. One points to the memory of the type (like a normal pointer) while the second points to information about the type. By using the second pointer to the information we can make choices on what to do with the information.
 
@@ -60,9 +60,9 @@ else
     Print("Error: Unhandled Text Object");
 
 	
-===============================
-Teir 2: Pointer to class/object
-===============================
+==================================
+Teir 2.01: Pointer to class/object
+==================================
 
 Adding into the pointer concept further we can specify pointers as pointing to a "class" or "Object" type. The class or object types can contain extra data at the begining of the memory, usually another pointer, which allows the program to run specialized code on that object.
 
@@ -86,9 +86,9 @@ Most languages/implimentations allow you to get and check the actual type of a p
 
 	
 	
-=========================================
-Teir 2: Smart Pointers (Memory Managment)
-=========================================
+============================================
+Teir 2.02: Smart Pointers (Memory Managment)
+============================================
 
 1) Unique pointers (lifetime/Memory Managment)
 
@@ -102,9 +102,9 @@ Each occurace of the pointer to an objects adds 1 to a shared counter. Upon dest
 
 Points to a given object untill it has been cleaned up at which point, it is set to 0 or the null pointer value. (extra) This is usually done by using a pointer to a pointer to the object such that upon destruction/destroyed/finalized of the object the second pointer is set to 0. Then any number of other pointers can see the second pointer has been set to 0.
 
-=========================
-Teir 3: Relative Pointers
-=========================
+============================
+Teir 3.00: Relative Pointers
+============================
 
 Relative pointers are a more formalized method of using index/offsets to refernce memory. The key element to a relative pointer is that it has some origin point which we offset from. There are 2 general types of relative pointers that you may encounter.
 
@@ -122,9 +122,9 @@ Benefits of using relative pointers
 * 
 
 
-==============
-Tier 3: Stride
-==============
+=================
+Tier 3.01: Stride
+=================
 
 Stride generally refers to the behavior of pointer arithmatic in the count of bytes that we move our address. We call it stride when it is an explicit, and often calculated, number of bytes we move our pointer's address by.
 

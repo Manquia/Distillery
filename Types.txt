@@ -6,9 +6,9 @@ Now we will go more in-depth to what the CPU will do foreach different type. The
 unsigned integer (8 bit) holding the value of 15: 00001111
 
 
-====================================
-Tier 1: Signed and Unsigned Integers
-====================================
+=======================================
+Tier 1.00: Signed and Unsigned Integers
+=======================================
 
 Examples are for 8-bit integers, but apply to 16,32,64,128 bit signed/unsigned integer types just add more value bits.
 
@@ -39,9 +39,9 @@ Signed Integer's are 2's Compliment: If you want to invert the sign of the numbe
 
 Notice that negative integers numbers are still basically in base 2, with the the 0 and 1 are flipped and then we just add 1.
 
-===================================
-Teir 1: Floating Point/Real Numbers
-===================================
+======================================
+Teir 1.01: Floating Point/Real Numbers
+======================================
 
 Floating point or Real numbers have a level of precision proportional to their bit. This means the format has a limited precision based on the number of bits the format uses. For 32-bit IEE floats the precision level is ~7 decimals (ie. 1.234567) near 0-1 values and gets worse as you incrase in size. This means that if we have a number which becomes more precise then !7 decimals durring its calculation that precision will be lost when we store the number back into memory.
 
@@ -65,23 +65,23 @@ Note: the fraction part is simplified.
 
 (extra) Floats can represent these values which all have different bit-representations: 0, -0, NAN (Not a Number), -Nan, INF (Infinity), -INF. These values may need special handing/checking in your code.
 
-================
-Tier 1: Pointers
-================
+===================
+Tier 1.02: Pointers
+===================
 
 Pointers are the simple types in that they are an address and a type. The type they are pointing to determines the stride when doing arithmatic operations and what the memory is intrepreted when the pointer is dereferenced. See Pointers.txt for more details.
 
-============
-Tier 1: void
-============
+===============
+Tier 1.03: void
+===============
 
 void (aka nothing) is a type used to indicate that there is not return or input type. Some languages have the input/return types become optional in the syntax so instead of "void" you write nothing. It is not possible to create a void value, it is nothing.
 
 pointer to void however is valid and used frequently. This means that we have an address without any connected type. A void pointer cannot be dereferenced and must be cast to a type for the address to be accessed.
 
-=======================
-Teir 1: enums and flags
-=======================
+==========================
+Teir 1.04: enums and flags
+==========================
 
 An enum is a bit pattern of a specified length which represents some abstract information about your program.
 
@@ -118,9 +118,9 @@ GoblinState Value: 113 means: 64 | 32 | 16 | 1 or (Fighter) | (Elite) | (Leader)
 
 (extra) There is an implied addative nature to flags within the same enum which is done to improve readability. In memory tight environments such as networking you may decide to break this guideline and fit more flags within a smaller memory space to maximuse effeciency.
 
-==============================================
-Tier 2: Type Conversion: Implicit and Explicit
-==============================================
+=================================================
+Tier 2.00: Type Conversion: Implicit and Explicit
+=================================================
 
 Most programming languages will allow type conversion between intrinsic types (ie. Integer -> float: 1 -> 1.0). These conversions may result in loss of precision, loss of signness (+/-), or even undefined behavior depending on the language/compiler/hardware used. This behavior is useful, but may be dangerious if unanticipated.
 
@@ -130,9 +130,9 @@ Safe type conversions may occure as a result of an implicit conversion cast. In 
 
 (extra) The distinction between implicit and explicit conversion casts is to give the programmer more control and inform the program of abnormal behavior.
 
-================================================
-Tier 2: Type Casting (exclicit type conversions)
-================================================
+===================================================
+Tier 2.01: Type Casting (exclicit type conversions)
+===================================================
 Pre-Requisite: Pointer.txt Teir 2
 
 Type casting is the process of taking some memory and interpreting it as a different type. The case itself may modify the memory depending on the language and conversion of type. Most languages have 1 casting operator which can do 1 of 3 different basic logical casts. The 3 basic logical casts are static/safe, dynamic/object, and reinterpret/raw.
@@ -143,9 +143,9 @@ dynamic/object cast - This cast takes in a pointer/reference to a user-defined t
 
 Reinterpret/raw cast - This cast does no modification to the data and will simply start treating the memory as a different type without consideration for the needs of the conversion. This means a raw cast from 1.234 float to integer will not be 1, but instead 1067316150 since the bit representation for floating point numbers and Integers do not match. Also most languages will force you to to a raw cast via pointer so that if you are moving between types of different size the programer excplicity "gives" the pointer value.
 
-============================
-Tier 2: Operator Overloading
-============================
+===============================
+Tier 2.02: Operator Overloading
+===============================
 
 Operator overloading is a programming language feature whereby a user-defined types can have operators defined on how certain operators interact with other types/operand(s).
 
@@ -157,15 +157,15 @@ Having this operator overloaded enables Vector2, v0 and v1, to be added and then
 
 The operand(s) and resulting type do not need to match. Operator Overloading is a fancy way to make a function call
 
-================================
-Tier 3: Generics (aka templates)
-================================
+===================================
+Tier 3.00: Generics (aka templates)
+===================================
 
 Generics contain a set of functionality specialized to a specific type. The generic has its own set of instructions per function and each specialization is its own unique user-defined type. (@See Control.txt Teir 3 for more details).
 
-==========================================
-Teir 3: Intrinsic Type Conversion Behavior
-==========================================
+=============================================
+Teir 3.01: Intrinsic Type Conversion Behavior
+=============================================
 
 @TODO
 
@@ -190,9 +190,9 @@ s -(down)--> u: if s >= 0 AND s < u's max value then safe. Otherwise u =  2^s'sb
 All floating point number conversions to and from signed or unsigned integers may lose precision if there is no exact fractional representation that can represent the integer value.
 
 
-=======================
-Tier 3: Getters/Setters
-=======================
+==========================
+Tier 3.02: Getters/Setters
+==========================
 
 Getters and Setters use value-like syntax to get and set data within an object. This allow the internal data representation of a value to be modified by many different input/output formats while its internal representation remains the same. It may also be helpful for debugging because we can add breakpoints, asserts, and trace/logging within a get or set function to provide information about who is accessing the value.
 
@@ -275,9 +275,9 @@ void UpdateClock(Clock clock, int secondsPassed)
 
 (extra) You may choose to not impliment both a Getter and a Setter, or make the Setter private and the Getter public. This gives you some added control over how a value is modified to provide intent to the user of the object.
 
-===============================================
-Tier 4: Single Instruction Multiple Data (SIMD)
-===============================================
+==================================================
+Tier 4.00: Single Instruction Multiple Data (SIMD)
+==================================================
 
 Types often relate directly to a set of specific CPU instructions/operations. One such set of CPU operations are Single Instruction Multiple Data (SIMD) also refered to as vector instructions. SIMD instructions use special wide registers (128, 256, 512, 1024 bit) and compute a single operation as if that one register held many of a single type. This allows us to run a single instruction on multiple types to quickly transform data.
 
@@ -299,35 +299,35 @@ src0   [0.1|0.2|0.3|0.1|0.6|1.0|1.2|0.2]
 src1   [0.8|0.2|1.2|2.1|0.4|0.1|2.3|0.1]
 result [0.9|0.4|1.5|2.2|1.0|1.1|3.5|0.3]
 
-========================
-Tier 4: Register keyword
-========================
+===========================
+Tier 4.01: Register keyword
+===========================
 
 Adding "register" into a local variable suggests to the compiler that this value be stored in a register instead of on the stack.
 
-========================
-Tier 4: Volatile keyword
-========================
+===========================
+Tier 4.02: Volatile keyword
+===========================
 
 A "volatile" type indicates to the compiler that this value may be modified by other threads/programs and should assume it has changed between each access. This is useful for lockless propogation of state across threads.
 
-========================
-Teir 4: Restrict keyword
-========================
+===========================
+Teir 4.03: Restrict keyword
+===========================
 
 A "restrict" keyword may be given to pointer parameter type to indicate that this pointer's address is unique to other passed parameters. This may enable certain read/write optimizations whereby multiple pointers of the same type are passed to a function and restrict indicates that the pointer values do not need to be reloaded after writing to any another pointer's memory.
 
-====================
-Tier 4: Fast Integer
-====================
+=======================
+Tier 4.04: Fast Integer
+=======================
 
 When compiling a program, the language may allow you to use a "fast" integer type. What this means is that the compiler can choose which integer types would be fastest but must atleast have a minimum specification of length.
 
 Example: "uint_fast16_t" <- This type specifies that the compiler must use atleast a 16 bit unsigned integer, but if using a 32 or 64 bit unsigned integer would be faster it may upgrade to the fastest type.
 
-=================
-Tier 4: Swizzling
-=================
+====================
+Tier 4.05: Swizzling
+====================
 
 Swizzling is the functionality of rearranging the elements of a vector. This is most commonly seen in computer graphics linear algebra libraries for Vector types.
 

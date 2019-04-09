@@ -31,9 +31,20 @@ How to read
 It is recommended that you download/clone the repository then open files in a text editor of your choice with word-wrap enabled.
 
 It is recommended that if you are a:
-* Veteran Programmer (2+ years of professional experience): You should already know everything below tier 3. Skim topics which are tier 3 and above and read sample code as needed.
+* Veteran Programmer (2+ years, professional systems-level programming): You likely know everything below tier 3. Skim topics which are tier 3 and above and read sample code as needed.
 * Intermediate programmer (college grad, self-taught): Skim topics starting at tier 1. Knowing the many names for certain terms/concepts will be helpful for later tiers even if you know the concepts by a different name. Read the sample code as needed.
 * New programmer: Read everything in each tier of every document before proceeding to the next tier. Read the sample code for every topic when available/applicable. 
+
+Topic Summary
+* Control.txt    : Programming methods/designs/systems related to static and dynamic control of your program.
+* Memory.txt     : Programming memory layout and features
+* Pointer.txt    : Programming access patterns/designs/systems for your memeory.
+* Types.txt      : Programming types as a CPU instruction interface and program design.
+* Containers.txt : Programming containers concepts and brief explaination of their function.
+
+Tier Explaination
+* Tier 1.xx-2.xx : Foundational knowledge
+* Tier 3.xx-7.xx : Situationally useful and domain specific knowledge
 
 Note: If you have never written code before in any language, the distillery is not a good resource for you. Find and do a beginner tutorial series in any language then come back once you have atleast +5 hours of personal coding time.
 

@@ -16,6 +16,14 @@ Base 64 Encoding
 
 
 
+Feedback: Elijah Rust
+
+* add table of contents per file
+* Tier 1.01, 1.02 (
+
+* How to read
+** Give a 1 sentence description of each file and it contents
+** What each tier cooralates to in terms of knowledge depth/expected understanding.
 
 
 
