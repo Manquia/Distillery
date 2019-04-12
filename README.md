@@ -1,13 +1,12 @@
 Distillery
 by Micah Rust
 
-======================
+
 High Concept and Goals
 ======================
 * Summarize simple to complex topics related to computer science
 * Provide google-able refernces/vocabulary for further learning
 
-========
 Audience
 ========
 * The Self-Learner: looking for ways to improve their skills but cannot encounter their unknown unknowns.
@@ -16,7 +15,6 @@ Audience
 * The Student: preparing for a challenging interview or test.
 * The Professor: composing class materials for new and evolving courses.
 
-=======
 Summary
 =======
 The main goal of the distillery is to enable the reader to rapidly read through many quick summaries of computer science topics. Each document has a topic. A document contains many sections on that topic which go into ever increasing complexity and detail. The distillery summary sections attempt to be language agnostic, but when needed they tend to lean towards C/C++ to explain some more complex sections.
@@ -25,7 +23,6 @@ Each section of a document has a tier level associated with it roughly correlati
 
 In this folder, you will see that there are sub-folders which are programming language names. In these folders are code files which show the specific details on a topic_section that the distillery summarizes. This will likely take a long time to write and may never be fully completed for all languages. These source files are samples which show a particular topic_section's material being used in the language.
 
-===========
 How to read
 ===========
 It is recommended that you download/clone the repository then open files in a text editor of your choice with word-wrap enabled.
@@ -48,7 +45,6 @@ Tier Explaination
 
 Note: If you have never written code before in any language, the distillery is not a good resource for you. Find and do a beginner tutorial series in any language then come back once you have atleast +5 hours of personal coding time.
 
-======
 Detail
 ======
 Programming languages I'd like to see code samples for:
@@ -60,18 +56,15 @@ Operating Systems I'd like to see code samples for:
 * Windows (win32 API)
 * Posix
 
-=============
 Contributions
 =============
 Contributions are welcome and wanted. I do not have the will nor knowledge to write samples in every language, nor am I an expert in all things computer science. If you find something factually incorrect, feel the need for a new section, or want to write some source samples please feel free to email me at micahtim@gmail.com and we can see about adding you as a contributor.
 
-===========
 Summary NOT
 ===========
 * The distillery is NOT a tutorial series. But does have source samples on a per-language/per-Operating system basis when applicable.
 * The distillery is NOT an in-depth source of information. It is a compilation of summaries to expose computer science ideas and concepts rapidly to its audience.
 
-=======
 Credits
 =======
 Editing
