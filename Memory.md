@@ -33,7 +33,7 @@ Tier 1.02: Memory as user defined types
 
 Not all types within a program have a set of CPU intrinsic operations attached to them. Many programming languages allow for the creation of user-defined types that encapsulate many intrinsic types that logically work together to form a set of functionality. A string can be a user-defined type which is a collection of u8, or u16 types whereby each u8 or u16's number maps to a specific character which can be looked up in ASCII or other character encodings.
 
-Example:
+**Example**: Memory interpreted as Binary, Decimal, and ASCII string.
 ```
 
   Viewer as| Binary                     | Decimal  | ASCII       |
@@ -47,9 +47,7 @@ Tier 1.03: Memory Addresses/pointers
 ====================================
 Memory is a collection of bits, and we can look at a specific location in the memory by its address value. An address does not specify a location in bits, but rather its location in bytes. An address is logically just a number that we can use to look into the memory by x number of bytes from some known start point in memory. For this reason any number, both postive and negative, may represent a valid address. (extra) In most cases the known start point is 0, as it is for absolute pointers, but this is not the case for relative pointers.
 
-Example
-
-Address Space
+**Example**: Address Space
 ```
   byte 0   byte 1   byte 2   byte 3   byte 4   byte 5
  /      \ /      \ /      \ /      \ /      \ /      \
@@ -70,7 +68,7 @@ The smallest part of memory a CPU can address is a byte. A byte is also usually 
 
 The CPU has memory alignment requirements for some of its operations. An operation may require 4-byte or 8-byte alignment such that it can only operate on memory addresses which are a multiple of 4 or 8. (ie. 4-byte alignment would require an address like 0, 4, 8, or 12 each of which is a multiple of 4)
 
-Example
+**Example**: Address Space and alignment
 ```
   byte 0   byte 1   byte 2   byte 3
  /      \ /      \ /      \ /      \
@@ -93,13 +91,15 @@ address 10 in binary is 10001001, but as used-defined flags: alive | blind | hun
 
 Unions are useful when some memory/information is not relavent to all states of a given user-defined type. This can reduce the memory the programmer must reason about by restricting access to the irrelevent memory while in certain states. Unions share the memory between states and may reduce the memory footprint.
  
-Example: (extra) Let's consider guard NPC in a game. The guard has 2 states "attacking" and "guarding". While attacking we hold onto data about the fight, let's say 84 bytes of memory. While we are guarding we only need to patrol a set path, let's say 98 bytes of memory. While guarding we are never attacking and while we are attacking we are never guarding. With this in mind, we can store the "attacking" data and the "guarding" data at the same address and use a union/Sum Type/Variant to interpret the memory according to our current state. 
+**Example**: (extra) Let's consider guard NPC in a game. The guard has 2 states "attacking" and "guarding". While attacking we hold onto data about the fight, let's say 84 bytes of memory. While we are guarding we only need to patrol a set path, let's say 98 bytes of memory. While guarding we are never attacking and while we are attacking we are never guarding. With this in mind, we can store the "attacking" data and the "guarding" data at the same address and use a union/Sum Type/Variant to interpret the memory according to our current state. 
 
 General characteristics of union like memory types by name:
+
 Unions, #place:
  * Does not keep a state value
  * Does not enforce initialization of relavent data
  * Does not restrict access to non relavent data
+ 
 Tagged Union, Sum Types, Variants:
  * keeps a state value
  * Enforce initialization of relavent data
@@ -249,7 +249,7 @@ Some implimentations of DLL/SO and Operating systems may allow for programming l
 Tier 4.02: Memory and your OS
 =============================
 
-Unless you are programming at the kernel level, you have an operating system (OS) that is managing the systems memory. The OS manages memory using pages, the OS has a page table for each active program. A page often maps to 4096 bytes of memory and will have its own privalges, modes, ownership, rules, et cetera depending on the OS and hardware. Management of these pages allow for the following features
+Unless you are programming at the kernel level, you have an operating system (OS) that is managing the system's memory. The OS manages memory using pages, the OS has a page table for each active program. A page often maps to 4096 bytes of memory and will have its own privalges, modes, ownership, rules, et cetera depending on the OS and hardware. Management of these pages allow for the following features
 
 Memory Modes: Allowing operations or restrictions on a memory page to read, write, or execution.
 
@@ -263,8 +263,9 @@ Copy on write is often initiated by a "fork" operation which clones a program.
 
 
 
+# Incomplete
 
 #4/5
-@Runtime code modification - Ask Michael Dorgon for example languages where this is used.
+@Runtime code modification - Ask Michael for example languages where this is used.
 @Runtime Inheritance (class/Object bundle, Java Script)
-@General Solution for Language binding - Ask Michael Dorgon
+@General Solution for Language binding - Ask Michael 

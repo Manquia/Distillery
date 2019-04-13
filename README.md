@@ -33,11 +33,11 @@ It is recommended that if you are a:
 * New programmer: Read everything in each tier of every document before proceeding to the next tier. Read the sample code for every topic when available/applicable. 
 
 Topic Summary
-* Control.txt    : Programming methods/designs/systems related to static and dynamic control of your program.
-* Memory.txt     : Programming memory layout and features
-* Pointer.txt    : Programming access patterns/designs/systems for your memeory.
-* Types.txt      : Programming types as a CPU instruction interface and program design.
-* Containers.txt : Programming containers concepts and brief explaination of their function.
+* Control.md    : Programming methods/designs/systems related to static and dynamic control of your program.
+* Memory.md     : Programming memory layout and features
+* Pointer.md    : Programming access patterns/designs/systems for your memeory.
+* Types.md      : Programming types as a CPU instruction interface and program design.
+* Containers.md : Programming containers concepts and brief explaination of their function.
 
 Tier Explaination
 * Tier 1.xx-2.xx : Foundational knowledge
