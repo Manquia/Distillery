@@ -1,8 +1,94 @@
 Control.txt
 
-Pre-requisite: Types.txt tier 1,
+Pre-requisite: Types.txt tier 1
 
-Tier 1.0: Function Calls
+Tier 1.00: Executing Statements
+==============================
+A statement is a section of code that is evaluated by the rules of the language. A statement may have:
+ - 0 or more sub-statements (AND)
+ - 0 or more expressions (AND)
+ - 0 or more declarations nested within.
+
+**Example**: Statement Evaluation
+
+```
+// Mathimatical operation evaluation order follows the programming languages' rules.
+// The ordering is called the operator precedence.
+value  = x + 2;        // Evaluated first.
+value += x + 1 - y/2;  // Evaluated second. 
+value /= value - x;    // Evaluated third.
+```
+
+Tier 1.01: Conditional Expressions
+==================================
+Programs can make a choice based on expressions which evaluate to a boolean of true or false. The selection of a section of code to run based on the value of the boolean is called a branch. To create a useful expression which evaluates to true or false there are many useful operators we can use.
+
+**Example**: List of common conditional operators
+```
+Operator  Name             Result
+                          
+e0 == e1  Equals(E)        True when e0 and e1 are equal, else false.
+e0 != e1  Not Equals       True when e0 and e1 are not equal, else false.
+e0 >  e1  Greater Than(GT) True when e0 is greater than e1, else false.
+e0 <  e1  Less Than (LT)   True when e0 is less than e0, else false.
+e0 >= e1  GT or E          True when e0 is GT or E to e1, else false.
+eo <= e1  LT or E          True when e0 is LT or E to e1, else false.
+!e0       Not              True when e0 is false. False when e0 is true.
+e0 <=> e1 Three way        0 when e0 and e1 are E. LT 0 when e0 LT e1. GT 0 when e0 GT e1.
+e0 && e1  Logical AND      True when e0 and e1 are true, else false. See Short Circuit below.
+e0 || e1  Logical OR       True when e0 or e1 are true, else false. See Short Circuit below.
+e0 &  e1  Bit-wise AND     True when e0 and e1 are true, else false. See Bit-wise Conditionals.
+e0 |  e1  Bit-wise OR      True when e0 or e1 are true, else false. See Bit-wise Conditionals.
+```
+Most languages allow conversion from integer values into boolean. Most languages evaluate 0 as false, and non-zero integer values as true.
+
+(extra) Three-way comparison '<=>' is sometimes called the "spaceship" operator.
+
+
+Tier 1.02: Grouping operator: '( ... )'
+=======================================
+The grouping operator may be used to denote the order in which an expression is evaluated. The order an expression is evaluated is otherwise language dependent based on the operators and sometimes types used in the expression.
+
+**Example**: Below the expression '1)' may evaluate to either expression '2)' or '3)' depending on the language and type of e0,e1,e2.
+```
+1)   e0 || e1 == e2    // Language dependent behavior
+2)   e0 ||(e1 == e2)   // (e1 == e2) will be executed before e0 || (result)
+3)  (e0 || e1)== e2    // (e0 || e1) will be executed before (result) == e2
+```
+
+Tier 1.03: Scope: '\{ ... \}'
+===========================
+Scope is simply a section of code denoted by some language semantics. Local variables declared inside a scope will be destroyed at the end of that scope. A function has a scope which opens at the beginning and closes when the function ends.
+
+Common scope semantics:
+* Curly bracket: Newlines, Spaces, Tabs do not affect the scope
+```
+{ 
+  // Scope 1a
+  {
+	// Scope 2a
+  }
+  // Scope 1a
+  // Scoep 1a
+  {
+	// Scope 2a
+	{
+	  // Scope 3a
+	}
+  }
+}
+```
+* Tab/space-based: Tabs denote scope begin/end
+```
+Scope 1a
+	Scope 2a
+Scope 1a
+Scope 1a
+	Scope 2b
+		Scope 3a
+```
+
+Tier 1.04: Function Calls
 ========================
 Functions encapsulate code and take inputs and outputs. Functions can be called in any order enabling linear calls, recursion, and cycles.
 
@@ -30,75 +116,8 @@ hybrid     foo() -> bar() -> king() -> foo() -> bar() -> magic()
 * Member: Function is connected to a class/object and may use an implicit this pointer to access the class/object.
 * Lambda Capture: Creates an implicit class/object in a function when declared which then may be accessed when the function runs. The class/object may be allocated on the stack or heap depending on the limitations of the language and compiler and use-case.
 
-Tier 1.01: Conditional Expressions
-==================================
-Programs can make a choice based on expressions which evaluate to a boolean of true or false. The selection of a section of code to run based on the value of the boolean is called a branch. To create a useful expression which evaluates to true or false there are many useful operators we can use.
 
-**Example**: List of common conditional operators
-```
-Operator  Name             Result
-                          
-e0 == e1  Equals(E)        True when e0 and e1 are equal, else false.
-e0 != e1  Not Equals       True when e0 and e1 are not equal, else false.
-e0 >  e1  Greater Than(GT) True when e0 is greater than e1, else false.
-e0 <  e1  Less Than (LT)   True when e0 is less than e0, else false.
-e0 >= e1  GT or E          True when e0 is GT or E to e1, else false.
-eo <= e1  LT or E          True when e0 is LT or E to e1, else false.
-!e0       Not              True when e0 is false. False when e0 is true.
-e0 <=> e1 Three way        0 when e0 and e1 are E. LT 0 when e0 LT e1. GT 0 when e0 GT e1.
-e0 && e1  Logical AND      True when e0 and e1 are true, else false. See Short Circuit below.
-e0 || e1  Logical OR       True when e0 or e1 are true, else false. See Short Circuit below.
-e0 &  e1  Bit-wise AND     True when e0 and e1 are true, else false. See Bit-wise Conditionals.
-e0 |  e1  Bit-wise OR      True when e0 or e1 are true, else false. See Bit-wise Conditionals.
-```
-Most languages allow conversion from integer values into boolean. Most languages evaluate 0 as false, and non-zero integer values as true.
-
-(extra) Three-way comparison '<=>' is sometimes called the "spaceship" operator.
-
-Tier 1.02: Grouping operator: '( ... )'
-=======================================
-The grouping operator may be used to denote the order in which an expression is evaluated. The order an expression is evaluated is otherwise language dependent based on the operators and sometimes types used in the expression.
-
-**Example**: Below the expression '1)' may evaluate to either expression '2)' or '3)' depending on the language and type of e0,e1,e2.
-```
-1)   e0 || e1 == e2    // Language dependent behavior
-2)   e0 ||(e1 == e2)   // (e1 == e2) will be executed before e0 || (result)
-3)  (e0 || e1)== e2    // (e0 || e1) will be executed before (result) == e2
-```
-Tier 1.03: Scope: '\{ ... \}'
-===========================
-Scope is simply a section of code denoted by some language semantics. Local variables declared inside a scope will be destroyed at the end of that scope. A function has a scope which opens at the beginning and closes when the function ends.
-
-Common scope semantics:
-* Curly bracket: Newlines, Spaces, Tabs do not affect the scope
-```
-    { 
-      // Scope 1a
-      {
-        // Scope 2a
-      }
-      // Scope 1a
-      // Scoep 1a
-      {
-        // Scope 2a
-        {
-          // Scope 3a
-        }
-      }
-    }
-```
-* Tab/space-based: Tabs denote scope begin/end
-```
-    Scope 1a
-        Scope 2a
-    Scope 1a
-    Scope 1a
-        Scope 2b
-            Scope 3a
-```
-
-
-Tier 1.04: Control Statements
+Tier 1.05: Control Statements
 =============================
 A control statement branches to a section of code (often a new scope) based on the result of its conditional expression.
 ```
@@ -147,7 +166,7 @@ Note: Inside a switch "case:", most languages continue to run linearly through t
 - strings: "case "Hello World":{ ... }"
 - expressions: "case value > 2:{ ... }"
 
-Tier 1.05: Loops
+Tier 1.06: Loops
 ================
 A loop contains a section of code (often a new scope) which the program may repeat 0 or more times depending on a given conditional expression.
 ```
@@ -1000,10 +1019,6 @@ Shared Memory: Memory Mapping between processes
 # Incomplete
 
 
-#1 Statements  (Probably rename FunctionCalls to Functions)
-#1 Arithmatic operators: +,-,*,/,%.
-
-#3 bit-wise operators (not conditional):  !!!! Why did I miss this!!
 
 #2
 @Iterators (This probably goes into types.md

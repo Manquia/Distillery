@@ -15,7 +15,7 @@ int main(void)
 	EvalAndPrint(0.0f);           // false 
 	EvalAndPrint(-0.0f);          // false
 
-	// Equals (bools)
+	// Equals (bool)
 	EvalAndPrint(true == true);   // true
 	EvalAndPrint(false == true);  // false
 	EvalAndPrint(true != true);   // false
