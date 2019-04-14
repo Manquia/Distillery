@@ -4,8 +4,6 @@
 #define EvalAndPrint(expression) \
 printf("%s     %s\n", (expression) ? "true :" : "false:", #expression)
 
-
-
 int main(void)
 {
 	// Evaluate as bool

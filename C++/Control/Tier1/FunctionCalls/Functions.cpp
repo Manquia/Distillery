@@ -1,11 +1,18 @@
 #include <cstdio>;
 
+// --------------------------------------------------------
+// Function Forward Declarations
+// --------------------------------------------------------
 
 // Example forward declaration called "PrintText"
 // Parameters(1): const char* text (C-style string)
 // Return: empty/void (nothing)
 // Notes: C++ requires that every function is declared before being referenced within the .cpp (object) file. This means that its signature known but does not requires that its definition (code) is known.
 void PrintText(const char* text);
+
+// --------------------------------------------------------
+// Function Declarations
+// --------------------------------------------------------
 
 // Example function definition called "HelloWorld"
 // Parameters(0): void
@@ -33,6 +40,99 @@ int AddNumbers(int number0, int number1)
 {
 	return number0 + number1;
 }
+// --------------------------------------------------------
+// Function Overloading
+// --------------------------------------------------------
+
+// Multiple functions may have the same name so long as they do not share the same parameters. (note: you may not overload on return type)
+int MultiplyNumbers(int n0, int n1)
+{
+    return n0 * n1;
+}
+float MultiplyNumbers(float n0, float n1)
+{
+    return n0 * n1;
+}
+// --------------------------------------------------------
+// Member Functions
+// --------------------------------------------------------
+
+// A member function is a function we call "on" an object (class, struct, or union) and takes an implicit "this" pointer.
+struct MyObject123
+{
+    int value = 774;
+    void PrintValue()
+    {
+        // Member functions take an implicit "this" pointer which does not show up in the parameter list but is accessable.
+        printf("Printing MyObject's value from explicit this pointer (%d)\n", this->value);
+        printf("Printing MyObject's value from implicit this pointer (%d)\n", value);
+    }
+    // A static function in an object does not take a "this" pointer to the object. We can however make our own parameter
+    // which is the same thing as the implicit "this" pointer, but we pass it explicitly.
+    static void PrintValue(MyObject123* ourThisPointer)
+    {
+        printf("Printing MyObject's value from implicit ourThisPointer (%d)\n", ourThisPointer->value);
+    }
+};
+
+
+// --------------------------------------------------------
+// namespacing functions (catagorizing functions)
+// --------------------------------------------------------
+
+// In C++ there are vaious ways to access a function.
+
+// Using a namespace
+namespace MyNamespace123
+{
+    void SpecialFunction()
+    {
+        printf("Special Function\n");
+    }
+} // end namespace MyNamespace123
+void CallNamespacedSpecialFunction()
+{
+    MyNamespace123::SpecialFunction();
+}
+
+
+// Using a class, struct or union with a static function we can namespace a function to the coralating type. To call a static function from the type we do not need an instance of the object so it behaves simularly to a namespace with the function having private/protected access to the object.
+struct MyStructure123
+{
+    // struct makes all declarations public by default.
+    static void DoStructThing()
+    {
+        printf("DoStructThing\n");
+    }
+};
+class MyClass123
+{
+    // class makes all declarations private by default so we have to specify public so that functions outside of MyClass123
+public:
+    static void DoClassThing()
+    {
+        printf("DoClassThing\n");
+    }
+};
+union MyUnion123
+{
+    static void DoUnionThing()
+    {
+        printf("DoUnionThing\n");
+    }
+};
+
+void CallObjectStaticDoThing()
+{
+    MyStructure123::DoStructThing();
+    MyClass123::DoClassThing();
+    MyUnion123::DoUnionThing();
+}
+
+
+// --------------------------------------------------------
+// Function call hierachry
+// --------------------------------------------------------
 
 // Example function definition called "foo", "bar", "magic", and "king" are appended with "Linear", "Resurcive", "Cycle" to show the corresponding concepts
 
@@ -158,6 +258,18 @@ int main(void)
 
 	printf("3 + 8 = %d\n", AddNumbers(3, 8));
 
+    // tell the compiler to use the overloaded function called MultiplyNumbers which takes integers.
+    MultiplyNumbers(1, 2); 
+    //tell the compiler to use the overloaded function called MultiplyNumbers which takes float.
+    MultiplyNumbers(1.1111f, 5.0f); 
+
+
+    CallNamespacedSpecialFunction();
+
+    MyObject123 myObject;
+    myObject.PrintValue();
+    MyObject123::PrintValue(&myObject);
+
 	fooLinear();
 	magicLinear();
 
@@ -165,7 +277,8 @@ int main(void)
 	fooRecursive(3);
 
 	fooCycle(3);
-	// fooCycle(-2147483647); // max negative 32-bit int. Cycle will run for billions of times before completion. This will crash the program because our stack which holds the variables for the function calls doesn't have enough memory to hold the values needed to complete. This sort of crash is called a stack overflow.
+    // max negative 32-bit int. Cycle will run for billions of times before completion. This will crash the program because our stack which holds the variables which take up memory on the stack. The stack has a limited size which we will then exceed. This sort of crash is called a stack overflow.
+	// fooCycle(-2147483647); 
 
 	fooHybrid(4);
 	magicHybrid(10);
@@ -202,7 +315,7 @@ int main(void)
 	};
 
 	// leprechaun is captured by value so we can change this and still find gold.
-	leprechaun = 0;
+	leprechaun = nullptr;
 
 	// Call lambda "Find Gold".
 	FindGold(8);
