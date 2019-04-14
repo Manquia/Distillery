@@ -1,18 +1,19 @@
 Pre-Requisite: types.txt Tier 1, Memory.txt Tier 1, Pointers.txt Tier 1
+
 Summary: A quick overview of common to exotic containers and their usefulness. This gives a more practical use of the containers whereas DataStructues.txt goes in depth on how the given containers work. This will NOT go into any sorting techniques, see sort.txt.
 
 Tier 1.00: Why Containers?
 ==========================
-Containers are general solutions to store, sort, and access data in a way to solve problems. In general there are 2 highly used containers because they are the best for most applications, but in reality, there are dozens of valid and potentially more optimal containers for a given task. Tier 1 will go over the most highly used.
+Containers are general solutions to store, sort, and access data in a way to solve problems. In general there are 2 highly used containers because they are the best for most applications, but in reality, there are dozens of valid and potentially more optimal containers for a given task. Tier 1 will go over the most highly used containers.
 
-Container Performance specification
-From Fastest to slowest
+Container Performance specification from fastest to slowest
+```
 O(c)      <- constant time operation
 O(logn)   <- scales with log(n) items in the container
 O(n)      <- scales with n items in the container
 O(nlogn)  <- scales with n * log(n) items in the container
 O(n^2)    <- scales with n^2 items in the container
-
+```
 Tier 1.01: Array aka: Vector, String
 ====================================
 ```
