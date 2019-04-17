@@ -88,7 +88,7 @@ Scope 1a
 		Scope 3a
 ```
 
-Tier 1.04: Function Calls
+Tier 1.04: FunctionS
 ========================
 Functions encapsulate code and take inputs and outputs. Functions can be called in any order enabling linear calls, recursion, and cycles.
 
