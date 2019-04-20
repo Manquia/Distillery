@@ -25,25 +25,30 @@ In this folder, you will see that there are sub-folders which are programming la
 
 How to read
 ===========
-It is recommended that you download/clone the repository then open files in a text editor of your choice with word-wrap enabled.
+The topics may be read from your browser or other markdown viewing application. If you are reading from a text editor, it is recommended that you enable word-wrap and use a monospace font. If you plan to read the samples, it is recommended that you download/clone the repository for your convenience.
 
 It is recommended that if you are a:
-* Veteran Programmer (2+ years, professional systems-level programming): You likely know everything below tier 3. Skim topics which are tier 3 and above and read sample code as needed.
+* Veteran Programmer (2+ years, _systems-level_ programming): You likely know everything below tier 3. Skim topics which are tier 3 and above and read sample code as needed.
 * Intermediate programmer (college grad, self-taught): Skim topics starting at tier 1. Knowing the many names for certain terms/concepts will be helpful for later tiers even if you know the concepts by a different name. Read the sample code as needed.
 * New programmer: Read everything in each tier of every document before proceeding to the next tier. Read the sample code for every topic when available/applicable. 
 
 Topic Summary
 * Control.md    : Programming methods/designs/systems related to static and dynamic control of your program.
 * Memory.md     : Programming memory layout and features
-* Pointer.md    : Programming access patterns/designs/systems for your memeory.
+* Pointer.md    : Programming access patterns/designs/systems for your memory.
 * Types.md      : Programming types as a CPU instruction interface and program design.
-* Containers.md : Programming containers concepts and brief explaination of their function.
+* Containers.md : Programming container concepts and a brief explanation of their function.
 
-Tier Explaination
+Tier Explanation
 * Tier 1.xx-2.xx : Foundational knowledge
-* Tier 3.xx-7.xx : Situationally useful and domain specific knowledge
+* Tier 3.xx-7.xx : Situationally useful and domain-specific knowledge
 
-Note: If you have never written code before in any language, the distillery is not a good resource for you. Find and do a beginner tutorial series in any language then come back once you have atleast +5 hours of personal coding time.
+Sample Code:
+* C/C++: Use Visual Studio 2017 or text editor of your choice
+* CSharp: Use Visual Studio 2017 or text editor of your choice
+* Jai: Pending Release
+
+Note: If you have never written code before in any language, the distillery is not a good resource for you. Find and do a beginner tutorial series in any language then come back once you have at least +5 hours of personal coding time.
 
 Detail
 ======
@@ -67,9 +72,6 @@ Summary NOT
 
 Credits
 =======
-Editing
-* Caleb Rust
 
 Special Thanks
-* Tucker Bane
 * Elijah Rust
