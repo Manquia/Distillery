@@ -6,8 +6,8 @@ Now we will go more in-depth to what the CPU will do foreach different type. The
 unsigned integer (8 bit) holding the value of 15: 00001111
 
 
-Tier 1.00: Signed and Unsigned Integers
-=======================================
+Tier 1.00: Integers (Signed and Unsigned)
+=========================================
 Examples are for 8-bit integers, but apply to 16,32,64,128 bit signed/unsigned integer types just add more value bits.
 
 Unsigned integers are a base 2 number.
