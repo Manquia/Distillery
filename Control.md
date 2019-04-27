@@ -264,7 +264,7 @@ binary  00000001 | 11111111 = 11111111
 T/F     true       true       true
 binary  10000001 | 00011001 = 10011001
 ```
-(extra) it should also be noted that we can use even more bit-wise operators in our conditionals so long as we understand and expect non-zero to evaluate to true and 0 to evaluate to false.
+(extra) it should also be noted that we can use even more bit-wise operators in our conditionals so long as we understand and expect non-zero to evaluate to true and 0 to evaluate to false. Other bit-wise operations which may prove helpful are: bit-wise XOR, bit-wise NOT, Shift bits left/right, Count left/right side's number of consecutive zero/one bits, total count zero/one bits (popCount/hamming weight), Circular shift (rotation), 2's compliment, etc...
 
 Tier 2.02: Label
 ================
