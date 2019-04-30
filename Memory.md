@@ -31,7 +31,7 @@ When you compile a program the type will help determine the possible instruction
 Tier 1.02: Memory as user defined types
 =======================================
 
-Not all types within a program have a set of CPU intrinsic operations attached to them. Many programming languages allow for the creation of user-defined types that encapsulate many intrinsic types that logically work together to form a set of functionality. A string can be a user-defined type which is a collection of u8, or u16 types whereby each u8 or u16's number maps to a specific character which can be looked up in ASCII or other character encodings.
+Not all types within a program have a set of CPU intrinsic operations attached to them. Many programming languages allow for the creation of user-defined types that encapsulate many intrinsic types that logically work together to form a set of functionality. A string (collection of characters) can be a user-defined type which is a collection of u8, or u16 types whereby each u8 or u16's number maps to a specific character which can be looked up in ASCII or other character encodings.
 
 **Example**: Memory interpreted as Binary, Decimal, and ASCII string.
 ```
