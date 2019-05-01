@@ -209,6 +209,22 @@ while(cond);      <- while cond is true, run scope again.
 ```
 (extra) do while loops sometimes have the cond always false and then use break statements to skip to the end of the scope.
 
+Tier 1.07 Arithmatic Operators
+===============================
+
+Computers have many useful arithmetic operators to give us greater control of our program.
+
+Common Operator symbols:
+```
+Arithmatic Operator
+ Name     |  Usage  | Description
+----------+---------+----------------------
+ Add      | e0 + e1 | Add e0 and e1
+ Subtract | e0 - e1 | Subtract e1 from e0
+ Multiply | e0 * e1 | Multiply e0 and e1
+ Divide   | e0 / e1 | Divide e0 by e1 (When done with integers, the result is rounded down)
+ Modulo   | e0 % e1 | Calculate the remainder of e0 divided by e1
+```
 Tier 2.00: Short Circuit
 ========================
 The logical AND: '&&' and logical OR: '||' operators often support short-circuiting whereby not all expressions will be evaluated if the statement can no longer evaluate to true or false respectively.
@@ -219,11 +235,11 @@ Conditional expression evaluated:
 ```
     Must run Up to here|    |not run, logically can be skipped
                        V    V
-                    true || false || true   <- Cannot become false
- false || false ||  true || true  || true   <- Cannot become false
-                   false && true            <- Cannot become true
-           true && false && true && true    <- Cannot become true
-(true && false) || (true || false) || false <- Cannot become false
+                    true || false || true   // Cannot become false
+ false || false ||  true || true  || true   // Cannot become false
+                   false && true            // Cannot become true
+           true && false && true && true    // Cannot become true
+(true && false) || (true || false) || false // Cannot become false
 ```
 Tier 2.01: bit-wise Conditionals
 ================================
