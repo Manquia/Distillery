@@ -60,6 +60,8 @@ Tier 1.03: Scope: '\{ ... \}'
 ===========================
 Scope is simply a section of code denoted by some language semantics. Local variables declared inside a scope will be destroyed at the end of that scope. A function has a scope which opens at the beginning and closes when the function ends.
 
+@TODO @INCOMPLETE this section needs quite a lot of love. I need to talk more about variables and how their life in the global, object, and function level scope is defined. The exaple below is also hard to parse... Just needs a full do-over.
+
 Common scope semantics:
 * Curly bracket: Newlines, Spaces, Tabs do not affect the scope
 ```
