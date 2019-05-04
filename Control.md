@@ -93,11 +93,16 @@ Tier 1.04: Variables
 
 A variable is a referencable section of memory that is associated with a type. 
 
-**Example**: Declaring a variable
+**Example**: Declaring a **local** variable common syntax
 ```
 {
-  // By declaring myVariable as an int we get memory from the stack as size int and assign the value 4.
+  // By declaring 'myVariable' as an int we get memory from the stack of size int and then assign it the value 4.
   int myVariable = 4; 
+  
+  
+  // Other language syntax
+  myVariable : int = 4;
+  var myVariable = 4;   // int type is infered by assigning the integer value of 4
 }
 ```
 * The stack is a block of memory used by functions as a sketch pad. See Tier 4.00 for more details.
@@ -105,16 +110,16 @@ A variable is a referencable section of memory that is associated with a type.
 
 In most programming languages the location or scope in which you declare a variable defines that variable's **lifetime** and where its **memory is stored**. Once a variable goes beyond its lifetime,  accessing that variable results is undefined behavior (UB).
 
-**Example**: Declaring a variable in a function's scope or sub-scopes makes it a **local** variable with a lifetime till the end of the scope. Memory is stored on the **stack**.
+**Example**: Declaring a variable in a function's scope or sub-scopes makes it a **local** variable with a lifetime lasting till the end of the scope. Memory is stored on the **stack**.
 ```
 // Example 1
 void DoThingy0()
 {
   int myVar = 0; // Declare local variable 'myVar' as an integer
   {
-    myVar = 1; // Accessing 'myVar' is fine
+    myVar = 1;   // Accessing 'myVar' is fine
   }
-  myVar = 2;   // Accessing 'myVar' is fine
+  myVar = 2;     // Accessing 'myVar' is fine
   // 'myVar' is destroyed before the end of this scope
 }
 
@@ -122,14 +127,15 @@ void DoThingy0()
 void DoThingy1()
 {
   {
-    int myVar = 0;  // Declare local varaible 'myVar' as an integer
+    int myVar = 0; // Declare local varaible 'myVar' as an integer
+	
     // 'myVar' is destroyed before the end of this scope
   } 
   myVar = 1; // ERROR: 'myVar' is beyond its lifetime, accessing it is UB.
 }
 ```
 
-**Example**: A variable may reference another type by pointer or reference. We may use the operating system to allocate persistent memory often called the **heap**.
+**Example**: A variable may reference another variable in memory by pointer or reference. We may use the operating system to allocate persistent memory often called **heap** allocations.
 ```
 // Example 1
 void DoThingy0()
@@ -138,7 +144,7 @@ void DoThingy0()
   {
     myVarPtr = new int(1); // Allocate an integer on the heap and assign our pointer with its address.
   }
-  *myVarPtr = 2;   // Accessing the interger that 'myVarPtr' is pointing to is fine.
+  *myVarPtr = 2;           // Accessing the interger that 'myVarPtr' is pointing to is fine.
   
   // We must explicitly delete the allocation otherwise it will not be cleaned up until the end of the program.
   // Failures to clean up is called a **memory leak** and can result in severe performance degradation and failure in non-managed programming languages.
@@ -174,7 +180,7 @@ void DoThingy()
 ```
 * The 'g_' prefix is not required, but it is often good practice because global variables can be accessed from everywhere so its a warning to be careful.
 
-**Example**: Declaring a variable in an object/class's scope bind's the variable's lifetime with that of the object. The object may be a local variable on the **stack**, memory in the **heap**, or a **global** variable.
+**Example**: Declaring a variable in an object/class's scope bind's the variable's lifetime with that of the object. The object or type may be a local variable on the **stack**, memory in the **heap**, or a **global** variable.
 
 ```
 struct Ship
@@ -191,13 +197,12 @@ Ship g_TheLongGame;
 
 void DoThingy0()
 {
-  // shipInHeap's Julee allocated/created
-  Ship* shipInHeap = new Ship();
-  // shipInHeap's Julee cleaned up/destroyed
-  delete shipInHeap
   
-  // shipOnStack's Julee created
-  Ship shipOnStack;
+  Ship* shipInHeap = new Ship(); // shipInHeap's Julee allocated/created
+  delete shipInHeap              // shipInHeap's Julee cleaned up/destroyed
+  
+  Ship shipOnStack;              // shipOnStack's Julee created
+  
   // 'shipOnStack' is destroyed before the end of this scope Julee with it.
 }
 ```
@@ -205,7 +210,7 @@ void DoThingy0()
 (extra) A namespace is similar to a folder/category. Its a way of organizing types and functions.
 (extra) Some programming languages make it is possible to hide variables in a higher scope if the variables' names match. This is called a **shadow variable** and often the compiler will print a warning and/or choose the variable which is the least number of scope jumps away.
 
-Tier 1.04: Functions
+Tier 1.05: Functions
 ========================
 Functions encapsulate code and take inputs and outputs. Functions can be called in any order enabling linear calls, recursion, and cycles.
 
@@ -234,7 +239,7 @@ hybrid     foo() -> bar() -> king() -> foo() -> bar() -> magic()
 * Lambda Capture: Creates an implicit class/object in a function when declared which then may be accessed when the function runs. The class/object may be allocated on the stack or heap depending on the limitations of the language and compiler and use-case.
 
 
-Tier 1.05: Control Statements
+Tier 1.06: Control Statements
 =============================
 A control statement branches to a section of code (often a new scope) based on the result of its conditional expression.
 ```
@@ -283,7 +288,7 @@ Note: Inside a switch "case:", most languages continue to run linearly through t
 - strings: "case "Hello World":{ ... }"
 - expressions: "case value > 2:{ ... }"
 
-Tier 1.06: Loops
+Tier 1.07: Loops
 ================
 A loop contains a section of code (often a new scope) which the program may repeat 0 or more times depending on a given conditional expression.
 ```
@@ -324,7 +329,7 @@ while(cond);      <- while cond is true, run scope again.
 ```
 (extra) do while loops sometimes have the cond always false and then use break statements to skip to the end of the scope.
 
-Tier 1.07 Arithmatic Operators
+Tier 1.08 Arithmatic Operators
 ===============================
 
 Computers have many useful arithmetic operators to give us greater control of our program.
@@ -900,37 +905,16 @@ The return of setjmp when first called is always 0, but when it returns as a res
 
 (extra) longjump should be avoided when possible because it increases code complexity and is not commonly used.
 
+
 Tier 4.02: Coroutine
 ====================
-A coroutine is a mechanism to run code 1 or more sets of code as a is multi-task on one line of execution. This works by assigning each task its own stack and jumping between functions and stacks to change tasks. This is useful for when you have many tasks which require you to wait such as I/O and do not want to pay the cost for multiple threads.
+A coroutine is a mechanism to run one or more sets of code in a multi-task single line of execution. This works by assigning each task its own mini-stack and jumping between stacks and functions once a task is ready to yield to another. This is useful for when you have many tasks which require you to wait between usage. Common examples include file I/O, Networking, and device polling.
 
-@Incomplete
-@create example, maybe the one above is good enough... it is basically what we want for this...
+* May be used for creating generator design patterns.
+* Provides some of the functionality of multi-threading without needing multiples lines of execution.
+* Implementations may provide quicker context switches then threads. See Fibers @Tier 4.10.
 
-struct CoroutineData
-{
-  int index = 0;
-  static const int count = 10;
-  jmp_buf jmpBuffs[10];
-  u8* stacks[10];
-} coData;
-
-void TaskExample(CoroutineData* coData)
-{
-  ...
-}
-
-int example (void)
-{
-  TaskExample(&coData);
-  
-  return 0;
-}
- 
-@ TODO @TODO @Review @REDO
-@ TODO clean this up!!! Not sure how I want to create this. Look at Rust/D?
-@Coroutine - @yield
-@Job system Coroutine
+If your language supports long Jump, then it is likely that you could implement a coroutine to multi-task on a single line of execution.
 
 Teir 4.03: Thread
 =================
@@ -1109,7 +1093,7 @@ The blocks below do not need to synchronize with each other but may depend on da
 
 Job System
 ```
-Timeline(ms)0---------1---------2---------3---------4---------5---------6--------7...
+Timeline(ms)0---------1---------2---------3---------4---------5---------6--------7---...
 Thread 1:   |Network Tick|Physics|Gameplay Logic|Network Tick|Physics|Gameplay Logic|...
 Thread 2:   |Graphics Pump|Graphics Post Process|Graphics Pump|Graphics Post Process|...
 Thread 3:   |Input Manager|Audio Pump|----------|Input Manager|Audio Pump|----------|...
@@ -1154,7 +1138,7 @@ Shared Memory: Memory Mapping between processes
 
 
 #2
-@Iterators (This probably goes into types.md
+@Iterators (This probably goes into types.md)
 
 #3
  
@@ -1164,7 +1148,8 @@ Shared Memory: Memory Mapping between processes
 #4
 
 @Promise/Future & Async compute model
-@Futex (https://en.wikipedia.org/wiki/Futex)
+@Futex (https://en.wikipedia.org/wiki/Futex) (Performant on low contention locks)
+@Thin lock                                   (Performant on high contention locks)
 
 
 #5
@@ -1172,7 +1157,9 @@ Shared Memory: Memory Mapping between processes
 @Generator/stream & Consumer model
 @Errno messaging model
 
-#? Develop.txt
+
+
+#???? Develop.md <- Idea is to highlight Development practices that are high-value. Probably make this sometime in the future.
 @Maybe make a file called Develop.txt for Developer tools ideas
 @Assert
 @Static Assert
