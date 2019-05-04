@@ -1071,7 +1071,11 @@ Tier 4.10: Fibers
 =================
 Fibers are similar to threads except they are often lighter weight in terms of system resource utilization and may implement cooperative multitasking.
 
-Multitasking is when you have multiple tasks being executed concurrently (ie. threads, fibers, processes). Cooperative multitasking refers to a thread model in which a process chooses when to yield to other processes. Preemptive multitasking refers to a thread model in which a process may be interrupted at any time by the operating system. Almost all modern operating systems use a preemptive thread model for their applications.
+Multitasking is when you have multiple tasks being executed concurrently (ie. threads, fibers, processes). 
+- **Cooperative** multitasking refers to a thread model in which a process/thread/fiber chooses when to yield to other processes.
+- **Preemptive** multitasking refers to a thread model in which a process/thread/fiber may be interrupted at any time by the operating system.
+
+Almost all modern operating systems use a preemptive thread model for their applications.
 
 Tier 4.11: Performance multithread programming
 ==============================================
