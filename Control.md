@@ -1067,15 +1067,16 @@ Bit-wise OR      bit-wise OR 2 integers and store the result
 CompareAndExchangeWeak
 CompareAndExchangeStrong
 
-Tier 4.10: Fibers
-=================
-Fibers are similar to threads except they are often lighter weight in terms of system resource utilization and may implement cooperative multitasking.
+Tier 4.10: Threading Models
+===========================
 
-Multitasking is when you have multiple tasks being executed concurrently (ie. threads, fibers, processes). 
-- **Cooperative** multitasking refers to a thread model in which a process/thread/fiber chooses when to yield to other processes.
-- **Preemptive** multitasking refers to a thread model in which a process/thread/fiber may be interrupted at any time by the operating system.
+Multitasking is when you have multiple tasks being executed concurrently (ie. threads, processes). 
+- **Cooperative** multitasking refers to a threading model in which a process/thread chooses when to yield to other processes.
+- **Preemptive** multitasking refers to a threading model in which a process/thread may be interrupted at any time by the operating system.
 
-Almost all modern operating systems use a preemptive thread model for their applications.
+Almost all modern operating systems use a preemptive multitasking for their applications.
+
+(extra) A fibers is a light weight thread in terms of system resources and may implement cooperative multitasking at the user-level.
 
 Tier 4.11: Performance multithread programming
 ==============================================
