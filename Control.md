@@ -58,37 +58,152 @@ The grouping operator may be used to denote the order in which an expression is 
 
 Tier 1.03: Scope: '\{ ... \}'
 ===========================
-Scope is simply a section of code denoted by some language semantics. Local variables declared inside a scope will be destroyed at the end of that scope. A function has a scope which opens at the beginning and closes when the function ends.
-
-@TODO @INCOMPLETE this section needs quite a lot of love. I need to talk more about variables and how their life in the global, object, and function level scope is defined. The exaple below is also hard to parse... Just needs a full do-over.
+Scope is a section or block of code denoted by some language semantics with a definite start and end.
 
 Common scope semantics:
 * Curly bracket: Newlines, Spaces, Tabs do not affect the scope
+* '{' is the start or opening of a new scope
+* '}' is the end or closing of the last open scope.
 ```
 { 
   // Scope 1a
   {
-	// Scope 2a
+    // Scope 2a
   }
   // Scope 1a
-  // Scoep 1a
   {
-	// Scope 2a
-	{
-	  // Scope 3a
-	}
+    // Scope 2b
+    { /* Scope 3a */ } // Note: Start and end may be on the same line.
   }
+  // Scope 1a
 }
 ```
 * Tab/space-based: Tabs denote scope begin/end
 ```
 Scope 1a
-	Scope 2a
+    Scope 2a
 Scope 1a
 Scope 1a
-	Scope 2b
-		Scope 3a
+    Scope 2b
+        Scope 3a
 ```
+
+Tier 1.04: Variables
+====================
+
+A variable is a referencable section of memory that is associated with a type. 
+
+**Example**: Declaring a variable
+```
+{
+  // By declaring myVariable as an int we get memory from the stack as size int and assign the value 4.
+  int myVariable = 4; 
+}
+```
+* The stack is a block of memory used by functions as a sketch pad. See Tier 4.00 for more details.
+* The memory size of a variable is often the same as the type but may vary depending on alignment requirements of the CPU instructions being used by the type.
+
+In most programming languages the location or scope in which you declare a variable defines that variable's **lifetime** and where its **memory is stored**. Once a variable goes beyond its lifetime,  accessing that variable results is undefined behavior (UB).
+
+**Example**: Declaring a variable in a function's scope or sub-scopes makes it a **local** variable with a lifetime till the end of the scope. Memory is stored on the **stack**.
+```
+// Example 1
+void DoThingy0()
+{
+  int myVar = 0; // Declare local variable 'myVar' as an integer
+  {
+    myVar = 1; // Accessing 'myVar' is fine
+  }
+  myVar = 2;   // Accessing 'myVar' is fine
+  // 'myVar' is destroyed before the end of this scope
+}
+
+// Example 2
+void DoThingy1()
+{
+  {
+    int myVar = 0;  // Declare local varaible 'myVar' as an integer
+    // 'myVar' is destroyed before the end of this scope
+  } 
+  myVar = 1; // ERROR: 'myVar' is beyond its lifetime, accessing it is UB.
+}
+```
+
+**Example**: A variable may reference another type by pointer or reference. We may use the operating system to allocate persistent memory often called the **heap**.
+```
+// Example 1
+void DoThingy0()
+{
+  int* myVarPtr = nullptr; // Declare local variable 'myVarPtr' as a pointer to integer that points to 0 address in memory.
+  {
+    myVarPtr = new int(1); // Allocate an integer on the heap and assign our pointer with its address.
+  }
+  *myVarPtr = 2;   // Accessing the interger that 'myVarPtr' is pointing to is fine.
+  
+  // We must explicitly delete the allocation otherwise it will not be cleaned up until the end of the program.
+  // Failures to clean up is called a **memory leak** and can result in severe performance degradation and failure in non-managed programming languages.
+  delete myVarPtr;
+  
+  // 'myVarPtr' is destroyed before the end of this scope
+}
+```
+
+**Example**: A variable may be declared as a **global** in which case its lifetime matches the program. A global variable is created/allocated on program startup and destroyed/cleaned up when the program terminates.
+```
+// To declare a global variable, programming languages often either use a keyword like static or global or they are located outside of a function or object scope.
+
+// declare 'g_myGlobalVar' as a global variable in the global namespace.
+static int g_myGlobalVar = 0;
+
+struct Penguin
+{
+  // Declare a global variable in the Penguin type's namespace. 
+  static int g_cuteFactor = 5;
+}
+
+void DoThingy()
+{
+  // Declare a global variable inside 'DoThingy' function.
+  static int g_Thingy = 0;
+  
+  // Example of accessing global variables
+  g_myGlobalVar += 1;
+  Penguin::g_cuteFactor += 1;
+  g_Thingy += 1;
+}
+```
+* The 'g_' prefix is not required, but it is often good practice because global variables can be accessed from everywhere so its a warning to be careful.
+
+**Example**: Declaring a variable in an object/class's scope bind's the variable's lifetime with that of the object. The object may be a local variable on the **stack**, memory in the **heap**, or a **global** variable.
+
+```
+struct Ship
+{
+  Sailor Julee;
+  
+  // The pointer address value lifespan is bound to this object. We will NOT clean up whatever
+  // we are pointing at. See Smart Pointers @Pointer.md 2.02 if automatic cleanup is desired.
+  Ship* enemyShip;
+}
+
+// Declare ship as a global. Julee's lifespan matches the program.
+Ship g_TheLongGame;
+
+void DoThingy0()
+{
+  // shipInHeap's Julee allocated/created
+  Ship* shipInHeap = new Ship();
+  // shipInHeap's Julee cleaned up/destroyed
+  delete shipInHeap
+  
+  // shipOnStack's Julee created
+  Ship shipOnStack;
+  // 'shipOnStack' is destroyed before the end of this scope Julee with it.
+}
+```
+
+(extra) A namespace is similar to a folder/category. Its a way of organizing types and functions.
+(extra) Some programming languages make it is possible to hide variables in a higher scope if the variables' names match. This is called a **shadow variable** and often the compiler will print a warning and/or choose the variable which is the least number of scope jumps away.
 
 Tier 1.04: Functions
 ========================
