@@ -55,9 +55,10 @@ Examples will be for 32-bit IEE floating point. Floating point numbers with 16-b
  |
  Signed bit
  
-actual value = (-1 * signed bit) * (2^(exponent-127)) * (1 + 1/fraction)
+value = (-1 * signed bit) * (2^(exponent-127)) * (1/fraction)
+
+Note: The '1/fraction' part is complicated. The above is a simplified lie.
 ```
-Note: the fraction part is simplified a bit
 
 (extra) Floats can represent these values which all have different bit-representations: 0, -0, NAN (Not a Number), -Nan, INF (Infinity), -INF. These values may need special handing/checking in your code.
 
@@ -150,8 +151,44 @@ Having this operator overloaded enables Vector2, v0 and v1, to be added and then
 
 The operand(s) and resulting type do not need to match. Operator Overloading is a fancy way to make a function call
 
-Tier 3.00: Generics (aka templates)
-===================================
+
+Tier 2.03: Constructors and Destructors
+=======================================
+
+In higher level programming languages most user-defined types have an implicit (must be called) and overridable pair of functions called the **constructor** (ctor) and **destructor** (dtor). The ctor is used to allocate the required resources and initialize the memory before normal operation of the type. The ctor is used to cleanup any allocated resources owned by the type. The concept of a ctor/initialize and dtor/finalize functions are extremely useful and exist in almost all programs from high-level to low-level in one form or another.
+
+(extra) In low-level high performance programs ownership of a resources is often shared or managed internally to meet the program's specific needs. This makes the implicit nature of constructors less useful in these situations but are often still used for system level initialize and finalize as normal functions.
+
+
+Tier 2.04: Iterators
+====================
+
+An **iterator** is a type used to traverse a collection of items often held within a container. Languages often provide a standard method/interface to get and operate iteration over a collection.
+
+**Example**: Iterators in C++
+```
+// Pass in MySpecialContainerType specialized to integers.
+void DoThing(MySpecialContainerType<int> collection)
+{
+    // Iterate over all items in the collection and add 1.
+    // This is only possible if the definition of MySpecialContainerType<Type>
+    // impliments the needed methods/interface to iterate through its collection.
+    for(auto& item : collection)
+    {
+        item += 1;
+    }
+}
+```
+
+Tier 2.05: Namespaces and Types
+===============================
+
+The concept of a **namespace** gives the programmer a way to catagorize code into artibrary referencable sections.
+
+User-defined types in many programing languages have variables and functions in their definition which may be static (global) and member (access/using 'this' pointer). These variables and functions may then be accessed by using the type's name simular to how you might use a namespace.
+
+Tier 3.00: Generics (aka templates, plymorphism)
+================================================
 Generics contain a set of functionality specialized to a specific type. The generic has its own set of instructions per function and each specialization is its own unique user-defined type. (@See Control.txt Teir 3 for more details).
 
 Teir 3.01: Intrinsic Type Conversion Behavior
@@ -322,6 +359,6 @@ Vector2 contains elements: x, y
 
 # Incomplete
 
-@Constructors + Destructors
-@Iterators 
+
+#2
 @Intrinsic type conversion Behavior

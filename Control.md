@@ -161,14 +161,7 @@ void DoThingy0()
 // declare 'g_myGlobalVar' as a global variable in the global namespace.
 static int g_myGlobalVar = 0;
 
-struct Penguin
-{
-  // Declare a global variable in the Penguin type's namespace. 
-  static int g_cuteFactor = 5;
-}
-
-void DoThingy()
-{
+struct Penguin`2
   // Declare a global variable inside 'DoThingy' function.
   static int g_Thingy = 0;
   
@@ -226,7 +219,9 @@ Cycle      foo() -> bar() -> foo() -> bar() -> foo() -> bar()
 hybrid     foo() -> bar() -> king() -> foo() -> bar() -> magic()
 ```
 
-(extra) functions have a return point, local variables, inputs, or outputs per function call which are stored on the current thread's stack. Calling a function may cause the stack to run out of memory resulting in a stack overflowing.
+functions have a return point, local variables, inputs, or outputs per function call which are stored on the current thread's stack. Calling a function may cause the stack to run out of memory resulting in a stack overflowing.
+
+A function may be in a user-defined or in a namespace in which case you may need to reference the namespace or type to call the function. **Member functions** are often defined inside the user-defined type's scope and take a pointer or refernce called 'this' or 'self' to the object they are inside.
 
 (extra) main is rarely the 'start' of the program's execution as other parts of the program require execution to before the main entry point function is called. Some languages and compilers will include ways to modify the program's setup with other specially marked function that the programmer has access to modify/add.
 
@@ -1140,6 +1135,7 @@ Shared Memory: Memory Mapping between processes
 
 # Incomplete
 
+#1
 
 
 #2
