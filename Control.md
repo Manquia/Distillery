@@ -470,6 +470,72 @@ switch(cond % 4)     // Switch conditionaly jumps to lebels below.
 ```
 (extra) Above is an example of a Duff's device. Probably you never write this, but knowing it exists can lead to some amazing optimizations and control.
 
+Tier 2.04: Iterators
+====================
+
+An **iterator** is generally a user-defined type used to traverse a collection of items often held within a container. The iterator type is a lightweight stateful object containing the needed data to traverse the data structure.
+
+Other purposes:
+* Providing Hints: Some search algorithms can be improved with a hint for closely related searches.
+* Safety Check: Many iterators will do safety checks when in a debug compile of the problem. These checks often include out of **bounds checks** (arrays), **iterator invalidation**
+ 
+An iterator may become invalidated for various reasons, depending on the container, but often is a result of adding or removing an item from the container or destruction of the container while iterating. (extra) The iterator invalidation is because by adding or removing an item the container may need to reallocate the memory used which means all current iterators may be referencing invalid memory resulting in undefined behavior.
+
+**Example**: Iterate though array 
+```
+int main(void)
+{
+    std::array<int, 8> myArray = GetArray();
+    
+    // Many languages have syntactic sugar to utilize iterators.
+    for(auto& item : myArray) // get object by reference
+    {
+        item += 10; // Add 10 to item
+    }
+}
+```
+
+
+Tier 2.05: Method Chaining
+==========================
+
+The design pattern of **Method Chaining** (aka. named parameter idiom) allows you to chain multiple methods calls to configure or specialize 1 or more objects. This is done by implementing the methods to return their "this" object reference so it may be used by the next call in the chain.
+
+**Example**: Method Chaining
+```
+struct GUIIcon : GUIElement  // (extra) Inheritance used here, see 3.09 for more details.
+{
+    GUIIcon& SetSize(int x, int y);
+    GUIIcon& SetDepth(int z);
+    GUIIcon& SetIcon(const string& iconName);
+    GUIIcon& SetColor(int red, int green, int blue);
+    GUIIcon& SetParent(GUIElement& parent);
+    ...
+}
+
+GUIcon CreatePlayMovieIcon()
+{
+    GUIIcon icon;
+    
+    // Chain method calls to cusomize icon
+    icon.SetSize(150,100)
+        .SetDepth(1)
+        .SetIcon("PlayMovie")
+        .SetColor(255, 255, 255);
+    return icon;
+}
+
+void CreateMenu()
+{
+    ...
+    GUIIcon icon = CreatePlayMovieIcon();
+    icon.SetParent(menuPanel);
+    ...
+}
+```
+
+(extra): In combination with virtual methods and inheritance this can provide a lot of customizability and code reuse for simple independent configurations and is often used for highly configurable objects such a GUI.
+
 Tier 3.00: defer
 ================
 defer takes an expression or scope and executes it when the scope it is declared in ends. This happens in reverse order the defer statements appear in the scope.
