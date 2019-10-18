@@ -1198,6 +1198,67 @@ Pipes: stdin, stdout, FILE *
 Shared Memory: Memory Mapping between processes
 
 
+Tier 5.03: Mutex Hierarchical (Technique)
+============================================
+A mutex which is used to synchronize an object and all of its sub-objects' memory. This tecnhique is often used with containers and systems which need to be thread-safe. A condiquence of this technique is that all other threads which try to use this container or system are blocked and must wait.
+
+**Example**: Example Network Client ManagerSystem
+
+We see the following example which is a network client manager system which can add clients and initialize their state. To do this we need to first synchronize the Client Manager to add the client. Then we must Initialize the sub-objects. 
+
+By locking the Manager we ensure we can Add or Remove clients.
+By locking the Client we ensure we can initialize, modify, or finalize the client's state
+```
+(#) '#' Refers to the order of evaluation within the function
+
+Lock    - Lock mutex held by the object
+Unlock  - Unlock mutex held by the object
+Add     - Add the client object into the Client Manager System making it reachable by other threads.
+Remove  - Remove the client object from the Client Manager System making it unreachable by other threads.
+Setup   - Initalize the object's state
+Clean   - Cleanup state or other resources associated with object
+
+
+ManagerSetupClient() Calls    |    AddClient()  |  SetupClient()   |
+------------------------------+-----------------+------------------+
+Client Manager Sustem (Mutex) |(1)Lock (4)Unlock|                  |
+Client Object (Mutex)         |(2)Add  (3)Lock  |(1)Setup (3)Unlock|
+Client Resources              |                 |(2)Setup          |
+------------------------------+-----------------+------------------+
+
+
+ManagerDestroyClient() Calls  |  RemoveClient()   | CleanupClient()  |
+------------------------------+-------------------+------------------+
+Client Manager Sustem (Mutex) |(1)Lock   (3)Unlock|                  |
+Client Object (Mutex)         |(2)Remove (4)Lock  |(2)Clean (3)Unlock|
+Client Resources              |                   |(1)Clean          |
+------------------------------+-------------------+------------------+		
+```
+
+With a hierarchical design we can not only ensure sychronization but with careful design can ensure that higher level locks may be released while the child objects are still locked. In the example above this means that even if ```Init()``` takes a long time to complete other threads may use the Client Manager Sustem while work is being done. If they attempt to access the newly created client they will have to wait, but for all other clients they can continue running.
+
+(extra) In the example above you MUST be careful on the order in which you lock/unlock because improper lock/unlock order may lead to a deadlock. 
+(extra) A good thought experiment for the example above to think about what should happen when the Setup step fails.
+
+Tier 5.03: Mapped Mutexes and Mapped Mutex Arrays (Optimization)
+============================================
+Most use cases for mutexes are what I'd call a **mapped mutex**. This means a mutex is maped to a section of memory that it is synchronizing across threads. A mutex may be maped to one or more sections of memory that you wish to synchronize. The relationship between a mutex and its synchronized memory is deterministic and is simply an offset or a pointer usually.
+
+A **mapped mutex array** specifically refers to a memory optimization for a large number of objects that you wish to synchronize across mulitple threads. This optimization has an object keep a semi-random key or index to reference into an array of mutexes. This results in any mutex in the array synchronizing multiple objects simultaniously as it is locked/unlocked reguardless of if the locking thread is accessing all of the objects. The downside to this optimization is when a thread is mistakenly blocked because the keys map to the same mutex in the array. This leads to a probabalistic collision which is related to the number of threads simultaniously running. This means an optimal mapped mutex array size is proportional to the number of simultaneously running threads times the number of mutexes each thread holds and NOT the number of objects that could be synchronized.
+
+Semi-random key or index
+- Every object holds a random index into the mapped mutex array. (costs a little more memory)
+- Every object uses its memory address which is then hashed to get an index. Since memory addresses are unique and have a massive range, using fibbonacci hash isn't uncommon.
+
+(extra) In the case in which some objects are locked more often than others (ie non-uniform distribution of work) and that you've choosen to have every object hold a random index there is an additional optimization you may apply which dynamically changes the index of an object upon unlocking the mutex depending on its use.
+- Add a count of the number of times each mutex is locked and the total number of mutexes locked in the array.
+- Logic Changes:
+-- Pre-Unlock: Determine if our mutex's lock count is above the average. If it's CF above the average, we semi-randomly select another index that is less than the average number of locks and set that as our index.
+-- Pre-Lock: Store the current index value
+-- Post-Lock: Check for a changed index value. If changed unlock and lock the new index else increment mutex lock count and total mapped mutex array count.
+
+CorrectionFraction(CF): Ideal value will depend on your access patterns and thread count. Maybe 1/3?
+
 
 # Incomplete
 
