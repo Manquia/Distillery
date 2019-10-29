@@ -1171,6 +1171,10 @@ Tier 5.00: Math as control (Subtle technique/idea)
 ==================================================
 In some cases immediately comparing a quantity is difficult because it is either multi-dimensional or hard to quantify. In such cases, it may prove helpful to use math to reduce the solution space to the point that no actual control is needed (aka. the task is linear). The following are 2 examples of how math can take a complex comparison example and make it much simpler.
 
+@Calculate operations in lookup tables
+@Lookup results/control in tables
+@Transform data to permute control flow.
+
 @TODO @TODO @TODO @INCOMPLETE
 
 @Data as control (Sequence, This is what an interpreted language is!)
@@ -1198,7 +1202,7 @@ Pipes: stdin, stdout, FILE *
 Shared Memory: Memory Mapping between processes
 
 
-Tier 5.03: Mutex Hierarchical (Technique)
+Tier 5.03: Mutex Hierarchical (Architecture)
 ============================================
 A mutex which is used to synchronize an object and all of its sub-objects' memory. This tecnhique is often used with containers and systems which need to be thread-safe. A condiquence of this technique is that all other threads which try to use this container or system are blocked and must wait.
 
@@ -1240,7 +1244,9 @@ With a hierarchical design we can not only ensure sychronization but with carefu
 (extra) In the example above you MUST be careful on the order in which you lock/unlock because improper lock/unlock order may lead to a deadlock. 
 (extra) A good thought experiment for the example above to think about what should happen when the Setup step fails.
 
-Tier 5.03: Mapped Mutexes and Mapped Mutex Arrays (Optimization)
+
+
+Tier 5.04: Mapped Mutexes and Mapped Mutex Arrays (Optimization)
 ============================================
 Most use cases for mutexes are what I'd call a **mapped mutex**. This means a mutex is maped to a section of memory that it is synchronizing across threads. A mutex may be maped to one or more sections of memory that you wish to synchronize. The relationship between a mutex and its synchronized memory is deterministic and is simply an offset or a pointer usually.
 
@@ -1258,6 +1264,36 @@ Semi-random key or index
 -- Post-Lock: Check for a changed index value. If changed unlock and lock the new index else increment mutex lock count and total mapped mutex array count.
 
 CorrectionFraction(CF): Ideal value will depend on your access patterns and thread count. Maybe 1/3?
+ 
+Tier 5.05: Reader-writer locks (aka rwlock, reader-writer mutex)
+============================================
+A reader-writer lock is a specialized implimentation of a mutex which allows the locking thread to specify if it intends to read or write to the memory protected by the mutex. Most OS/CPUs support multple threads to read from the same address in memory in parralell and at less than or equal to cost the cost of a serial read. In contrast it is expensive for most CPU's to synchronize a write across multiple threads and may result in CPU stalls and/or write failures depending the CPU/OS architecture. This type of mutex is highly valued in the case that a mutex's protected memory is read frequently and written to infrequently.
+
+**Example**: Reader-writer mutex
+
+We can see below an example of 4 threads using a reader-writer lock. The readers may all read in parralell while the writers work in serial.
+```
+LR = Lock as reader
+UR = Unlock as reader
+R = Reading (lock held)
+LW = Lock as writer
+UW = Unlock as writer
+W = Writing (lock held)
+
+Time              0   1   2   3   4   5   6   7   8   9  10  11
+------------------+---+---+---+---+---+---+---+---+---+---+---+     
+rwlock Mode       |   |LR |LR |LR |   |LW |LW |LW |LW |LW |LW |
+Thread 0 lock for |LR |R  |R  |UR |LW |LW |LW |LW |W  |UW |UW |
+Thread 1 lock for |   |LR |R  |UR |   |   |   |   |   |   |   |
+Thread 2 lock for |   |LR |R  |UR |   |   |   |   |   |   |   |
+Thread 3 lock for |   |LW |LW |LW |LW |W  |W  |UW |   |   |   |
+------------------+---+---+---+---+---+---+---+---+---+---+---+
+```
+
+(extra) Programming flow is counter intuative and before implimenting a reader-write mutex the program should be instumented to see the ratio of read to writes. The ratio at which the performance of a reader-writer mutex and a normal mutex intersect is highly dependent on their implimentations.
+
+
+
 
 
 # Incomplete
