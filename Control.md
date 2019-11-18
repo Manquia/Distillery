@@ -1139,17 +1139,7 @@ Almost all modern operating systems use a preemptive multitasking for their appl
 
 (extra) A fibers is a light weight thread in terms of system resources and may implement cooperative multitasking at the user-level.
 
-Tier 4.11: Performance multithread programming
-==============================================
-Above are many useful primitives to enable multi-threaded programming as a paradigm. These are very useful for a variety of system tasks but are not particularly fast in terms of performance.
-
-Common areas to optimize multithreaded programming:
-- Creating performance multithreaded code is all about dividing up the data such that there is no need to synchronize it in the first place. When you must synchronize between threads do so at stages in the data pipeline which has the smallest amount of data to synchronize.
-- Expending extra memory to create a local and a shared copy of values which must be synchronized can improve performance because we can reduce the synchronization between threads.
-- Instrument threading primitives (Mutex, semaphore, Conditional Variable) to log directly to a profiler. This is important since using most thread primitives lead to threads waiting in sleep so the cost may be hidden otherwise.
-- @TODO @Incomplete add more wisdom once I have become wiser to the ways of multithreaded programming. Ask people who have more experience in this area.
-
-Teir 4.12: Job System
+Teir 4.11: Job System
 =====================
 A Job system is a formal way to manage thread execution such that minimal synchronization is needed. These are often in well-defined software whereby much of the functionality can be broken into meaningful blocks.
 
@@ -1167,33 +1157,7 @@ Thread 4:   |~~~~~~~~~~~~~~~~~~~~~~Background file I/O~~~~~~~~~~~~~~~~~~~~~~~~~~
 ```
 (extra) Game Engine job systems may work on multiple frame's worths of tasks simultaneously to maximize the throughput of the hardware. This adds additional latency from the user's input, but better utilizes the CPU and often GPU's performance characteristics.
 
-Tier 5.00: Math as control (Subtle technique/idea)
-==================================================
-In some cases immediately comparing a quantity is difficult because it is either multi-dimensional or hard to quantify. In such cases, it may prove helpful to use math to reduce the solution space to the point that no actual control is needed (aka. the task is linear). The following are 2 examples of how math can take a complex comparison example and make it much simpler.
-
-@Calculate operations in lookup tables
-@Lookup results/control in tables
-@Transform data to permute control flow.
-
-@TODO @TODO @TODO @INCOMPLETE
-
-@Data as control (Sequence, This is what an interpreted language is!)
-
-(extra) Computers love linear code without any control as it is extremely fast. Removing control can be a valuable optimization.
-
-Tier 5.01: Container(s) as control @Review @Incomplete
-==================================
-Certain containers can be used to give us iterative control over a given data set. The order of a container is logically useful because it allows us to view/use an item in some relation to other items within the container.
-
-Common Containers used for their ordering property
-```
-stack: first in last out (FILO) 
-queue: first in first out (FIFO)
-heap: min/max item
-tree: various (behavior trees, rules, logic)
-graph: various (pathfinding, parsing, state machine)
-```
-Tier 5.02: Inter Process communication (IPC)  @TODO @TODO @Incomplete
+Tier 5.00: Inter Process communication (IPC)  @TODO @TODO @Incomplete
 ============================================
 Inter process communication is the process of programs communicating with eachother through vaious means.
 
@@ -1201,8 +1165,7 @@ Signals/Messages: See signal.h C file
 Pipes: stdin, stdout, FILE *
 Shared Memory: Memory Mapping between processes
 
-
-Tier 5.03: Mutex Hierarchical (Architecture)
+Tier 5.01: Mutex Hierarchical (Architecture)
 ============================================
 A mutex which is used to synchronize an object and all of its sub-objects' memory. This tecnhique is often used with containers and systems which need to be thread-safe. A condiquence of this technique is that all other threads which try to use this container or system are blocked and must wait.
 
@@ -1246,7 +1209,7 @@ With a hierarchical design we can not only ensure sychronization but with carefu
 
 
 
-Tier 5.04: Mapped Mutexes and Mapped Mutex Arrays (Optimization)
+Tier 5.02: Mapped Mutexes and Mapped Mutex Arrays (Optimization)
 ============================================
 Most use cases for mutexes are what I'd call a **mapped mutex**. This means a mutex is maped to a section of memory that it is synchronizing across threads. A mutex may be maped to one or more sections of memory that you wish to synchronize. The relationship between a mutex and its synchronized memory is deterministic and is simply an offset or a pointer usually.
 
@@ -1265,7 +1228,7 @@ Semi-random key or index
 
 CorrectionFraction(CF): Ideal value will depend on your access patterns and thread count. Maybe 1/3?
  
-Tier 5.05: Reader-writer locks (aka rwlock, reader-writer mutex)
+Tier 5.03: Reader-writer locks (aka rwlock, reader-writer mutex)
 ============================================
 A reader-writer lock is a specialized implimentation of a mutex which allows the locking thread to specify if it intends to read or write to the memory protected by the mutex. Most OS/CPUs support multple threads to read from the same address in memory in parralell and at less than or equal to cost the cost of a serial read. In contrast it is expensive for most CPU's to synchronize a write across multiple threads and may result in CPU stalls and/or write failures depending the CPU/OS architecture. This type of mutex is highly valued in the case that a mutex's protected memory is read frequently and written to infrequently.
 
@@ -1293,17 +1256,9 @@ Thread 3 lock for |   |LW |LW |LW |LW |W  |W  |UW |   |   |   |
 (extra) Programming flow is counter intuative and before implimenting a reader-write mutex the program should be instumented to see the ratio of read to writes. The ratio at which the performance of a reader-writer mutex and a normal mutex intersect is highly dependent on their implimentations.
 
 
-
-
-
 # Incomplete
-
 #1
-
-
 #2
-@Iterators (This probably goes into types.md)
-
 #3
  
 @Exceptions & Exception Handling
@@ -1320,25 +1275,6 @@ Thread 3 lock for |   |LW |LW |LW |LW |W  |W  |UW |   |   |   |
 @Program wide Signals (kill) See signal.h C header file for API details
 @Generator/stream & Consumer model
 @Errno messaging model
-
-
-
-#???? Develop.md <- Idea is to highlight Development practices that are high-value. Probably make this sometime in the future.
-@Maybe make a file called Develop.txt for Developer tools ideas
-@Assert
-@Static Assert
-@Debugger: Breakpoint, data breakpoint, Conditional breakpoint
-@IDE
-@Build systems
-  @Linker (C++ specific build tools)
-  @Object Files (C/C++ specific, but this is semi common. We should look into this more to see if this is common in C#)
-  @Maybe move The static library/DLL stuff from Memory.txt to this file. Not sure where to put library linking...
-
-@Test Searching
- * Wild Card "*"
- * Searchable Identifiers
-@Development Tips
- * Opinion Opinion Opinion
 
 
 #6
