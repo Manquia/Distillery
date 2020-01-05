@@ -207,7 +207,7 @@ Tier 1.05: Functions
 ========================
 Functions encapsulate code and take inputs and outputs. Functions can be called in any order enabling linear calls, recursion, and cycles.
 
-Most programs have a special entry point function, often called main, which is the logical starting point of the program.
+Most programs have a special entry point function, often called **main**, which is the logical starting point of the program.
 
 **Example**: Call Hierarchy structure examples
 
@@ -219,9 +219,11 @@ Cycle      foo() -> bar() -> foo() -> bar() -> foo() -> bar()
 hybrid     foo() -> bar() -> king() -> foo() -> bar() -> magic()
 ```
 
-functions have a return point, local variables, inputs, or outputs per function call which are stored on the current thread's stack. Calling a function may cause the stack to run out of memory resulting in a stack overflowing.
+Functions have a return point, local variables, inputs, or outputs per function call which are stored on the current thread's stack. A thread's stack memory is finite which can cause the action of calling a function to result in a stack overflow.
 
 A function may be in a user-defined or in a namespace in which case you may need to reference the namespace or type to call the function. **Member functions** are often defined inside the user-defined type's scope and take a pointer or refernce called 'this' or 'self' to the object they are inside.
+
+(extra) Another name for a Function is a Callback or Callback Handler. A function is often refered to in this way when providing a reference to the function which may be executed later instead of immediatly.
 
 (extra) main is rarely the 'start' of the program's execution as other parts of the program require execution to before the main entry point function is called. Some languages and compilers will include ways to modify the program's setup with other specially marked function that the programmer has access to modify/add.
 
@@ -232,7 +234,6 @@ A function may be in a user-defined or in a namespace in which case you may need
 * Free: Function is not connected to any class/object and may be called from anywhere.
 * Member: Function is connected to a class/object and may use an implicit this pointer to access the class/object.
 * Lambda Capture: Creates an implicit class/object in a function when declared which then may be accessed when the function runs. The class/object may be allocated on the stack or heap depending on the limitations of the language and compiler and use-case.
-
 
 Tier 1.06: Control Statements
 =============================
@@ -649,7 +650,7 @@ struct Character
 ```
 (extra) This example shows how to create some meta-data (information about the data) that may help in a variety of tasks such as serialization, data layouts, profiling, and more depending on your needs. In general, macros are a great way to generate simple code but are very bad at generating complex code.
 
-@TODO @INCOMPLETE investigate macros in rust/D and see if I should add a section here to talk about their particular varieties.
+@TODO @INCOMPLETE investigate macros in Rust/D and see if I should add a section here to talk about their particular varieties.
 
 Tier 3.04: String Compilation
 =============================
@@ -1157,13 +1158,47 @@ Thread 4:   |~~~~~~~~~~~~~~~~~~~~~~Background file I/O~~~~~~~~~~~~~~~~~~~~~~~~~~
 ```
 (extra) Game Engine job systems may work on multiple frame's worths of tasks simultaneously to maximize the throughput of the hardware. This adds additional latency from the user's input, but better utilizes the CPU and often GPU's performance characteristics.
 
-Tier 5.00: Inter Process communication (IPC)  @TODO @TODO @Incomplete
+Tier 5.00: Inter Process Communication (IPC)
 ============================================
-Inter process communication is the process of programs communicating with eachother through vaious means.
+Inter Process Communication (IPC) are utility libraries and systems supplied by the operating system (OS) which are used to communicate with other programs on the system.
 
-Signals/Messages: See signal.h C file
-Pipes: stdin, stdout, FILE *
-Shared Memory: Memory Mapping between processes
+Common IPC types include
+
+**Signals**: Often reserved for communication from the OS to a program to communicate an important event. This is done by calling a callback function within the program to handle the message.
+
+
+**Example**: Signals in C
+
+Callback Handler
+```
+void signal_handler(int signal)
+{
+  // Handle signal code here
+}
+```
+Common communicated Signal Codes
+```
+- SIGTERM - Termination request, sent to the program
+- SIGSEGV - Invalid memory access (segmentation fault)
+- SIGINT  - External interrupt, usually initiated by the user
+- SIGILL  - Invalid program image, such as invalid instruction
+- SIGABRT - Abnormal termination condition, as is e.g. initiated by abort()
+- SIGFPE  - Erroneous arithmetic operation such as divide by zero
+```
+(extra) Most programs upon startup have a default handler which may be overriden with a custom user-defined callback.
+
+- **Message Queues**: A queue of descrete messages or memory buffers sent between programs. Messages often have meta-data and read priority which may re-order the queue from the default First-In-First-Out (FIFO) ordering.
+
+- **Shared Memory**: This method allows two or more programs to access the same memory. Shared Memory is often the fastest IPC and is accomplished by directly maping memory into mulitple programs. Using shared memory brings all of the challenges of mulit-threaded programming (ie. Synchronization, Race Conditions, etc...).
+
+- **Pipes**: Pipes are byte streams which may be read/written to by other programs to communicate. Common pipes include stdin, stdout, and stderr which may also be accessed from most command lines.
+
+- **File System**: Write/Read to files to communicate between programs. This can be useful in some special cases of high latency and/or when memory is highly constrainted. 
+
+(extra) Pipes and files must be "flushed" to ensure the byte stream gets pushed out of the local cache.
+
+- **IPC Events**: A synchronization method to alert other programs an event has occured. This may be implimented as a callback and/or mutex-like blocking call.
+
 
 Tier 5.01: Mutex Hierarchical (Architecture)
 ============================================
