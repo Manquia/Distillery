@@ -266,6 +266,6 @@ Copy on write is often initiated by a "fork" operation which clones a program.
 # Incomplete
 
 #4/5
-@Runtime code modification - Ask Michael for example languages where this is used.
+@Runtime code modification. I might not include this since CPUs aren't performant on this type of operation.
 @Runtime Inheritance (class/Object bundle, Java Script)
-@General Solution for Language binding - Ask Michael 
+@General Solution for Language binding 

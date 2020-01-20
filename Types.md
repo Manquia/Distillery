@@ -193,28 +193,43 @@ Generics contain a set of functionality specialized to a specific type. The gene
 
 Teir 3.01: Intrinsic Type Conversion Behavior
 =============================================
-@TODO @Incomplete
+
+Intrinsic type conversion behavior may change between languages and/or compilers. So it is good to be aware of how one intrinsic will be converted to another. In general, most languages handle the conversaions as follows.
 
 General type conversion behavior:
 ```
 Legend:
  * s: signed Integer
  * u: unsigned Integer
- * down: bit-length decreases
- * up: bit-length increases
+ * f: floating point number
+ * zero: bit-length remains the same between the type conversion
+ * positive: bit-length increases
+ * negative: bit-length decreases
 
-Source Type -(size difference)-> Resulting type : Behavior
+Source Type -(intrinsic type size delta)-> Resulting type : Behavior
 
-u -(equal)-> s: if u <= s's max positive then safe. Otherwise s = s's max negative
-u -(up)----> s: safe
-u -(down)--> s: 
+u -(zero)-----> u: Nominal conversion (no op)
+u -(positive)-> u: Nominal conversion
+u -(negative)-> u: Conversion loses uppermost bits.
 
+u -(zero)-----> s: Nominal conversion if u <= s's max positive. Otherwise number becomes negative.
+u -(positive)-> s: Nominal conversion
+u -(negative)-> s: Conversion loses uppermost bits. The resulting number may be positive or negative.
 
-s -(equal)-> u: if s >= 0 then safe. Otherwise u = 2^s'sbitLength + (s's first u'sbitsLength)
-s -(up)----> u: if s >= 0 then safe. Otherwise u = 2^s'sbitLength + s
-s -(down)--> u: if s >= 0 AND s < u's max value then safe. Otherwise u =  2^s'sbitLength + (s's first u'sbitsLength)
+s -(zero)-----> s: Nominal conversion (no op)
+s -(positive)-> s: Nominal conversion
+s -(negative)-> s: Conversion loses uppermost bits. The resulting number may be positive or negative.
+
+s -(zero)-----> u: Nominal conversion if s >= 0. Otherwise @See @TODO Two's compliment
+s -(positive)-> u: Nominal conversion if s >= 0. Otherwise @See @TODO Two's compliment
+s -(negative)-> u: Conversion loses uppermost bits.
+
+s,u -(ANY)----> f: Approximate conversion. Conversion to any langth floating point number always results in a fractional representation. The fractional representation may not align to a whole interger value.
+f ---(ANY)----> s: Floor/Ceiling conversion. If f > 0.0, then s = floor(f); if f < 0.0, then s = ceil(f); 
+f ---(ANY)----> u: Convert as signed, then convert signed to unsigned.
+
 ```
-All floating point number conversions to and from signed or unsigned integers may lose precision if there is no exact fractional representation that can represent the integer value.
+
 
 Tier 3.02: Getters/Setters
 ==========================

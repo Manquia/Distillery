@@ -519,7 +519,7 @@ pinned_vector - https://www.youtube.com/watch?v=Ke1mJiGO-pU
 
 # Incomplete 
 
-@Array + HashTable hybrid for constant time Everything! @Ask Paul, I really want to have this in here
+@Array + HashTable hybrid for constant time fun stuff
 @ DONE Pinned_vector (useful for games/ECS, "Infinite" vector on 64-bit OS using Virtual memory) <- https://www.youtube.com/watch?v=Ke1mJiGO-pU
 @Colony (plf::colony) Look at this <- https://www.youtube.com/watch?v=wBER1R8YyGY
 

@@ -1291,7 +1291,7 @@ Thread 3 lock for |   |LW |LW |LW |LW |W  |W  |UW |   |   |   |
 (extra) Programming flow is counter intuative and before implimenting a reader-write mutex the program should be instumented to see the ratio of read to writes. The ratio at which the performance of a reader-writer mutex and a normal mutex intersect is highly dependent on their implimentations.
 
 
-# Incomplete
+# Incomplete TODO
 #1
 #2
 #3
@@ -1314,4 +1314,4 @@ Thread 3 lock for |   |LW |LW |LW |LW |W  |W  |UW |   |   |   |
 
 #6
 @Lazy Linkage <--- I think this should go somewhere else, not sure where though...
-@Hazard Pointer <- very specific technique. Maybe move it into technique.txt if we ever make that
+@Hazard Pointer <- very specific MT technique. Maybe move it into technique.txt if we ever make that
