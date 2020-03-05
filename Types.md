@@ -1,41 +1,36 @@
 Pre-Requisite: Memory.md Tier 1
-Summary: A basic overview of intrinsic types, and common user types seen in programming languages
-
-Now we will go more in-depth to what the CPU will do foreach different type. The example below will investigate 8 bit integer types. For integer types of larger than 8 bits they work the same with more bits in the middle to represent more numbers.
-
-unsigned integer (8 bit) holding the value of 15: 00001111
-
+Summary: A basic overview of intrinsic types, and common user types seen in programming languages. This section does not include any containers (see @Containers.md for details on containers).
 
 Tier 1.00: Integers (Signed and Unsigned)
 =========================================
 Examples are for 8-bit integers, but apply to 16,32,64,128 bit signed/unsigned integer types just add more value bits.
 
-Unsigned integers are a base 2 number.
+Computers represent integers in base 2.
 
-Unsigned Operation
+Common intrinsic integer operations:
 
-+ Addition       - Adds 2 unsigned numbers. If one of the 2 numbers is signed, the unsigned number will usually be converted to signed before doing signed addition.
-- Subtraction    - Subracts 1 unsigned number from another unsigned number. Often, programming languages will force a signed result, but both signed and unsigned results are possible.
-* Multiplication - Multiply 2 unsigned numbers together. Results is also unsigned
-/ Division       - Divides 1 usngiend number by another. Result is also unsigned and takes logical floor of the result.
+* '+' Addition       - Adds 2 signed or unsigned integers together. If integers' signed-ness does not match, usually the unsigned integer will be converted to signed before doing a signed addition.
+* '-' Subtraction    - Subracts 1 signed or unsigned integer from another. Subtraction in most programming languages of unsigned or signed numbers will result in a signed integer.
+* '*' Multiplication - Multiply 2 signed or unsigned numbers together.
+* '/' Division       - Divides 1 signed or unsigned integer by another. Result m is also unsigned and takes logical floor of the result.
 
-unsigned Integer Memory Layout:
 
-S <- signed bit (most significant) determines if integer is positive or negative.
-V <- value bit in base 2
+Integer Memory Layout:
 ```
+S <- signed bit (most significant) determines if integer is positive or negative.
+V <- value bit in base 2.
+
 unsigned 8-bit integer: VVVVVVVV
 signed 8-bit integer:   SVVVVVVV
 
 8 bit unsigned integer examples: 00110110 = 54,   11111100 = 252
 8-bit signed integer examples:   00110110 = 54,   11111100 = -4
 ```
-Signed Integer's are 2's Compliment: If you want to invert the sign of the number then you flip all bits and add 1. This will give you the same number bit signed changed to match 2's compliment integers.
+Signed integer's are Two's Compliment: If you want to invert the sign of an integer then you flip all bits and add 1.
 ```
 2's compliment example: 54 = 00110110 -(flip bits)-> 11001001 -(add 1)-> 11001010 = -54
 2's Compliment example: -4 = 11111100 -(flip bits)-> 00000011 -(add 1)-> 00000100 = 4
 ```
-Notice that negative integers numbers are still basically in base 2, with the the 0 and 1 are flipped and then we just add 1.
 
 Teir 1.01: Floating Point/Real Numbers
 ======================================
@@ -66,19 +61,13 @@ Note: The '1/fraction' part is complicated. The above is a simplified lie.
 
 Tier 1.02: Pointers
 ===================
-Pointers are the simple types in that they are an address and a type. The type they are pointing to determines the stride when doing arithmatic operations and what the memory is intrepreted when the pointer is dereferenced. See Pointers.txt for more details.
+Pointers store an address value which can be used to access memory. The pointer's type how the memory is interpreted and  its stride when doing arithmatic operations. See @Pointers.txt for more details.
 
-Tier 1.03: void
-===============
-void (aka nothing) is a type used to indicate that there is not return or input type. Some languages have the input/return types become optional in the syntax so instead of "void" you write nothing. It is not possible to create a void value, it is nothing.
-
-pointer to void however is valid and used frequently. This means that we have an address without any connected type. A void pointer cannot be dereferenced and must be cast to a type for the address to be accessed.
-
-Teir 1.04: enums and flags
+Teir 1.03: enums and flags
 ==========================
 An enum is a bit pattern of a specified length which represents some abstract information about your program.
 
-**Example:** enum to hold state
+**Example:** Enum to hold state
 ```
 enum EngineState : u8   // use unsigned operations and bit pattern length of 8 bits
 {
@@ -88,9 +77,9 @@ enum EngineState : u8   // use unsigned operations and bit pattern length of 8 b
   Broken = 3,  // Pattern: 00000011
 }
 ```
-A flag is a specialized enum in which each bit may have an implied addative property with all other bits in the bit pattern's length.
+A flag is a enum in which each bit may have an implied addative property with all other bits in the bit pattern's length.
 
-**Example**: flags for complex state
+**Example**: Flags used to store state
 ```
 enum GoblinState : u8  // use unsigned operations and bit pattern length of 8 bits
 {
@@ -115,7 +104,7 @@ GoblinState Value:
   113 = 64 | 32 | 16 | 1 = (Fighter) | (Elite) | (Leader) | (Alive)  |
 ------+------------------+-------------------------------------------+
 ```
-(extra) There is an implied addative nature to flags within the same enum which is done to improve readability. In memory tight environments such as networking you may decide to break this guideline and fit more flags within a smaller memory space to maximuse effeciency.
+(extra) A single enum may include both flags and bit patterns but may require additional work to access/set the flags or patterns independently depending on their size and alignment.
 
 Tier 2.00: Type Conversion: Implicit and Explicit
 =================================================
