@@ -1,5 +1,3 @@
-
-
 #incomplete: This page is still under development and will reach a finer level of completion in the future.
 This page is focused on learned about useful development practices that you will commonly see programs use.
 
