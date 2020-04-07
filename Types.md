@@ -106,9 +106,9 @@ GoblinState Value:
 ```
 (extra) A single enum may include both flags and bit patterns but may require additional work to access/set the flags or patterns independently depending on their size and alignment.
 
-Teir 1.04: Custom/User-defined Types (struct/class)
+Teir 1.04: Custom/User-defined Types (struct/class/object)
 ======================================================
-A user-defined type is a collection of types packed in a layout with a given size. Most languages use the keyword **struct** and/or **class** to indicate the begining of a user defined type's definition. 
+A user-defined type is a collection of types packed in a layout with a given size. Most languages use the keyword **struct** and/or **class** and/or **object** to indicate the begining of a user defined type's definition. 
 
 **Example**: Person struct example
 ```
