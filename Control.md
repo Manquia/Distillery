@@ -26,17 +26,21 @@ Programs can make a choice based on expressions which evaluate to a boolean of t
 **Example**: List of common conditional operators
 ```
 Operator  Name             Result
-                          
+
+Comparables                          
 e0 == e1  Equals(E)        True when e0 and e1 are equal, else false.
 e0 != e1  Not Equals       True when e0 and e1 are not equal, else false.
 e0 >  e1  Greater Than(GT) True when e0 is greater than e1, else false.
 e0 <  e1  Less Than (LT)   True when e0 is less than e0, else false.
 e0 >= e1  GT or E          True when e0 is GT or E to e1, else false.
 eo <= e1  LT or E          True when e0 is LT or E to e1, else false.
+
+
 !e0       Not              True when e0 is false. False when e0 is true.
-e0 <=> e1 Three way        0 when e0 and e1 are E. LT 0 when e0 LT e1. GT 0 when e0 GT e1.
 e0 && e1  Logical AND      True when e0 and e1 are true, else false. See Short Circuit below.
 e0 || e1  Logical OR       True when e0 or e1 are true, else false. See Short Circuit below.
+
+
 e0 &  e1  Bit-wise AND     True when e0 and e1 are true, else false. See Bit-wise Conditionals.
 e0 |  e1  Bit-wise OR      True when e0 or e1 are true, else false. See Bit-wise Conditionals.
 ```
@@ -66,26 +70,26 @@ Common scope semantics:
 * '}' is the end or closing of the last open scope.
 ```
 { 
-  // Scope 1a
+  // Scope 1
   {
-    // Scope 2a
+    // Scope 1.a
   }
-  // Scope 1a
+  // Scope 1
   {
-    // Scope 2b
-    { /* Scope 3a */ } // Note: Start and end may be on the same line.
+    // Scope 1.b
+    { /* Scope 1.b.i */ } // Note: Start and end may be on the same line.
   }
-  // Scope 1a
+  // Scope 1
 }
 ```
 * Tab/space-based: Tabs denote scope begin/end
 ```
-Scope 1a
-    Scope 2a
-Scope 1a
-Scope 1a
-    Scope 2b
-        Scope 3a
+Scope 1
+    Scope 1.a
+Scope 1
+    Scope 1.b
+        Scope 1.b.i
+Scope 1
 ```
 
 Tier 1.04: Variables
@@ -213,10 +217,12 @@ Most programs have a special entry point function, often called **main**, which 
 
 'foo', 'bar', 'magic', and 'king' are all functions
 ```
-Linear     foo() -> bar() -> magic() -> king()
-Recursion  foo() -> foo() -> foo() -> foo() -> foo()
-Cycle      foo() -> bar() -> foo() -> bar() -> foo() -> bar()
-hybrid     foo() -> bar() -> king() -> foo() -> bar() -> magic()
+Order     | Function call order
+----------+---------------------------------------------------
+Linear    | foo() -> bar() -> magic() -> king()
+Recursion | foo() -> foo() -> foo() -> foo() -> foo()
+Cycle     | foo() -> bar() -> foo() -> bar() -> foo() -> bar()
+hybrid    | foo() -> bar() -> king() -> foo() -> bar() -> magic()
 ```
 
 Functions have a return point, local variables, inputs, or outputs per function call which are stored on the current thread's stack. A thread's stack memory is finite which can cause the action of calling a function to result in a stack overflow.
@@ -301,7 +307,7 @@ while(cond)   // while cond is true,
 Used all index or items in a logical order or container whereby each index or item is used in the scope of the loop.
 ```
 foreach 1..5   // for each index starting at 1 rising to 5 (1,2,3,4,5)
-{ ... }        // evaluate scope with index untill all selected index have run.
+{ ... }        // evaluate scope with index until all selected index have run.
 ```
 **Example**: foreach (item in container)
 ```
@@ -1102,7 +1108,7 @@ void exampleWait(ConditionalVariable& cv)
 
 void exampleNotify(ConditionalVariable& cv)
 {
-  while(g_waiters < 5) { } // do nothing (spin) untill we have 5 or more threads waiting on the CV
+  while(g_waiters < 5) { } // do nothing (spin) until we have 5 or more threads waiting on the CV
   
   cvMutex.Lock()         // Lock the shared mutex
   for(1..5)              // Iterate 5 times.

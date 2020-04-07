@@ -102,7 +102,7 @@ Each occurace of the pointer to an objects adds 1 to a shared counter. Upon dest
 
 3) Weak pointers or Handles or References (lifetime management)
 
-Points to a given object untill it has been cleaned up at which point, it is set to 0 or the null pointer value. (extra) This is usually done by using a pointer to a pointer to the object such that upon destruction/destroyed/finalized of the object the second pointer is set to 0. Then any number of other pointers can see the second pointer has been set to 0.
+Points to a given object until it has been cleaned up at which point, it is set to 0 or the null pointer value. (extra) This is usually done by using a pointer to a pointer to the object such that upon destruction/destroyed/finalized of the object the second pointer is set to 0. Then any number of other pointers can see the second pointer has been set to 0.
 
 Teir 3.00: Relative Pointers
 ============================

@@ -188,7 +188,7 @@ Virtual memory is the process of mapping the program's memory address space into
 - Reserve: Reserve a block of virtual address space to map at a later time.
 - Commit: Take a reserved block of virtual address space and map it directly to memory.
 
-(extra) Virtual memory works well untill you reach the the active physical RAM limit of the system. This may causes the system to "thrash memory" spending a lot of time moving memory between physical storage while the CPU waits for its memory.
+(extra) Virtual memory works well until you reach the the active physical RAM limit of the system. This may causes the system to "thrash memory" spending a lot of time moving memory between physical storage while the CPU waits for its memory.
 
 Memory mapped files is when you map a file into RAM to quickly modify/update its contents logically in the filesystem. This maps some of the application's address space onto the filesystem's address space so that any pointers into the applications address space modify the filesystem's file directly. In general this does not do file I/O on read/write, but save parts or the whole buffer when needed.
 

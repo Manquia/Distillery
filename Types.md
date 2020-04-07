@@ -106,6 +106,26 @@ GoblinState Value:
 ```
 (extra) A single enum may include both flags and bit patterns but may require additional work to access/set the flags or patterns independently depending on their size and alignment.
 
+Teir 1.04: Custom/User-defined Types (struct/class)
+======================================================
+A user-defined type is a collection of types packed in a layout with a given size. Most languages use the keyword **struct** and/or **class** to indicate the begining of a user defined type's definition. 
+
+**Example**: Person struct example
+```
+struct Person
+{
+	int age;
+	int height;
+	int weight;
+	int money;
+	string name;
+};
+```
+
+(extra) User defined types often have their own namespace which may contain additional items such as global variables, constants, functions. See Namespaces for more details.
+
+(extra) Some languages allow for user-defined types to inherit or include another types namespace and/or functions. See @Control.md 3.09: Inheritance.
+
 Tier 2.00: Type Conversion: Implicit and Explicit
 =================================================
 Most programming languages will allow type conversion between intrinsic types (ie. Integer -> float: 1 -> 1.0). These conversions may result in loss of precision, loss of signness (+/-), or even undefined behavior depending on the language/compiler/hardware used. This behavior is useful, but may be dangerious if unanticipated.
@@ -169,12 +189,12 @@ void DoThing(MySpecialContainerType<int> collection)
 }
 ```
 
-Tier 2.05: Namespaces and Types
-===============================
+Tier 2.05: Namespaces and Type Namespaces
+=========================================
 
 The concept of a **namespace** gives the programmer a way to catagorize code into artibrary referencable sections.
 
-User-defined types in many programing languages have variables and functions in their definition which may be static (global) and member (access/using 'this' pointer). These variables and functions may then be accessed by using the type's name simular to how you might use a namespace.
+User-defined types in many programing languages have variables and functions in their definition which may be free (global/static) or member (access/using 'this' pointer). These variables and functions may then be accessed by using the type's name simular to how you might use a namespace.
 
 Tier 3.00: Generics (aka templates, plymorphism)
 ================================================
