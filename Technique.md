@@ -1,8 +1,4 @@
-
-
-
 #Incomplete
-
 
 Tier 5.00: Math as control (Subtle technique/idea)
 ==================================================
@@ -24,11 +20,11 @@ Certain containers can be used to give us iterative control over a given data se
 
 Common Containers used for their ordering property
 ```
-stack: first in last out (FILO) 
-queue: first in first out (FIFO)
-heap: min/max item
-tree: various (behavior trees, rules, logic)
-graph: various (pathfinding, parsing, state machine)
+stack: first in last out (FILO, push-pop state, graph traversal depth-first) 
+queue: first in first out (FIFO, graph traversal breadth-first)
+heap: min/max in a collection of items (graph traversal priority)
+tree: various (behavior trees, rules, logic, composition)
+graphs: various (pathfinding, parsing, state machine)
 ```
 
 
@@ -49,5 +45,5 @@ Common areas to optimize multithreaded programming:
 
 * Moore's Law - CPU "power" progression
 * Amdahl's law - Multi-core speedup limits
-* Little's Law - How everything uses queues and what it means.
+* Little's Law - How everything uses queues and what it means. This is a really long article/section which is more a ramifications of how the internet/hardware does high throughput communication.
 
