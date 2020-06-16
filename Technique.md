@@ -1,13 +1,45 @@
 #Incomplete
 
-Tier 5.00: Math as control (Subtle technique/idea)
+Tier 5.00: Math/Data as control (Subtle technique/idea)
 ==================================================
-When writing a program is often easy to overuse control statements. If you find yourself writing many 'if' statements you should ask if rather the answer can be instead derived from a data transformation or mapping. The idea is to use a transformation instead of explicit control.
+When writing a program is often easy to overuse control statements. If you find yourself writing many 'if' statements you should ask if rather the answer can be instead derived from a data transformation or mapping. The idea is to use a transformation instead of explicit control to simplify the code and/or improve performance.
 
-**Example**: Mapping Lookup
+**Example**: Mapping Lookup example
 
-In this example we will be converting a MachineId to get its PowerLevel.
+Consider a function that return a character's max health depending on their race.
 
+Control Heavy method:
+```
+s32 GetBaseRaceHealth(Race r)
+{
+    if (r == Race::Elf) return 13;
+    if (r == Race::Human) return 14;
+    if (r == Race::Orc) return 17;
+    if (r == Race::Troll) return 12;
+    return 0;
+}
+```
+
+Mapping/Lookup method:
+For each Race there is an enum value that we can map to an array. (extra: Using a HashTable may help for more complex keys that do not easily map to an array).
+```
+// An array of RaceCount integers
+s32 BaseRaceHealth[Race:RaceCount] = 
+{
+    [Race::Elf]   = 13,
+    [Race::Human] = 14,
+    [Race::Orc]   = 17,
+    [Race::Troll] = 12,
+};
+s32 GetBaseRaceHealth(Race r)
+{
+    if (r < 0 || r >= Race::RaceCount) return 0;
+    return BaseRaceHealth[r];
+} 
+
+```
+
+Note: By using a mapping/lookup method where we perfer using data over control we handle can write simpler code that also may be serialized.
 
 
 **Example**: AngleToDirection (Using a linear transformation versus control)
