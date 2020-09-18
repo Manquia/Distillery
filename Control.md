@@ -656,8 +656,6 @@ struct Character
 ```
 (extra) This example shows how to create some meta-data (information about the data) that may help in a variety of tasks such as serialization, data layouts, profiling, and more depending on your needs. In general, macros are a great way to generate simple code but are very bad at generating complex code.
 
-@TODO @INCOMPLETE investigate macros in Rust/D and see if I should add a section here to talk about their particular varieties.
-
 Tier 3.04: String Compilation
 =============================
 You may generate a string programmatically at compile-time that is then compiled into the program's runtime. This is extremely flexible and a relative niche language feature and sometimes is a special compiler feature.
@@ -1017,7 +1015,7 @@ We have a global integer which is incremented by 2 threads at the same time. If 
 
 Tier 4.05: Mutex (aka. critical section)
 ========================================
-A mutex is a thread synchronization mechanism.
+A mutex is a thread synchronization mechanism. It is often used to coordinate access patterns such that multiple threads may safely read/write to memory in a serial (ordered) way.
 
 Mutex functionality:
 - Lock: Locks the mutex so that any other thread who attempts to lock it will wait until this thread has unlocked.
@@ -1031,72 +1029,116 @@ Lock Level: A mutex may allow a maximum recursion lock level which will error if
 
 **Example**:
 ```
-void example0()   // called by many threads
+Mutex g_dataMutex; // Global Mutex lock
+int g_data;
+
+void exampleIncrement()   // called by many threads running on any core
 {
-  dataMutex.Lock();
-  ...                // code will not be execuded by any other thread (aka. critical section)
-  dataMutex.Unlock();
+  g_dataMutex.Lock();
+  g_data += 1; // Protected by the mutex (aka. Critical Section)
+  g_dataMutex.Unlock();
 }
 
-void example1()   // called by many threads
+void exampleDecrement()   // called by many threads running on any core
 {
-  dataMutex.Lock();
-  ...                // code will not be execuded by any other thread (aka. critical section)
-  dataMutex.Unlock();
+  g_dataMutex.Lock();
+  g_data -= 1; // Protected by the mutex (aka. Critical Section)
+  g_dataMutex.Unlock();
 }
 ```
-The code in example0 and example1 have their access patterns are synchronized because only 1 may be changing the data between the Lock/Unlock pair. Mutex's guarantee all accessed memory from a thread will be completely written to memory by the time another thread has acquired the lock.
+The code in exampleIncrement() and exampleDecrement() have their access patterns synchronized because only one thread may change the data between the 2 functions simultaniously. The Lock/Unlock pair guarantees all accessed memory from a thread will be completely flushed so that other threads will get the most recently accessed data. If another thread attempt to lock a mutex which is already locked, they will be put to sleep and wait on the mutex.
 
 Tier 4.06: Spinlock (aka: Mutex)
 ================================
 A spinlock is a mutex which does not yield to the OS's execution in a sleep/wait routine when the lock cannot be acquired but instead attempts repeatedly to acquire the mutex in the loop. The loop may run millions of times and often have a timeout feature. A spinlock implementation may be the same as a mutex but include the added functionality to TryLock in a loop. 
 
-Tier 4.07: Semephore
+Tier 4.07: Semaphore
 ====================
-A semaphore is a thread synchronization mechanism. It is often used in combination with a mutex. The semaphore's counter
+A semaphore is a thread synchronization mechanism.
 
 Semaphore functionality:
-- Acquire: When a counter is non-zero, decrement the semaphore's counter, otherwise wait.
-- Release: Increment the semaphore counter.
+- Acquire/Wait: When a counter is non-zero, decrement the semaphore's counter, otherwise wait (sleep).
+- Release/Post: Increment the semaphore counter.
+- GetCounter/GetValue: Get's the current value of the semaphore.
 
 Semaphore properties:
 Ownerless: A semaphore is ownerless and can be acquired/released by any thread.
-Counter: A semaphore has a given start counter which can be set to any number.
+Counter: A semaphore has a given start/initial counter which can be set to any integer.
+
+**Example**: Resources limited
+```
+Semaphore g_workSemaphore(4); // Initial counter of 4.
+
+void ResourceLimitExample()  // may be called by many threads, but supports a maximum of workerSemaphore's counter.
+{
+  g_workSemaphore.Acquire();  // Ensure our thread is not above max supported of 4.
+  
+  // Maximum of 4 threads may be running this code in parralell
+  DoWork(); // Only supports 4 max concurrent threads.
+  
+  g_workSemaphore.Release();
+}
+```
+
+**Example**: Worker Job System
+```
+Semaphore g_workSemaphore(0); // Initial counter of 0.
+Mutex g_workQueueMutex;
+
+void WorkerWaitForJob() // Worker threads wait in this function when not activly doing a job.
+{
+  // Wait for semaphore to be incremented.
+  g_workSemaphore.Acquire();  
+  
+  // There is 1 or more Job(s) to claim
+  ClaimJob();
+  
+  return; // return and start the claimed job.
+}
+
+void PostJob()
+{
+  AddJob();
+  
+  g_workSemaphore.Release(); // Increment semaphore to wake a worker thread.
+}
+
+void AddJob()
+{
+    g_workQueueMutex.Lock();  // Sychronize with any other Workers or Posting threads.
+    ...                       // Add a job.
+    g_workQueueMutex.Unlock();
+}
+
+void ClaimJob()
+{
+    g_workQueueMutex.Lock();  // Sychronize with any other Workers or Posting threads.
+    ...                       // Claim some work to do.
+    g_workQueueMutex.Unlock();
+}
+```
 
 (extra) A semaphore is called "binary semaphore" when its counter is 1. This makes it very similar to a mutex, except that any thread may release the semaphore which would be an illegal operation on a mutex.
 
-**Example**:
-```
-void exampleStartDoingWork()    // may be called by many threads, but supports a maximum of workerSemephore's counter.
-{
-  workerSemephore.Aquire();  // Ensure our thread is not above max supported.
-  
-  {                       // Get some work to do
-    workMutex.Lock();     // ClaimWork requires we hold this lock. (often inside ClaimWork)
-    ClaimWork();          // Claim some work to do.
-    workMutex.Unlock();   // Unlock lets other threads ClaimWork
-  }
-  
-  CompleteClaimedWork();      // Do given work, keep workspace
-  workerSemephore.Release();
-}
-```
 Tier 4.08: Conditional Variable
 ===============================
-A conditional variable (CV) is a thread synchronization mechanism which wraps around a mutex to provide signaling to other threads.
+A conditional variable (CV) is a thread synchronization mechanism which connects to a mutex.
 
-Conditional Variable functionality:
+Conditional Variable Functionality:
 - WaitOnCV: Wait for another thread to signal the conditional variable, often has an optional timeout.
 - NotifyCV: If a thread is waiting on the CV, signal it to start in a first in first out order.
 - NotifyCVAll: Any threads waiting on the CV are signaled to start.
 
 Conditional Variable Properties:
-- WaitOnCV requires that we first hold the CV's associated mutex. Upon waiting we also atomically unlock the mutex. Upon waking we try an lock the associated mutex.
-- NotifyCV AND NotifyCVAll require that we first hold the CV's associated mutex.
+- WaitOnCV requires that we first hold the CV's connected mutex before calling WaitOnCV.
+- Upon waiting in WaitOnCV the thread unlocks the mutex.
+- Upon returning from WaitOnCV the thread locks the mutex.
+- NotifyCV AND NotifyCVAll require that we first hold the CV's associated mutex/.
 
 **Example**: In the example below, all CVs share 1 mutex
 ```
 int g_waiters = 0;                         // writing to g_waiters is protected by the cvMutex
+
 void exampleWait(ConditionalVariable& cv)
 {
   cvMutex.Lock();
@@ -1108,14 +1150,15 @@ void exampleWait(ConditionalVariable& cv)
 
 void exampleNotify(ConditionalVariable& cv)
 {
-  while(g_waiters < 5) { } // do nothing (spin) until we have 5 or more threads waiting on the CV
+  while(g_waiters < 5) { Sleep(1); } // do nothing (spin) until we have 5 or more threads waiting on the CV
   
-  cvMutex.Lock()         // Lock the shared mutex
+  cvMutex.Lock()         // Lock the connected mutex
   for(1..5)              // Iterate 5 times.
     cv.NotifyCV();       // notify thread to wake up.
   cvMutex.Unlock();      // threads have been signaled, let them lock the mutex to finish waking up.
 }
 ```
+
 Tier 4.09: Atomics
 ==================
 Atomics are a handful of fast-ish operations which are synchronized across threads. This parallel programming paradigm is called wait-free, but ironically can be slower than the other mechanisms above. It can be slower because in general, it works by allowing 1 thread to make progress while the others deal with the fallout.
@@ -1297,16 +1340,16 @@ Thread 3 lock for |   |LW |LW |LW |LW |W  |W  |UW |   |   |   |
 (extra) Programming flow is counter intuative and before implimenting a reader-write mutex the program should be instumented to see the ratio of read to writes. The ratio at which the performance of a reader-writer mutex and a normal mutex intersect is highly dependent on their implimentations.
 
 
-# Incomplete TODO
+# Incomplete TODO?
 #1
 #2
 #3
+3.03 @TODO @INCOMPLETE investigate macros in Rust/D and see if I should add a section here to talk about their particular varieties.
  
 @Exceptions & Exception Handling
 @Regex Search Format
 
 #4
-
 @Promise/Future & Async compute model
 @Futex (https://en.wikipedia.org/wiki/Futex) (Performant on low contention locks)
 @Thin lock                                   (Performant on high contention locks)
