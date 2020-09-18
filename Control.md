@@ -1017,15 +1017,15 @@ Tier 4.05: Mutex (aka. critical section)
 ========================================
 A mutex is a thread synchronization mechanism. It is often used to coordinate access patterns such that multiple threads may safely read/write to memory in a serial (ordered) way.
 
-Mutex functionality:
+Mutex Functionality:
 - Lock: Locks the mutex so that any other thread who attempts to lock it will wait until this thread has unlocked.
 - Unlock: Unlocks the mutex awaking any other threads waiting on it.
 - Try Lock: Try and lock the mutex, but do not wait if the lock cannot be acquired.
 
-Mutex properties:
-Ownership: While a mutex is locked it may only be unlocked by the thread which owns it.
-Recursive: A mutex may be recursive which allows a single thread to lock the same mutex multiple times.
-Lock Level: A mutex may allow a maximum recursion lock level which will error if the repeat lock count exceeds a certain count.
+Mutex Properties:
+- Ownership: While a mutex is locked it may only be unlocked by the thread which owns it.
+- Recursive: A mutex may be recursive which allows a single thread to lock the same mutex multiple times.
+- Lock Level: A mutex may allow a maximum recursion lock level which will error if the repeat lock count exceeds a certain count.
 
 **Example**:
 ```
@@ -1056,14 +1056,14 @@ Tier 4.07: Semaphore
 ====================
 A semaphore is a thread synchronization mechanism.
 
-Semaphore functionality:
+Semaphore Functionality:
 - Acquire/Wait: When a counter is non-zero, decrement the semaphore's counter, otherwise wait (sleep).
 - Release/Post: Increment the semaphore counter.
 - GetCounter/GetValue: Get's the current value of the semaphore.
 
-Semaphore properties:
-Ownerless: A semaphore is ownerless and can be acquired/released by any thread.
-Counter: A semaphore has a given start/initial counter which can be set to any integer.
+Semaphore Properties:
+- Ownerless: A semaphore is ownerless and can be acquired/released by any thread.
+- Counter: A semaphore has a given start/initial counter which can be set to any integer.
 
 **Example**: Resources limited
 ```
