@@ -109,19 +109,19 @@ Tier 2.02: Bit Order/Endianness
 ===============================
 Most CPU's read from memory in 1 of 2 ways:
 ```
-Big Endian Register     |    Little Endian Register
-       +--+--+--+--+    |           +--+--+--+--+
-       |01|02|03|04|    |           |01|02|03|04|
-Memory +--+--+--+--+    |    Memory +--+--+--+--+
-   +--+  /  /  /  /     |       +--+  |  |  |  |
-a  |01|_/  /  /  /      |    a  |04|<-+--+--+--/
-   +--+   /  /  /       |       +--+  |  |  |
-a+1|02|__/  /  /        |    a+1|03|<-+--+--/
-   +--+    /  /         |       +--+  |  |
-a+2|03|___/  /          |    a+2|02|<-+--/
-   +--+     /           |       +--+  |
-a+3|04|____/            |    a+3|01|<-/
-   +--+                 |       +--+
+Big Endian 32-bit Register |    Little Endian-32 bit Register
+       +--+--+--+--+       |           +--+--+--+--+
+       |F0|0E|E0|0D|       |           |F0|0E|E0|0D|
+Memory +--+--+--+--+       |    Memory +--+--+--+--+
+   +--+  /  /  /  /        |       +--+  |  |  |  |
+a  |F0|_/  /  /  /         |    a  |0D|<-+--+--+--/
+   +--+   /  /  /          |       +--+  |  |  |
+a+1|0E|__/  /  /           |    a+1|E0|<-+--+--/
+   +--+    /  /            |       +--+  |  |
+a+2|E0|___/  /             |    a+2|0E|<-+--/
+   +--+     /              |       +--+  |
+a+3|0D|____/               |    a+3|F0|<-/
+   +--+                    |       +--+
 ```
 This can also be thought of as the writing most significant bits to least significant bits out of the register into memory. Little endian vs big endian differ on which side, left or right, is the most significant.
 
@@ -237,7 +237,7 @@ A common way to reduce internet/network trafic and latency is to cache requests 
 
 Tier 4.00: Static Library
 =========================
-A static library is a file containing programing logic that may be linked into a final executable at compile-time.
+A static library is a file containing programing logic that may be linked into a executable or another library at compile-time.
 
 Tier 4.01: DLL and Shared Library
 =================================

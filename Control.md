@@ -1327,14 +1327,15 @@ LW = Lock as writer
 UW = Unlock as writer
 W = Writing (lock held)
 
-Time              0   1   2   3   4   5   6   7   8   9  10  11
-------------------+---+---+---+---+---+---+---+---+---+---+---+     
-rwlock Mode       |   |LR |LR |LR |   |LW |LW |LW |LW |LW |LW |
-Thread 0 lock for |LR |R  |R  |UR |LW |LW |LW |LW |W  |UW |UW |
-Thread 1 lock for |   |LR |R  |UR |   |   |   |   |   |   |   |
-Thread 2 lock for |   |LR |R  |UR |   |   |   |   |   |   |   |
-Thread 3 lock for |   |LW |LW |LW |LW |W  |W  |UW |   |   |   |
-------------------+---+---+---+---+---+---+---+---+---+---+---+
+Time          0   1   2   3   4   5   6   7   8   9  10  11
+--------------+---+---+---+---+---+---+---+---+---+---+---+     
+rwlock Mode   |   |LR |LR |LR |   |LW |LW |LW |LW |LW |LW |
+--------------+---+---+---+---+---+---+---+---+---+---+---+    
+Thread 0      |LR |R  |R  |UR |LW |LW |LW |LW |W  |UW |UW |
+Thread 1      |   |LR |R  |UR |   |   |   |   |   |   |   |
+Thread 2      |   |LR |R  |UR |   |   |   |   |   |   |   |
+Thread 3      |   |LW |LW |LW |LW |W  |W  |UW |   |   |   |
+--------------+---+---+---+---+---+---+---+---+---+---+---+
 ```
 
 (extra) Programming flow is counter intuative and before implimenting a reader-write mutex the program should be instumented to see the ratio of read to writes. The ratio at which the performance of a reader-writer mutex and a normal mutex intersect is highly dependent on their implimentations.

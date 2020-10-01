@@ -16,6 +16,7 @@ class Array
             integerArray[i] = (char)('a' + i);
             Console.WriteLine("Initialized index " + i + " to character value: " + (char)('a' + i));
         }
+        PrintArray(integerArray);
 
         // find index and print the result
         int index = FindFirst('b', integerArray);
@@ -46,7 +47,15 @@ class Array
         return -1;
     }
 
-    // @Excercise impliment function: static public void PrintArray(int[] array)
+    static public void PrintArray(int[] array)
+    {
+        for (int i = 0; i < array.Length; ++i)
+        {
+            Console.Write(array[i] + ' ');
+        }
+        Console.Write('\n');
+    }
+    
     // @Excercise impliment function: static public int FindLast(char find, char[] array)
     // @Excercise impliment function: static public int[] GrowArray(char[] oldArray, int newSize)
     // @Excercise impliment function: static public bool RemoveFirst(char toRemove, char[] array)
