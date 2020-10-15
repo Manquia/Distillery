@@ -54,6 +54,45 @@ switch(code)
 
 Tier 2.02: Text Searching
 ============================================
+When writing code it is importatn to take into accout how easily veriables or types can be found via text searches. This is important for future development as other developers may need to find all instances of a function call or must verify specific facets of it's usage.
+
+Consider the following code which impliments an object Reflector with several methods. In this example we want to be able to find all instinces of the execute.
+
+**Example**: 
+* Variable names are not preditable
+* Function/Method names cannot be easily found.
+```
+using namespace Meta; // Pulls in the Meta namespace
+void Format1()
+{
+    Reflector myR;
+    myR.push(...);   // Push an item to be reflected
+    myR();           // execute the reflector using "operator ()"
+}
+```
+
+If you were doing a search through all files it would be very hard to track down all the instances where the "operator ()" is called since that operator is used in a lot of syntax. There is also the issue that the variable names are not predictable or easy to find. In a more complicated piece of code you might elaborate on which Reflector this varible is refering, but when it's simple it is best to use a predictable name. 
+
+For the purposes of comparison see the code below which has been reformated to be more easily searched.
+
+**Example**: 
+* Variable names are simple/predictable.
+* Function/Method names are uniquely searchable.
+```
+void Format1()
+{
+    Meta::Reflector reflector;
+    Meta::PushReflectorItem(&reflector);
+    Meta::ExecuteReflector(&reflector);
+}
+```
+
+This example remove the using namespace which will remove some possible text name collisons between other "Reflector" names. By changing the name to reflector it becomes a more predictable name and since it's a simple function there is not any lost meaning. By adding formal function names for "PushReflectorItem" and "ExecuteReflector" we have further increased the ability for this function to be found by future developers. You will also note that the comments are redundent since the function names help document what is happening.
+
+Note:
+
+I am not recommending all code should be excessivly verbose and there is a place for short code. However, in the cases where you are calling into non-standard library functions it is important to consider how easily their names may be found via text search.
+
 
 @TODO 
 
