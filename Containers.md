@@ -183,7 +183,7 @@ Pop        |_____|Push1|Push2|Push3|   Removed/Get value Push0
 Pop  x2    |_____|_____|_____|Push3|   Removed/Get value Push1, Push2
 Pop        |_____|_____|_____|_____|   Removed/Get value Push3
 ```
-(extra) To traverse a graph in a breadth-first approach, a queue can be used.
+(extra) To traverse a tree or graph in a breadth-first approach, a queue can be used.
 
 Tier 3.01: Stack (conceptual container)
 =======================================
@@ -199,7 +199,7 @@ Pop        |Push0|Push1|Push2|_____|   Removed/Get value Push3
 Pop  x2    |Push0|_____|_____|_____|   Removed/Get value Push2, push1
 Pop        |_____|_____|_____|_____|   Removed/Get value Push0
 ```
-(extra) to traverse a graph in a depth-first approach a stack can be used.
+(extra) to traverse a tree or graph in a depth-first approach a stack can be used.
 
 Tier 3.02: Circular Buffer (conceptual container) aka: Ring Buffer
 ==================================================================
@@ -245,18 +245,19 @@ Pop Max      Max: 10,   size: 4        Remove/Get current Max: 12
 
 Tier 4.00: Bucket Array (hybrid container)
 ================================
-B <- Max of Bucket Size and Bucket Count
+Cap <- Capacity of buckets
+B <- Bucket Count
 ```
 specs     Sorted   Unsorted   Description
-Add       O(B)     O(c)       Add an item to an array which is large enough to hold the item
-Remove    O(B)     O(c)       Remove an item from an array at a known index.
+Add       O(Cap)   O(c)       Add an item to an array which is large enough to hold the item
+Remove    O(Cap)   O(c)       Remove an item from an array at a known index.
 Find      O(logn)  O(n)       Find an item within the array
 Subscript O(c)     O(c)       Get value at a given array index in a given bucket index
-Grow      O(B)     O(B)       Increase the size of the array, to fit more item
+Grow      O(B)     O(B)       Increase the capacity by  to fit more item
 ```
 A bucket array is an ordered container which consists of an array of arrays of items. To look up an item in a bucket array, we both its bucket index and the array index. We use the bucket index to select the array, and then the array index to select the item within that array/bucket.
 
-**Example**: bucket count: 2, bucket size: 3
+**Example**: bucket count(B): 2, bucket size(Cap): 3
 ```
  array of arrays       Bucket (array of items) 
  
@@ -266,7 +267,7 @@ A bucket array is an ordered container which consists of an array of arrays of i
 
 (extra) A bucket array gives similar performance benefits as an array.
 
-(extra) A bucket array may contain large amounts of data since we no longer need to worry about exceeding the max allocation size of contiguous memory. This is its main advantage over arrays and that if sorted Adding and removing is O(B) at worst instead of O(n).
+(extra) A bucket array may contain large amounts of data since we no longer need to worry about exceeding the max allocation size of contiguous memory. This is its main advantage over arrays in addition to it's sorted Add and remove being O(Cap) at worst instead of O(n).
 
 Tier 4.01: B-List (hybrid container)
 ====================================
@@ -276,14 +277,14 @@ B <- array size
 ```
 specs     Sorted   Unsorted   Description
 Add       O(B)     O(c)       Add an item to a B-List which is large enough to hold the item
-Remove    O(B)     O(c)       Remove an item from a B-List at a known index.
-Find      O(B)     O(n)       Find an item within the B-List
-Subscript O(B)     O(c)       Get value at a logical index into the B-List
-Grow      O(c)     O(c)       Increase the size of the B-List, to fit more item
+Remove    O(n/B)   O(n/B)     Remove an item from a B-List at a known index.
+Find      O(n/B)   O(n)       Find an item within the B-List
+Subscript O(n/B)   O(n/B)     Get value at a logical index into the B-List
+Grow      O(c)     O(c)       Increase the capacity by B.
 ```
-A B-List is an ordered container which consists of a linked list whereby each node contains a static array of items. In a sorted B-List the items are logically sorted across nodes so each node quickly 
+A B-List is an ordered container which consists of a linked list whereby each node contains a static array of items. In a sorted B-List the items are logically sorted across nodes all nodes. This means that Node[0] is the smallest in the node and Node[end] is the largest making it very quick to see if a node of B items could contain an item.
 
-**Example**: array size: 3, node count: 2
+**Example**: array size(B): 3, node count: 2, item count: 5
 ```
   <-|ITEM|ITEM|ITEM|-> <-|ITEM|ITEM|____|->
     \              /     \              /
@@ -525,6 +526,7 @@ pinned_vector - https://www.youtube.com/watch?v=Ke1mJiGO-pU
 +
 
 #4
+@Ring Buffer
 @Set
 
 #5
