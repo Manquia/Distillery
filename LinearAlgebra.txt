@@ -1,0 +1,22 @@
+Linear Algebra
+
+
+
+===============
+Tier 1: Vectors
+===============
+
+A vector is a set of 1 or more pairs of numbers indicating of direction and magnitude through the size of the number and sign. The number of pairs of numbers determines the demensions the vector is in.
+
+Example:
+
+1D vector: -1, 2, -5, 6
+2D vector: {-1,2}, {-5,6}, {-10,12}
+3D vector: {0,1,2}, {-1,-2,-3}
+4D vector: {0,-1,2,-3}
+
+
+
+
+
+
