@@ -1343,6 +1343,7 @@ Thread 3      |   |LW |LW |LW |LW |W  |W  |UW |   |   |   |
 
 # Incomplete TODO?
 #1
+TODO Add: conditional ? 456 : -1; conditinal Ternery
 #2
 #3
 3.03 @TODO @INCOMPLETE investigate macros in Rust/D and see if I should add a section here to talk about their particular varieties.
