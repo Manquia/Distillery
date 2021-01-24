@@ -869,7 +869,7 @@ void example()
   pAnimal2->Sleep();
 }
 ```
-example prints: Eat | Sleep | Cat eat | Sleep | Eat | Garfield sleep |
+example prints: Eat | Sleep | Cat eat | Sleep | Cat eat | Garfield sleep |
 
 Tier 3.12: Event Systems (aka. message systems)
 ===============================================
