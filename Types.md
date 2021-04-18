@@ -34,9 +34,9 @@ Signed integer's are Two's Compliment: If you want to invert the sign of an inte
 
 Teir 1.01: Floating Point/Real Numbers
 ======================================
-Floating point or Real numbers have a level of precision proportional to the bits in the format. This means the format has a limited precision based on the number of bits the format uses. For 32-bit IEE floats the precision level is ~7 decimals (ie. 1.234567) near 0-1 values and gets worse as you incrase in magnitude. This means that if we have a number which becomes more precise then 7 decimals durring its calculation that precision will be lost when we store the number back into memory.
+Floating point or Real numbers have a level of precision proportional to the bits in the format. This means the format has a limited precision based on the number of bits the format uses. For 32-bit IEEE floats the precision level is ~7 decimals (ie. 1.234567) near 0-1 values and gets worse as you incrase in magnitude. This means that if we have a number which becomes more precise then 7 decimals during its calculation that precision will be lost when we store the number back into memory.
 
-Examples will be for 32-bit IEE floating point. Floating point numbers with 16-bit and 64-bit have different ratios for each secton but follow the same guidelines.
+Examples will be for 32-bit IEEE floating point. Floating point numbers with 16-bit and 64-bit have different ratios for each secton but follow the same guidelines.
 
  - S <- Signed bit (most significant). 0 = positive, 1 = negative.
  - E <- Exponent bits. An exponent of 0 is the value 127
