@@ -1,13 +1,8 @@
-#ifndef DYNAMIC_ARRAY
-#define DYNAMIC_ARRAY
+#pragma once
+#include <utility>//std::move, std::forward<T>
 
-#include <cassert>
-#ifndef _DEBUG
-#define NDEBUG
-#endif
-
-namespace MYC //(my containers)
-{
+//templated class for an array that is resizeable at runtime (std::vector<T>)
+//(no iterators)
 template<class T> 
 class DynamicArray
 {
@@ -21,11 +16,6 @@ public:
 
 	T& operator[](size_t index)
 	{
-		//(if in debug mode only) check that index insnt out of bounds
-		//and if it is, then print err msg and terminate program
-		assert(("subscript operator used to access an invalid array index",
-			    index >=0 && index < numOfElements));
-	
 		return typePtr[index];
 	}
 
@@ -50,13 +40,17 @@ public:
 		//if the old obj has had memory allocated already
 		//then allocate new memory for new array
 		if(oldObj.typePtr)
+		{
 			reAllocate(oldObj.capacity);
+		}
 
 		//if the oldobj has a size then realloc just happend
 		//and that means there is an array to put things into
 		//otherwise the loop wont run
-		for(int i = 0; i < oldObj.getSize(); ++i)			
-			new(typePtr + i) T(oldObj.typePtr[i]);
+		for(int i = 0; i < oldObj.getSize(); ++i)
+		{
+			::new(typePtr + i) T(oldObj.typePtr[i]);
+		}
 
 		numOfElements = oldObj.numOfElements;
 	}
@@ -66,11 +60,15 @@ public:
 	{
 		//if the user assigned the same obj to itself
 		if(this == &right) 
+		{
 			return *this;
-	
+		}
+
 		//deconstruct everything
 		for(int i = 0; i < numOfElements; i++)
+		{
 			typePtr[i].~T();
+		}
 
 		//if the capacity of the arrays arent already the same size
 		//then reallocate so the left side capacity is the same as right
@@ -86,7 +84,9 @@ public:
 		}
 		
 		for(int i = 0; i < right.numOfElements; ++i)
+		{
 			new(typePtr + i) T(right.typePtr[i]);
+		}
 
 		numOfElements = right.numOfElements;
 		return *this;
@@ -96,13 +96,17 @@ public:
 	{
 		//if first push/emplace allocate the first array
 		if(!typePtr)
+		{
 			reAllocate(DynamicArray::defaultCapacity);
-	
+		}
+
 		//if the array runs out of room make more room (1.5x as much)
 		if(numOfElements >= capacity)
+		{
 			reAllocate(capacity + capacity / 2);
-		
-		new(typePtr + numOfElements) T(val);
+		}
+
+		::new(typePtr + numOfElements) T(val);
 		numOfElements++;
 	}
 
@@ -114,25 +118,35 @@ public:
 
 		//if the array runs out of room make more room (1.5x as much)
 		if(numOfElements >= capacity)
+		{
 			reAllocate(capacity + capacity / 2);
+		}
 
-		new(typePtr + numOfElements) T(std::move(val));
+		//new(typePtr + numOfElements) T(std::move(val));
+		typePtr[numOfElements] = std::move(val);
 		numOfElements++;
 	}
 
+	//constructs the elements in place
+	//takes a varying number of arguments to give the constructor
+	//and also might need a varying number of types
 	template<typename... Types>
 	T& emplaceBack(Types&&... args)
 	{
 		//if first push/emplace allocate the first array
 		if(!typePtr)
+		{
 			reAllocate(DynamicArray::defaultCapacity);
+		}
 
 		//if the array runs out of room make more room (1.5x as much)
-		if(numOfElements >= capacity)	
+		if(numOfElements >= capacity)
+		{	
 			reAllocate(capacity + capacity / 2);
+		}
 
 		//placement new to construct item in array
-		new(typePtr + numOfElements) T(std::forward<Types>(args)...);
+		::new(typePtr + numOfElements) T(std::forward<Types>(args)...);
 		return typePtr[numOfElements++];	
 	}
 
@@ -146,9 +160,11 @@ public:
 			//by default user expects array to be in the order they made it in.
 			//So instead of taking the last element and putting it at typePtr[index]
 			//I'm going to shift the entire vector over from the "right" by 1 spot
-			for(uint32_t i=index,j=index+1; j<numOfElements; ++i, ++j)				
+			for(uint32_t i=index,j=index+1; j<numOfElements; ++i, ++j)
+			{
 				typePtr[i] = std::move(typePtr[j]);		
-			
+			}
+
 			--numOfElements;
 		}
 	}
@@ -159,8 +175,10 @@ public:
 		//then push a new one in its place, then the resources the
 		//old one may have owned never got destroyed/freed;	
 		//same thing goes for erase() and clear()
-		if(numOfElements > 0)			
-			typePtr[--numOfElements].~T();		
+		if(numOfElements > 0)	
+		{
+			typePtr[--numOfElements].~T();	
+		}
 	}
 
 	void shrinkToFit()
@@ -172,8 +190,10 @@ public:
 				::operator delete(typePtr, sizeof(T)*capacity);
 				typePtr = nullptr;
 			}
-			else 			
-				reAllocate(numOfElements);			
+			else 
+			{			
+				reAllocate(numOfElements);	
+			}
 		}
 	}
 
@@ -181,43 +201,40 @@ public:
 	{
 		//if the type has its own resources to clean up, then destroy them
 		for(uint32_t i = 0; i < numOfElements; i++)
+		{
 			typePtr[i].~T();
-		
+		}
+
 		numOfElements = 0;
 	}
 
 	void reserve(size_t size)
 	{
-		if(size > capacity);
+		if(size > capacity)
 			reAllocate(size);
-	}		
+	}
+
 private:	
 	void reAllocate(size_t newCapacity)
 	{
 		//allocate new block of memory in free store/heap
 		T* tempPtr = (T*)::operator new(sizeof(T)*newCapacity);
 		capacity = newCapacity;
-	
+		
 		//if first allocate then skip the copy/move
 		//if realloc was called due to assignment then skip
 		if(typePtr)
 		{
 			//copy/move elements over to new array
 			for(uint32_t i = 0; i < numOfElements; i++)
+			{
 				new(tempPtr + i) T(std::move(typePtr[i]));
+				typePtr[i].~T();	
+			}
 		}
-		
-		//if the type has its own resources to clean up, then destroy them
-		//(if first alloc then numOfElements is = 0 and loop wont run)
-		for(int i = 0; i < numOfElements; i++)
-			typePtr[i].~T();				 
-		
+	
 		//delete old array
-		//(deleting nullptr on first alloc is okay)
 		::operator delete(typePtr, sizeof(T)*capacity);
 		typePtr = tempPtr;
 	}
-
 };//class DynamicArray
-}//namespace MYC (my containers)
-#endif //ifdef DYNAMIC_ARRAY
