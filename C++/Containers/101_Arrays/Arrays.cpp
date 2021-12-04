@@ -111,9 +111,6 @@ int main()
 
 	StaticArray<Vec4, 5> staticArray;
 
-	DynamicArray<Vec4> dynamicArray2;
-
-	dynamicArray2 = std::move(dynamicArray);
 
     return 0;
 }
