@@ -92,13 +92,28 @@ public:
 
 		return *this;
 	}
+
+	//comparison operator
+	bool operator==(const Vec4& right) const 
+	{//this ignores comparing the heap allocations as they're just there for testing
+		return (
+				right.x == this->x &&
+				right.y == this->y &&
+				right.z == this->z &&
+				right.w == this->w
+			   );
+	}
 };
 
 int main()
 {
-	DynamicArray<Vec4> dyanmicArray;
+	DynamicArray<Vec4> dynamicArray;
 
 	StaticArray<Vec4, 5> staticArray;
+
+	DynamicArray<Vec4> dynamicArray2;
+
+	dynamicArray2 = std::move(dynamicArray);
 
     return 0;
 }

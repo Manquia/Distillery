@@ -2,6 +2,7 @@
 
 //templated class as a wrapper for a 
 //default stack allocated, statically sized array (std::array<T, size_t>)
+//iterator not necessary
 template <class T, size_t size>
 class StaticArray
 {
