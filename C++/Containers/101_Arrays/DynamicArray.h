@@ -160,8 +160,8 @@ public:
 		{
 			if(!numOfElements)
 			{
-			   		::operator delete(typePtr, sizeof(T)*capacity);
-			   		typePtr = nullptr;	
+			   	::operator delete(typePtr, sizeof(T)*capacity);
+			   	typePtr = nullptr;	
 			}
 			else reAllocate(numOfElements);					
 		}
@@ -205,4 +205,4 @@ private:
 		::operator delete(typePtr, sizeof(T)*capacity);
 		typePtr = tempPtr;
 	}
-};//class DynamicArray
+};//class DynamicArray<T>
