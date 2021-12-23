@@ -59,36 +59,43 @@ public:
 	}
 
 	//move assignment operator
-	Vec4& operator=(Vec4&& oldObj) noexcept
+	Vec4& operator=(Vec4&& right) noexcept
 	{
+		if(this == &right)
+			return *this;
+
 		std::cout << "Vec4 move asign\n";
-		memoryBlock = oldObj.memoryBlock;
-		oldObj.memoryBlock = nullptr;
+		delete[] memoryBlock;
+		memoryBlock = right.memoryBlock;
+		right.memoryBlock = nullptr;
 
-		x = oldObj.x;
-		y = oldObj.y;
-		z = oldObj.z;
-		w = oldObj.w;
+		x = right.x;
+		y = right.y;
+		z = right.z;
+		w = right.w;
 
-		oldObj.x = 0;
-		oldObj.y = 0;
-		oldObj.z = 0;
-		oldObj.w = 0;
+		right.x = 0;
+		right.y = 0;
+		right.z = 0;
+		right.w = 0;
 		
 		return *this;
 	}
 
 	//asignment operator
-	Vec4& operator=(Vec4& oldObj)
+	Vec4& operator=(const Vec4& right)
 	{
+		if(this == &right)
+			return *this;
+
 		std::cout << "Vec4 copy asign\n";
 		memoryBlock = new int[10];
-		memcpy(memoryBlock, oldObj.memoryBlock, sizeof(int)*10);
+		memcpy(memoryBlock, right.memoryBlock, sizeof(int)*10);
 
-		x = oldObj.x;
-		y = oldObj.y;
-		z = oldObj.z;
-		w = oldObj.w;
+		x = right.x;
+		y = right.y;
+		z = right.z;
+		w = right.w;
 
 		return *this;
 	}

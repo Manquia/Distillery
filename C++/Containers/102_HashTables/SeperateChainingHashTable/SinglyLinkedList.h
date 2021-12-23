@@ -20,7 +20,7 @@ public:
         //construct a node from an existing lvalue
         Node(const T& data, Node* ptr) : next(ptr), data(data){}
 
-        //construct a node from an rvalue
+        //construct a node from an existing rvalue
         Node(T&& data, Node* ptr) : next(ptr), data(std::move(data)){}
 
         //node constructor for emplacing inside node
@@ -113,6 +113,8 @@ public:
     //move assignment operator
     LinkedList& operator=(LinkedList&& right) noexcept
     {
+        this->clearAll();
+
         //just make the head of the new list
         //point to the first node of the old list
         head = right.head;
@@ -221,6 +223,10 @@ public:
     //deletes all the elements
     void clearAll()
     {
+        //if empty list return
+        if(!head)
+            return;
+
         //start the journey at the first node
         Node* traveler = head;
         
@@ -253,10 +259,8 @@ public:
         //if the first element hasnt been made 
         //emplace in the front first
         if(!head)
-        {
-            emplaceFront(std::forward<Types>(args)...);
-            return;
-        }
+            return emplaceFront(std::forward<Types>(args)...);
+        
         //get adress of list[index] then make a new node
         //that points to where list[index] points to 
         //then change list[index] to point to the new node

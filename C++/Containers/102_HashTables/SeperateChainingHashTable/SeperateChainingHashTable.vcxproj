@@ -144,6 +144,7 @@
     <ClCompile Include="SeperateChainingHashTable.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="DynamicArray.h" />
     <ClInclude Include="Vec4.h" />
     <ClInclude Include="SeperateChainingHashTable.h" />
     <ClInclude Include="SinglyLinkedList.h" />

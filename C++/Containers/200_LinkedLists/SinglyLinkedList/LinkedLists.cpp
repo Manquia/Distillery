@@ -6,8 +6,5 @@ int main()
 {
 	LinkedList<Vec4> myList;	
 
-
-	myList.printList();
-
 	return 0;
 }
