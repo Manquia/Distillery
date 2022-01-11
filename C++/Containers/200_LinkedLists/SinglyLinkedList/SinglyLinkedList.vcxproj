@@ -20,10 +20,11 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="LinkedLists.cpp" />
+    <ClCompile Include="vec4.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="SinglyLinkedList.h" />
-    <ClInclude Include="Vec4.h" />
+    <ClInclude Include="vec4.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>

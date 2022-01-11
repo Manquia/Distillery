@@ -1,13 +1,12 @@
 #pragma once
 
-#include <exception>   //std::invalid_argument
 #include <utility>     //std::forward<T>(), std::move()
 #include <iostream>    //std::cout
 #include <functional>  //std::hash<KeyType>
 
 #include "dynamicArray.h"     //the dynamic array I made is used here for the array of singly linked lists
-#include "SinglyLinkedList.h" //the linked list I made is used here for the chaining
-#include "Vec4.h"             //sample class for tests (just in a header for convenience)
+#include "LinkedListWithIterator.h" //the linked list I made is used here for the chaining
+#include "vec4.h"             //sample class for tests 
 
 //templated class for a hashtable
 //this one uses seperate chaining to
@@ -17,11 +16,8 @@
 template <class KeyType, class ValType>
 class SCHashTable //seperate chaining hash table
 {
-public:
-
-    //I used my own struct instead of std::pair because I like writing things myself.
-    //also because the member variable names of std::pair are generically named
-    //first and second and not (the more descriptive for this case) key and value
+private:
+    //std::pair's members are generically named so I used my own struct
     struct KVpair //key value pair
     {
         KeyType key;
@@ -40,15 +36,17 @@ public:
             : key(std::forward<KeyType>(key)), value(std::forward<Types>(args)...){}
 
         //move constructor used for rehashing
-        KVpair(KVpair&& oldPair) 
+        KVpair(KVpair&& oldPair) noexcept
             : key(std::move(oldPair.key)), value(std::move(oldPair.value)){}
     };
+
+private:
 
     //pair to be returned from emplace/insert
     struct insertReturn
     {
-        bool flag;
-        KVpair& kvpair;
+        bool isUnique;
+        ValType& valRef;
     };
 
     DynamicArray<LinkedList<KVpair>> chains; //the dyanmic array of linked lists 
@@ -57,36 +55,35 @@ public:
     float        maxLoadFactor;              //if load factor exceeds this, a rehash happens
     const size_t defaultNumOfLists;          //number of lists at initialization
     size_t       numOfLists;                 //number of lists at a given time
-    
+
+private:   
+
     //takes an index of which list to traverse, 
     //and a key. if key is in that list, return
-    //the memory address of that key value pair
+    //the memory address of that key value pair.
+    //if the key isnt in the list then return null
     KVpair* isKeyInList(const KeyType& key, const size_t index)
     {
-        //start the iterator (pointer) at the begining 
-        //of the list[index] and travel until key is found
-        //or nullptr is found (end of list)
-        auto* iter = chains[index].head;
-        for( ; iter; iter=iter->next)
+        //traverse the list checking every key against the key param
+        for(auto& i : chains[index])
         {
-            //if the key already exists then
-            //replace the value at that location
-            if(iter->data.key == key)
-                return &(iter->data);
+            if(i.key == key)
+                return &i;
         }
 
         //if the end of the list was reached
         //then the key isnt in the list
         return nullptr;
-    }   
+    }
 
     bool isMaxLoadFactorReached()
     {
         loadFactor = size / (float)numOfLists;
-        return loadFactor >= maxLoadFactor ? true : false;
+        return loadFactor >= maxLoadFactor;
     }
 
-    //hash the key. Up to caller to mod value
+    //hash the key. Up to caller to mod 
+    //the ret by the number of lists
     size_t hash(const KeyType& key)
     {
         std::hash<KeyType> hash;
@@ -97,10 +94,10 @@ public:
     //and re hash location of elements
     void rehash()
     {
-        uint32_t newNumOfLists = uint32_t(numOfLists * 1.5);
+        uint32_t newNumOfLists = (uint32_t)numOfLists * 1.5;
         
         //I found this end up being more 
-        //readable/easier than resizing the old vector
+        //readable/easier than resizing/reusing the old vector
         DynamicArray<LinkedList<KVpair>> temp;
         temp.resize(newNumOfLists);
     
@@ -108,18 +105,18 @@ public:
         for(uint32_t i{}; i<numOfLists; i++) 
         {
             //for every node in old lists
-            for(auto* it=chains[i].head; it; it=it->next)
+            for(auto& node : chains[i])
             {
                 //rehash key to a new index
-                size_t newIndex = hash(it->data.key) % newNumOfLists;
+                size_t newIndex = hash(node.key) % newNumOfLists;
     
                 //now that we know which list to put the kvpair into,
                 //move the data from the old list in the new one
-                temp[newIndex].pushFront(std::move(it->data));
+                temp[newIndex].pushFront(std::move(node));
             }
         }
     
-        chains = std::move(temp);   //copy assignment
+        chains = std::move(temp);   //move assignment
         numOfLists = newNumOfLists; //update numOfLists
     }
 
@@ -135,16 +132,17 @@ public:
     SCHashTable& operator=(SCHashTable&&) = delete;//move assignment operator
 
     SCHashTable()
-        : size(0u), loadFactor(0.0f), 
+        : size(0), loadFactor(0.0f), 
           maxLoadFactor(2.0f), 
-          defaultNumOfLists(10u),
+          defaultNumOfLists(10),
           numOfLists(defaultNumOfLists)
     {
-        chains.resize(10);
+        chains.resize(defaultNumOfLists);
     }
 
     //destructor for the dynamic array is called automatically
-    //and every node in all the linked lists are freed
+    //and thus the destructor for every linked list is called also
+    //and so every node in every list is deleted
     ~SCHashTable(){}
 
     const size_t getSize() const {return size;}
@@ -152,42 +150,48 @@ public:
     const float  getMaxLoadFactor() const {return maxLoadFactor;}
 
     //removes all linked list nodes
-    void clearAll(bool shouldShrink = true)
+    void clearAll(bool shouldShrink = false)
     {
         for(uint32_t i = 0; i < chains.getSize(); i++)
             chains[i].~LinkedList();
         
         //shrink dynamic array to the default size
         if(numOfLists > defaultNumOfLists && shouldShrink)
+        {
             chains.shrink(defaultNumOfLists);
+            numOfLists = defaultNumOfLists;
+        }
 
         loadFactor = 0.0f;
         size = 0;
-        numOfLists = defaultNumOfLists;
-    }
-
-    ValType& operator[](KeyType&& key)
-    {
-        return tryEmplace(std::move(key)).kvpair.value;
     }
 
     void printTable()
     {
+        if(size)
+            std::cout << "{key: key, value: value}\n";
+
         //for every list
         for(uint32_t i{}; i<numOfLists; i++)
-        {
+        {  
             std::cout << "["<<i<<"]-->";
+
             //for every node in every list
-            for(auto* it = chains[i].head; it; it=it->next)
+            for(auto& it : chains[i])
             {
-                std::cout << "{key: " << it->data.key << ", value:" << it->data.value<<"}";
+                std::cout << "{" << it.key << ", " << it.value << "}";
                 std::cout << "->";
             }
             std::cout << "NULL\n";
         }
     }
 
-    //constructs a kvpair in place if the key doesnt exist yet
+    ValType& operator[](KeyType&& key)
+    {
+        return tryEmplace(std::move(key)).valRef;
+    }
+
+    //constructs a kvpair in place only if the key doesnt exist yet
     template<typename... Types>
     insertReturn tryEmplace(KeyType&& key, Types&&... args)
     {
@@ -205,20 +209,20 @@ public:
 
             //it emplaced the value at the front of list
             //so ret true (denoting a new node was emplaced)
-            //and the head pointer's data's location 
-            //(the location of the new kvpair)
-            return {true, chains[index].head->data};
+            //and a reference to the value in that node
+            return {true, chains[index].begin()->value};
         }
         
         //else return false indicating tryEmplace
-        //did not insert new kvpair (because key already existed)
-        //and the location of where the 
-        //kvpair is that blocked tryEmplace
-        return {false, *kvpair};
+        //did not insert new kvpair 
+        //(because the key already existed)
+        //and a reference to the value in the kvpair
+        //that blocked tryEmplace
+        return {false, kvpair->value};
     }
 
     //constructs a kvpair element in place
-    //returns KVpair ref and a bool (false if it over wrote an element)
+    //returns value ref and a bool (false if it over wrote an element)
     template<typename... Types>
     insertReturn emplace(KeyType&& key, Types&&... args) 
     {
@@ -233,7 +237,7 @@ public:
             //free any resources it might control first
             kvpair->value.~ValType();
             new(&kvpair->value) ValType(std::forward<Types>(args)...);
-            return {false, *kvpair};
+            return {false, kvpair->value};
         }
         {//if kpvair is nullptr (key wasnt already in list)
             chains[index].emplaceFront(std::forward<KeyType>(key), 
@@ -241,12 +245,12 @@ public:
             size++;
             if(isMaxLoadFactorReached())
                 rehash();
-            return {true, chains[index].head->data};
+            return {true, chains[index].begin()->value};
         }
     }
 
     //insert overload to accept two rvalues and tries to move into table
-    //returns KVpair ref and a bool (false if it over wrote an element)
+    //returns value ref and a bool (false if it over wrote an element)
     insertReturn insert(KeyType&& key, ValType&& value)    
     {
         size_t index = hash(key) % numOfLists;
@@ -258,20 +262,21 @@ public:
             //free any resources it might control first
             kvpair->value.~ValType();
             new(&kvpair->value) ValType(std::forward<ValType>(value));
-            return {false, *kvpair};
-        }      
+            return {false, kvpair->value};
+        }
+        else
         {//if kvpair is nullptr (key wasnt already in list)
-            chains[index].pushFront(KVpair(std::forward<KeyType>(key),
-                                           std::forward<ValType>(value)));
+            chains[index].emplaceFront(std::forward<KeyType>(key),
+                                       std::forward<ValType>(value));
             size++;
             if(isMaxLoadFactorReached())
                 rehash();
-            return {true, chains[index].head->data};
+            return {true, chains[index].begin()->value};
         }
     }
 
     //inserts two already existing lvalues into the hash table
-    //returns KVpair ref and a bool (false if it over wrote an element)
+    //returns value ref and a bool (false if it over wrote an element)
     insertReturn insert(const KeyType& key, const ValType& value)
     {
         //figure out which list to iterate over
@@ -285,7 +290,7 @@ public:
             //free any resources it might control first
             kvpair->value.~ValType();
             new(&kvpair->value) ValType(value);
-            return {false, kvpair->data};
+            return {false, kvpair->value};
         }         
         {//if kvpair is nullptr (key wasnt already in list)
             chains[index].pushFront(KVpair(key,value));
@@ -293,28 +298,25 @@ public:
             size++;
             if(isMaxLoadFactorReached())
                 rehash(); 
-            return {true, chains[index].head->data};
+            return {true, chains[index].begin()->value};
         }
     }
 
-    //return the location of the kvpair if key is in the table.
-    //Up to the user to check if the return isnt null before 
-    //attempting to dereference the returned pointer
-    KVpair* search(const KeyType& key)
+    //return the location of the value if key is in the table.
+    ValType* search(const KeyType& key)
     {
         //get the index of which list to search
         size_t index = hash(key) % numOfLists;
 
-        //start the iterator (pointer) at the beginning
+        //start the iterator at the beginning
         //of the list[index] and travel until key is found
         //or nullptr is found (end of list)
-        auto* iter = chains[index].head;
-        for( ; iter; iter=iter->next)
+        for(auto& i : chains[index])
         {
             //if the key is found in a node
             //return the address of where it is
-            if(iter->data.key == key)
-                return &iter->data;
+            if(i.key == key)
+                return &i.value;
         }
         //if key not found in table return null
         return nullptr;
@@ -326,29 +328,16 @@ public:
     bool erase(const KeyType& key)
     {
         size_t index = hash(key) % numOfLists;
-        
-        //if the list is empty return
-        if(!chains[index].head)
-            return false;
 
-        //if the first node holds the key just popFront()
-        if(chains[index].head->data.key == key)
+        for(auto it=chains[index].begin(); 
+            it!=chains[index].end(); ++it)
         {
-            chains[index].popFront();
-            size--;
-            return true;
-        }
-
-        //else traverse the list looking for the key
-        auto* iter = chains[index].head;       
-        for( ; iter->next; iter=iter->next)
-        {
-            if(iter->next->data.key == key)   
+            if(it->key == key)
             {
-                chains[index].eraseAtLocation(iter);
-                size--;
+                chains[index].eraseAtLocation(it);
+                --size;
                 return true;
-            }           
+            }
         }
 
         return false;

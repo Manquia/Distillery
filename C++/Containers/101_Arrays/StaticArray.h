@@ -1,5 +1,5 @@
 #pragma once
-
+#include "vec4.h"
 
 //templated class as a wrapper for a 
 //default stack allocated, statically sized array (std::array<T, size_t>)

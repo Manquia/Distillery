@@ -1,5 +1,6 @@
 #pragma once
 #include <utility>//std::move, std::forward<T>
+#include "vec4.h"
 
 //templated class for an array that is resizeable at runtime (std::vector<T>)
 //iterator not necessary
@@ -49,7 +50,21 @@ public:
 		::operator delete(typePtr, sizeof(T)*capacity);
 	}
 
-	DynamicArray(DynamicArray&&) = delete;
+	//move constructor
+	DynamicArray(DynamicArray&& oldObj) noexcept
+	{
+		//make the new array steal the 
+		//resources of the old array
+		typePtr    = oldObj.typePtr;
+		numOfElems = oldObj.numOfElems;
+		capacity   = oldObj.capacity;
+		
+		//remember to not have two pointers 
+		//pointing at the same memory
+		oldObj.typePtr = nullptr;
+		oldObj.capacity = 0;
+		oldObj.numOfElems = 0;
+	}
 
 	//copy constructor
 	DynamicArray(const DynamicArray& oldObj) 

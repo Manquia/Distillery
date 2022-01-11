@@ -1,4 +1,4 @@
-#include "Vec4.h"//sample class for tests
+#include "vec4.h"//sample class for tests
 #include "SinglyLinkedList.h"
 #include <iostream>
 

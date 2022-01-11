@@ -142,12 +142,13 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="SeperateChainingHashTable.cpp" />
+    <ClCompile Include="vec4.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="DynamicArray.h" />
-    <ClInclude Include="Vec4.h" />
+    <ClInclude Include="linkedListWithIterator.h" />
     <ClInclude Include="SeperateChainingHashTable.h" />
-    <ClInclude Include="SinglyLinkedList.h" />
+    <ClInclude Include="vec4.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

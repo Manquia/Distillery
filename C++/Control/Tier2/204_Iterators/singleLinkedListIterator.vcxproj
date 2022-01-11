@@ -18,20 +18,11 @@
       <Platform>x64</Platform>
     </ProjectConfiguration>
   </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="DynamicArray.h" />
-    <ClInclude Include="StaticArray.h" />
-    <ClInclude Include="vec4.h" />
-  </ItemGroup>
-  <ItemGroup>
-    <ClCompile Include="Arrays.cpp" />
-    <ClCompile Include="vec4.cpp" />
-  </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>
     <Keyword>Win32Proj</Keyword>
-    <ProjectGuid>{ec0de57c-c551-42fe-8e08-70824ca629fc}</ProjectGuid>
-    <RootNamespace>Arrays</RootNamespace>
+    <ProjectGuid>{541140f0-0a35-4dbe-ac6d-f56cf54c3200}</ProjectGuid>
+    <RootNamespace>singleLinkedListIterator</RootNamespace>
     <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
@@ -125,7 +116,6 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <LanguageStandard>stdcpp20</LanguageStandard>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -140,7 +130,6 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <LanguageStandard>stdcpp20</LanguageStandard>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -149,6 +138,14 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
     </Link>
   </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClInclude Include="linkedListIterator.h" />
+    <ClInclude Include="vec4.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="iterator.cpp" />
+    <ClCompile Include="vec4.cpp" />
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>

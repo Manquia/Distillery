@@ -2,6 +2,7 @@
 #include <utility>   //std::move(), std::forward<T>()
 #include <iostream>  //std::cout
 #include <exception> //std::out_of_range std::invalid_argument
+#include "vec4.h"
 
 //the same LinkedList class from 200_LinkedList 
 //included here for use in the seperate chaning hash table
@@ -35,19 +36,11 @@ public:
     LinkedList(): head(nullptr), size(0){}
 
     //copy constructor
-    LinkedList(const LinkedList& oldObj) 
-    {
-        //if theres nothing in the old list make an epmty list
-        if(!oldObj.head)
-        {
-            head = nullptr;
-            size = 0;
-            return;
-        }
-
+    LinkedList(const LinkedList& oldObj) : size(0), head(nullptr)
+    {     
         //start the journey through the old object at the first node
         Node* traveler = oldObj.head;
-       
+        
         //while the traveling pointer hasnt 
         //reached the end of the old object's list
         uint32_t index = 0;
@@ -55,7 +48,7 @@ public:
         {
             //for each node in old list, push a 
             //new node to the back of the new list
-            this->insertAfter(traveler->data, index);
+            insertAfter(traveler->data, index);
 
             traveler = traveler->next;
             index++;
@@ -78,22 +71,19 @@ public:
     }
 
     //copy assignment operator
-    LinkedList& operator=(const LinkedList& right) 
+    LinkedList& operator=(const LinkedList& rhs) 
     {
         //if the operands are the same lvalue
-        if(this == &right) 
+        if(this == &rhs) 
             return *this;
-        
-        //if theres nothing in the old list make an epmty list
-        if(!right.head)
-        {
-            head = nullptr;
-            size = 0;
-            return *this;
-        }
+
+        //empty out the left hand size list before it becomes 
+        //a copy of the right hand side list
+        //(clearAll will also set head=null and size=0)
+        clearAll();
 
         //start the journey through the old object at the first node
-        Node* traveler = right.head;   
+        Node* traveler = rhs.head;   
 
         //while the traveling pointer hasnt
         //reached the end of the old object's list
@@ -102,7 +92,7 @@ public:
         {
             //for each node in old list, push a 
             //new node to the back of the new list
-            this->insertAfter(traveler->data, index);
+            insertAfter(traveler->data, index);
         
             traveler = traveler->next;
             index++;
@@ -113,6 +103,9 @@ public:
     //move assignment operator
     LinkedList& operator=(LinkedList&& right) noexcept
     {
+        //clear left hand side list before it becomes the right hand size
+        clearAll();
+
         //just make the head of the new list
         //point to the first node of the old list
         head = right.head;
@@ -187,8 +180,8 @@ public:
         --size;
     }
 
-    //if you dont know where nodes location is yet
-    //use then function (it will traverse list index times then erase)
+    //if you dont know where the node you want to delete is yet (you didnt travel to it)
+    //then use then function (it will traverse list index times then erase)
     void eraseAtIndex(size_t index)
     {
         //if index is out of range / too large
@@ -206,8 +199,8 @@ public:
         //previous the one we want to delete
         Node* previousNodeLocation = iterateUntil(index-1);
 
-        //get the address of the node after the node we want to delete
-        //if we are deleting the last node the address will be null
+        //get the address of the node AFTER the node we want to delete.
+        //if we are deleting the last node that address will be null
         Node* nextNodeLocation = previousNodeLocation->next->next;
 
         //delete node at index
