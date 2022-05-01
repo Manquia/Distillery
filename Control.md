@@ -14,9 +14,10 @@ A statement is a section of code that is evaluated by the rules of the language.
 ```
 // Mathimatical operation evaluation order follows the programming languages' rules.
 // The ordering is called the operator precedence.
-value  = x + 2;        // Evaluated first.
-value += x + 1 - y/2;  // Evaluated second. 
-value /= value - x;    // Evaluated third.
+value : Integer;       // Evaluated first.   Reads: create a variable "value" of type Integer.
+value = 7;             // Evaluated second.  Reads: variable "value" is assigned the integer value of 7.
+value = value + 2;     // Evaluated thrid.   Reads: variable "value" plus integer value 2 is assigned to variable "value"
+value = value - value; // Evaluated fourth.  Reads: variable "value" is subtracted by variable "value" is assigned to variable "value"
 ```
 
 Tier 1.01: Conditional Expressions
