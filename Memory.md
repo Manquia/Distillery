@@ -3,7 +3,7 @@ Summary: Description of memory with tiers of complexity from basic to in-depth.
 
 Tier 1.00: Memory is Basic
 ==========================
-Memory is simply a collection of bits which can be stored and accessed. A single bit can hold the value of 0 or 1. These collections of bits can be viewed in many different ways in which the order of the bits matters to the information which we may derive. In the same way that a series of letters are used to make up words, bits are interpreted in groups which many programming languages refer to as types.
+Memory is simply a collection of bits which can be stored and accessed. A single bit can hold the value of 0 or 1. When 8 bits are stored in sequence this is called a byte. These collections of bits can be viewed in many different ways in which the order of the bits matters to the information which we may derive. In the same way that a series of letters are used to make up words, bits are interpreted in groups which many programming languages refer to as types.
 
 Tier 1.01: Memory as intrinsic types
 ====================================
