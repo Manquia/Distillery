@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 16
-VisualStudioVersion = 16.0.31829.152
+# Visual Studio Version 17
+VisualStudioVersion = 17.4.33213.308
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Arrays", "..\Containers\101_Arrays\Arrays.vcxproj", "{EC0DE57C-C551-42FE-8E08-70824CA629FC}"
 EndProject
@@ -14,6 +14,8 @@ EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Functions", "..\Control\Tier1\FunctionCalls\FunctionCalls.vcxproj", "{F65F0A5F-4EE1-4F68-8433-8C0D0B5B8998}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "ConditionalExpressions", "..\Control\Tier1\ConditionalExpressions\ConditionalExpressions.vcxproj", "{3030267F-DC92-4149-BB93-0E5264241AB7}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "AVLTree", "AVLTree\AVLTree.vcxproj", "{2FAFA0C4-D12B-4DA0-A0E9-C059C30312B7}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -71,6 +73,14 @@ Global
 		{3030267F-DC92-4149-BB93-0E5264241AB7}.Release|x64.Build.0 = Release|x64
 		{3030267F-DC92-4149-BB93-0E5264241AB7}.Release|x86.ActiveCfg = Release|Win32
 		{3030267F-DC92-4149-BB93-0E5264241AB7}.Release|x86.Build.0 = Release|Win32
+		{2FAFA0C4-D12B-4DA0-A0E9-C059C30312B7}.Debug|x64.ActiveCfg = Debug|x64
+		{2FAFA0C4-D12B-4DA0-A0E9-C059C30312B7}.Debug|x64.Build.0 = Debug|x64
+		{2FAFA0C4-D12B-4DA0-A0E9-C059C30312B7}.Debug|x86.ActiveCfg = Debug|Win32
+		{2FAFA0C4-D12B-4DA0-A0E9-C059C30312B7}.Debug|x86.Build.0 = Debug|Win32
+		{2FAFA0C4-D12B-4DA0-A0E9-C059C30312B7}.Release|x64.ActiveCfg = Release|x64
+		{2FAFA0C4-D12B-4DA0-A0E9-C059C30312B7}.Release|x64.Build.0 = Release|x64
+		{2FAFA0C4-D12B-4DA0-A0E9-C059C30312B7}.Release|x86.ActiveCfg = Release|Win32
+		{2FAFA0C4-D12B-4DA0-A0E9-C059C30312B7}.Release|x86.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
