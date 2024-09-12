@@ -1,0 +1,38 @@
+Summary: Go over common to more exotic algorithms in incresing complexity.
+Algorithm.txt
+
+
+Prerequiste: Tier 'X' from all other sections to read 'X'.
+
+#0
+Computer Science talk on trade off off memory for speed and vise versa in the design.
+
+#1
+
+@Insert Into List
+@Linear Search (Dynamic programming variant)
+@Binary Search
+@Unordered Remove
+@Bubble Sort
+
+#2
+@Quick Sort
+@Merge Sort
+
+#3
+
+@Sentinals (Linear Search example)
+@Graph Traversal (Quick Check traversed with sentinal)
+@BFS & DFS graph traversal
+@Tree Traversal (inorder, preorder, postorder)
+
+#4
+@Radix Sort
+@Divide and conquor spacial partitioning
+@A*
+@Balancing Tree (AVL tree algorithm)
+
+#5
+@Dynamic Programming (Minimize/maximize something with cost)
+
+$6
