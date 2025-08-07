@@ -2,35 +2,32 @@ Distillery
 by Myka Rust
 
 
-High Concept and Goals
-======================
-* Summarize simple to complex topics related to computer science
-* Provide google-able refernces/vocabulary for further learning
+Goals
+=====
+* Summarize simple to complex topics related to computer programming.
+* Provide google-able refernces and vocabulary for further learning.
 
 Audience
 ========
-* The Self-Learner: looking for ways to improve their skills but cannot encounter their unknown unknowns.
-* The Explorer: examining new and old ideas they may not have encountered yet.
-* The Innovator: building upon existing designs and ideas with an eye for improvement.
-* The Student: preparing for a challenging interview or test.
-* The Professor: composing class materials for new and evolving courses.
+* The Self-Learner: Searching for ways to improve their skills but is having touble finding their unknown unknowns.
+* The Explorer: Examining new and old ideas they may not have encountered yet.
+* The Student: Preparing for a challenging interview hoping to build deeper knowledge.
+* The Innovator: Building upon existing design ideas with an eye for improvement.
 
 Summary
 =======
-The main goal of the distillery is to enable the reader to rapidly read through many quick summaries of computer science topics. Each document has a topic. A document contains many sections on that topic which go into ever increasing complexity and detail. The distillery summary sections attempt to be language agnostic, but when needed they tend to lean towards C/C++ to explain some more complex sections.
+The main goal of the distillery is to enable the reader to rapidly read through many quick summaries of computer programming topics. Each document has a topic. A document contains many sections on that topic which go into ever increasing complexity and detail. The distillery summary sections attempt to be language agnostic, but when needed they tend to lean towards C/C++ to explain some more complex sections.
 
-Each section of a document has a tier level associated with it roughly correlating to its subjective "depth" into the field of computer science. If you know nothing about computer science, you should read the "tiers" sequentially across all documents because they reference material listed in previous tiers of other documents.
-
-In this folder, you will see that there are sub-folders which are programming language names. In these folders are code files which show the specific details on a topic_section that the distillery summarizes. This will likely take a long time to write and may never be fully completed for all languages. These source files are samples which show a particular topic_section's material being used in the language.
+Each section of a document has a tier level associated with it roughly correlating to its subjective "depth" into the field of computer programming. If you know little about computer programming, you should read the tiers sequentially across all documents because they reference material listed in previous tiers of other documents.
 
 How to read
 ===========
-The topics may be read from your browser or other markdown viewing application. If you are reading from a text editor, it is recommended that you enable word-wrap and use a monospace font. If you plan to read the samples, it is recommended that you download/clone the repository for your convenience.
+The topics may be read from your browser or other markdown viewing application. If you are reading from a text editor, it is recommended that you enable word-wrap and use a monospace font.
 
-It is recommended that if you are a:
-* Veteran Programmer (2+ years, _systems-level_ programming): You likely know everything below tier 3. Skim topics which are tier 3 and above and read sample code as needed.
-* Intermediate programmer (college grad, self-taught): Skim topics starting at tier 1. Knowing the many names for certain terms/concepts will be helpful for later tiers even if you know the concepts by a different name. Read the sample code as needed.
-* New programmer: Read everything in each tier of every document before proceeding to the next tier. Read the sample code for every topic when available/applicable. 
+Where to start:
+* Veteran Programmer (2+ years, _systems-level_ programming): Skim read teir 2 section titles. You likely know most everything below tier 3 topics.
+* Intermediate programmer (college grad, self-taught): Skim read teir 1 topics. Knowing the names for certain terms/concepts will be helpful in later tiers.
+* New programmer: Read everything in each tier of every document before proceeding to the next tier.
 
 Topic Summary
 * Control.md    : Programming methods/designs/systems related to static and dynamic control of your program.
@@ -47,5 +44,6 @@ Note: If you have never written code before in any language, the distillery is n
 
 Summary NOT
 ===========
-* The distillery is NOT a tutorial series. But does have source samples on a per-language/per-Operating system basis when applicable.
-* The distillery is NOT an in-depth source of information. It is a compilation of summaries to expose computer science ideas and concepts rapidly to its audience.
+* The distillery is NOT an in-depth source of information.
+* The distillery is NOT a great resource if you've never written code before.
+* The distillery is NOT It is a compilation of summaries to expose computer science ideas and concepts rapidly to its audience.
