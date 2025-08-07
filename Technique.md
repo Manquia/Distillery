@@ -1,4 +1,39 @@
-#Incomplete
+#Incomplete : Document is a placeholder
+
+Tier 2.00: Container(s) as control
+==================================
+Certain containers can be used to give us iterative control over a given data set. The order of a container is logically useful because it allows us to view/use an item in some relation to other items within the container.
+
+Common Containers used for their ordering property
+```
+stack: first in last out (FILO, push-pop state, graph traversal depth-first) 
+queue: first in first out (FIFO, graph traversal breadth-first)
+heap: min/max in a collection of items (Priority Queue, graph traversal priority, A-Star)
+tree: various (behavior trees, rules, logic, composition)
+graphs: various (pathfinding, parsing, state machine)
+```
+
+Tier 4.00: Performance multithread programming
+==============================================
+Above are many useful primitives to enable multi-threaded programming as a paradigm. These are very useful for a variety of system tasks but are not particularly fast in terms of performance.
+
+Common areas to optimize multithreaded programming:
+- Creating performance multithreaded code is all about dividing up the data such that there is no need to synchronize it in the first place. When you must synchronize between threads do so at stages in the data pipeline which has the smallest amount of data to synchronize.
+- Expending extra memory to create a local and a shared copy of values which must be synchronized can improve performance because we can reduce the synchronization between threads.
+- Instrument threading primitives (Mutex, semaphore, Conditional Variable) to log directly to a profiler. This is important since using most thread primitives lead to threads waiting in sleep so the cost may be hidden otherwise.
+- @TODO @Incomplete add more wisdom once I have become wiser to the ways of multithreaded programming. Ask people who have more experience in this area.
+
+@Talk about batching and thread context switching probably.
+
+
+@TODO
+
+* Dirty Flag (Object/data has changed)
+* Container check number (Reduce lookup count by holding onto a change id/number to know if a container has been changed since last time you attempted to find something inside it). There can be both a Change/Add and a Change/Subtract number to further reduce extra checks.
+
+* Moore's Law - CPU "power" progression
+* Amdahl's law - Multi-core speedup limits
+* Little's Law - How everything uses queues and what it means. This is a really long article/section which is more a ramifications of how the internet/hardware does high throughput communication.
 
 Tier 5.00: Math/Data as control (Subtle technique/idea)
 ==================================================
@@ -170,21 +205,7 @@ Direction GetDirection(f32 angleFromNorth_degrees)
 
 (extra) Computers love linear code without any control as it is extremely fast. Removing control can be a valuable optimization.
 
-Tier 5.01: Container(s) as control
-==================================
-Certain containers can be used to give us iterative control over a given data set. The order of a container is logically useful because it allows us to view/use an item in some relation to other items within the container.
-
-Common Containers used for their ordering property
-```
-stack: first in last out (FILO, push-pop state, graph traversal depth-first) 
-queue: first in first out (FIFO, graph traversal breadth-first)
-heap: min/max in a collection of items (Priority Queue, graph traversal priority, A-Star)
-tree: various (behavior trees, rules, logic, composition)
-graphs: various (pathfinding, parsing, state machine)
-```
-
-
-Tier 5.02: Batching Optimization @Polish
+Tier 5.01: Batching Optimization @Polish
 ================================
 
 Batching is the process of gathering many small related tasks into a group. Once the group has reached an ideal size the group of tasks gets worked on. This technique is often uses when a separate gatherer thread and processing thread is required (ie. Inter-process communication). Once the gatherer thread has collected enough data it will signal the processing thread to start working.
@@ -204,27 +225,4 @@ Cons
 Gathering tricks
 - Gathers want to touch as little of the data they wish to process. This often means that they don't access the memory they are handing off to the processor and moreoften just remap the memory (IPC case) or pass a pointer to the data.
 - Dirty Flag: In the case that you have many items and do not want to store a whole pointer to indicate work should be done to an item a "dirty" flag may be used. When this flag (1 bit) is set it lets the processing thread know this item should be processed. This is especially useful when the data is already contigious in memory and most items need processing.
-
-
-Tier 4.11: Performance multithread programming
-==============================================
-Above are many useful primitives to enable multi-threaded programming as a paradigm. These are very useful for a variety of system tasks but are not particularly fast in terms of performance.
-
-Common areas to optimize multithreaded programming:
-- Creating performance multithreaded code is all about dividing up the data such that there is no need to synchronize it in the first place. When you must synchronize between threads do so at stages in the data pipeline which has the smallest amount of data to synchronize.
-- Expending extra memory to create a local and a shared copy of values which must be synchronized can improve performance because we can reduce the synchronization between threads.
-- Instrument threading primitives (Mutex, semaphore, Conditional Variable) to log directly to a profiler. This is important since using most thread primitives lead to threads waiting in sleep so the cost may be hidden otherwise.
-- @TODO @Incomplete add more wisdom once I have become wiser to the ways of multithreaded programming. Ask people who have more experience in this area.
-
-@Talk about batching and thread context switching probably.
-
-
-@TODO
-
-* Dirty Flag (Object/data has changed)
-* Container check number (Reduce lookup count by holding onto a change id/number to know if a container has been changed since last time you attempted to find something inside it). There can be both a Change/Add and a Change/Subtract number to further reduce extra checks.
-
-* Moore's Law - CPU "power" progression
-* Amdahl's law - Multi-core speedup limits
-* Little's Law - How everything uses queues and what it means. This is a really long article/section which is more a ramifications of how the internet/hardware does high throughput communication.
 
