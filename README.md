@@ -40,10 +40,4 @@ Tier Explanation
 * Tier 1.xx-2.xx : Foundational knowledge
 * Tier 3.xx-7.xx : Situationally useful and domain-specific knowledge
 
-Note: If you have never written code before in any language, the distillery is not a good resource for you. Find and do a beginner tutorial series in any language then come back once you have at least +5 hours of personal coding time.
-
-Summary NOT
-===========
-* The distillery is NOT an in-depth source of information.
-* The distillery is NOT a great resource if you've never written code before.
-* The distillery is NOT It is a compilation of summaries to expose computer science ideas and concepts rapidly to its audience.
+Note: If you have never written code before in any language, the distillery is not a good resource for you. Find and do a beginner tutorial series in any language then come back once you have at least +25 hours of personal coding time.
