@@ -1,13 +1,109 @@
 #incomplete: This page is still under development and will reach a finer level of completion in the future.
+
 This page is focused on learned about useful development practices that you will commonly see programs use.
 
 Tier 2.00: Logs
 ============================================
 
-- Information: File, Line, Module (if applicable), Timestamps (helps with I/O race conditions)
-- Level: Logs, Warning, Errors
-@Verbosity
-@Examples
+For any large program it can be useful to log out text or other information for later reading. This can inform you of the order in which your program executed or, in most useful cases, failed to execute.
+
+Example: Consider a program that connects to a server when running and how at any point the network connection might fail. Having a log to indicate a loss of signal can help a programer identify how a program reached a specific state.
+
+A good logging system may incorperate verbosity levels which can be used to filter out certain types of messages.
+
+Usual verbosity levels:
+```
+* Verbosity_Log     - Record order of program execution, expected behavoir.
+* Verbosity_Warning - Record order of program execution, handled, but non-standard behavoir.
+* Verbosity_Error   - Unhandled or exceptional behavoir that will dramatically change the program behavoir.
+```
+
+**Example Logs**: Expected behavoir
+```
+Initialized Physics System
+Connected to home server at 192.168.0.1:9001
+All assets loaded.
+Starting Simulation.
+```
+
+**Example Warning**: Non-standard, but recoverable.
+```
+Failed to connect with home server at 192.168.0.1:9001.
+Audio thread sample was queue empty, audio blip expected.
+Failed to compile shader "Shaders/RopeParticle.glsl" using default fallback.
+```
+
+**Example Errors**: No easy recovery path. Program might be terminated or paused.
+```
+Entity sytem block allocation failed!
+OS Thread for task "UpdateParticles" failed to start.
+Level file "Levels/MainGameplay.lvl" contained invalid format.
+```
+
+In large programs, especially if multi-threaded or multi-process, additional general information is often added to add clarity on the order, log operating thread, and context.
+
+**Example** full log:
+```
+Format:
+[sec:ms:us, filename:line#] Verbosity_Type: Message
+
+Sample log file:
+
+...
+[1923:030:542, connection.c:1924] Warning: Connection with server time out.
+[1923:031:145, connection.c:2150] Log: Attempting to connect with server 192.168.0.1
+[1927:998:642, packet.c:643] Error: Message block allocator out of memory.
+[1928:005:132, error.c:241] Error: System memory access violation at 0x00000004. Freezing all threads and attempting graceful program termination.
+[1928:101:155, init.c:530] Log: Program shutdown complete
+```
+
+Additional logging tricks:
+
+Push and pop tabs or insert arrow tokens to visually group blocks of log statements together.
+**Example**: Level startup
+```
+Starting Level "DarkLevel0.lvl"
+  Loading Assets
+    Sprites Loaded
+    Meshes Loaded
+    Sounds loaded
+    Scripts loaded
+  Asset Load complete
+Level Started
+```
+**Example**: Data driven modular gameplay effect
+```
+Updating gameplay effect: Bomb Effect
+  On Update
+    Check Time: Loop 0.5s
+      Spawn Object: Bomb Beep SFX
+    Check Time: Single 10s
+      Trigger Event: On Impact
+  On Impact
+    Effect Shape: Sphere
+      Apply Impulse
+      Apply Status: Frost
+      Apply Damage: Type[Piercing, Frost]
+    Spawn Object: Frost Bomb Explosion VFX
+    Spawn Object: Frost Bomb Explosion SFX
+    Destroy: Self
+```
+
+Adding a thread number or thread name to logging help find issues whereby a thread is executing code erroneously.
+**Example**:
+```
+Without thread names: Looks like player is randomly getting updated twice in a single frame.
+[015:100]: Updating player movement
+[015:120]: Updating player movement
+[015:123]: Updating player movement
+[015:140]: Updating player movement
+
+With thread names: Very obvious the audio thread, perhaps a callback, is doing something wrong.
+[TH:Game :015:100]: Updating player movement
+[TH:Game :015:120]: Updating player movement
+[TH:Audio:015:123]: Updating player movement
+[TH:Game :015:140]: Updating player movement
+```
 
 Tier 2.01: Asserts
 ============================================

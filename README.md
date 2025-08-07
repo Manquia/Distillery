@@ -1,5 +1,5 @@
 Distillery
-by Micah Rust
+by Myka Rust
 
 
 High Concept and Goals
@@ -43,35 +43,9 @@ Tier Explanation
 * Tier 1.xx-2.xx : Foundational knowledge
 * Tier 3.xx-7.xx : Situationally useful and domain-specific knowledge
 
-Sample Code:
-* C/C++: Use Visual Studio 2017 or text editor of your choice
-* CSharp: Use Visual Studio 2017 or text editor of your choice
-* Jai: Pending Release
-
 Note: If you have never written code before in any language, the distillery is not a good resource for you. Find and do a beginner tutorial series in any language then come back once you have at least +5 hours of personal coding time.
-
-Detail
-======
-Programming languages I'd like to see code samples for:
-* C/C++
-* Jai
-* C#
-
-Operating Systems I'd like to see code samples for:
-* Windows (win32 API)
-* Posix
-
-Contributions
-=============
-Contributions are welcome and wanted. I do not have the will nor knowledge to write samples in every language, nor am I an expert in all things computer science. If you find something factually incorrect, feel the need for a new section, or want to write some source samples please feel free to email me at micahtim@gmail.com and we can see about adding you as a contributor.
 
 Summary NOT
 ===========
 * The distillery is NOT a tutorial series. But does have source samples on a per-language/per-Operating system basis when applicable.
 * The distillery is NOT an in-depth source of information. It is a compilation of summaries to expose computer science ideas and concepts rapidly to its audience.
-
-Credits
-=======
-
-Special Thanks
-* Elijah Rust
