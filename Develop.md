@@ -1,6 +1,4 @@
-#incomplete: This page is still under development and will reach a finer level of completion in the future.
-
-This page is focused on learned about useful development practices that you will commonly see programs use.
+This page is focused on useful development practices that may help you create better programs.
 
 Tier 2.00: Logs
 ============================================
@@ -12,28 +10,26 @@ Example: Consider a program that connects to a server when running and how at an
 A good logging system may incorperate verbosity levels which can be used to filter out certain types of messages.
 
 Usual verbosity levels:
-```
-* Verbosity_Log     - Record order of program execution, expected behavoir.
-* Verbosity_Warning - Record order of program execution, handled, but non-standard behavoir.
-* Verbosity_Error   - Unhandled or exceptional behavoir that will dramatically change the program behavoir.
-```
+* Verbosity_Log: Record order of program execution, expected behavoir.
+* Verbosity_Warning: Record order of program execution, handled, but non-standard behavoir.
+* Verbosity_Error: Unhandled or exceptional behavoir that will dramatically change the program behavoir.
 
-**Example Logs**: Expected behavoir
+**Example Log**: Expected behavoir
 ```
-Initialized Physics System
+Initialized graphics system
 Connected to home server at 192.168.0.1:9001
 All assets loaded.
-Starting Simulation.
+Starting simulation.
 ```
 
 **Example Warning**: Non-standard, but recoverable.
 ```
 Failed to connect with home server at 192.168.0.1:9001.
-Audio thread sample was queue empty, audio blip expected.
+Audio thread sample queue was empty, audio blip possible.
 Failed to compile shader "Shaders/RopeParticle.glsl" using default fallback.
 ```
 
-**Example Errors**: No easy recovery path. Program might be terminated or paused.
+**Example Error**: No easy recovery path. Program might be terminated or paused.
 ```
 Entity sytem block allocation failed!
 OS Thread for task "UpdateParticles" failed to start.
@@ -42,24 +38,26 @@ Level file "Levels/MainGameplay.lvl" contained invalid format.
 
 In large programs, especially if multi-threaded or multi-process, additional general information is often added to add clarity on the order, log operating thread, and context.
 
-**Example** full log:
+**Example**: Detailed log file
 ```
 Format:
-[sec:ms:us, filename:line#] Verbosity_Type: Message
+[sec:ms:us, Filename:lineNumber] Verbosity_Type: Message
 
 Sample log file:
 
 ...
 [1923:030:542, connection.c:1924] Warning: Connection with server time out.
-[1923:031:145, connection.c:2150] Log: Attempting to connect with server 192.168.0.1
-[1927:998:642, packet.c:643] Error: Message block allocator out of memory.
-[1928:005:132, error.c:241] Error: System memory access violation at 0x00000004. Freezing all threads and attempting graceful program termination.
+[1923:039:145, connection.c:2150] Log: Attempting to connect with server 192.168.0.1
+[1928:001:642, packet.c:643] Error: Message block allocator out of memory.
+[1928:005:132, error.c:241] Error: System memory access violation at 0x00000004.
+[1928:006:533, error.c:245] Log: Freezing all threads.
+[1928:008:754, error.c:257] Log: Attempting graceful shutdown.
 [1928:101:155, init.c:530] Log: Program shutdown complete
 ```
 
-Additional logging tricks:
+**Additional logging tricks**
 
-Push and pop tabs or insert arrow tokens to visually group blocks of log statements together.
+* Push and pop tabs or insert arrow tokens to visually group blocks of log statements together.
 **Example**: Level startup
 ```
 Starting Level "DarkLevel0.lvl"
@@ -89,7 +87,7 @@ Updating gameplay effect: Bomb Effect
     Destroy: Self
 ```
 
-Adding a thread number or thread name to logging help find issues whereby a thread is executing code erroneously.
+* Adding a thread number or thread name to logging help find issues whereby a thread is executing code erroneously.
 **Example**:
 ```
 Without thread names: Looks like player is randomly getting updated twice in a single frame.
@@ -105,11 +103,13 @@ With thread names: Very obvious the audio thread, perhaps a callback, is doing s
 [TH:Game :015:140]: Updating player movement
 ```
 
-Tier 2.01: Asserts
-============================================
-Asserts are  runtime development build checks to ensure the program's state is valid. Asserts help programers make small and large changes to a program because these checks will alert the programer of any invalid state they accidentally created.
+* If a program uses extensive logging it might be useful to add categories that divide logging into specific domains or sections of the program.
 
-Asserts are a development tool. Asserts are often partially or completly disabled in release/shiped builds of a program.
+Tier 2.01: Runtime Asserts
+============================================
+Asserts are runtime development build checks to ensure the program's state is valid. Asserts help programers make small and large changes to a program because these checks will alert the programer of any invalid state that is accidentally created.
+
+Asserts are a development tool and are often partially or completly disabled in release/shipped builds of a program.
 
 Assert statement format:
 ```
