@@ -3,11 +3,12 @@ Summary
 Overview of intrinsic types and common user-types seen in computer programming.
 
 Pre-Requisite: [Memory.md:1.XX](https://github.com/Manquia/Distillery/blob/master/Memory.md)
+
 Note: See [Containers.md](https://github.com/Manquia/Distillery/blob/master/Containers.md) for collection types.
 
 Tier 1.00: Integers (Signed and Unsigned)
 =========================================
-CPU hardware computes _integer_ values in binary (base 2). In order to represent negative _integers_, two's compliment is used.
+CPU hardware computes _integer_ values in binary (base 2). In order to represent negative _integers_, Two's Compliment is used.
 
 Common intrinsic integer operations:
 
@@ -17,6 +18,7 @@ Common intrinsic integer operations:
 * '/' Division       - Divides 1 signed or unsigned _integer_ by another. The mathimatical floor is applied to the result.
 
 Note: If an operations _integers'_ signed-ness does not match, usually the unsigned _integer_ will be converted to signed before doing the operation.
+
 Note: Examples below use 8-bit _integers_, but also apply to 16, 32, 64, 128 bit signed/unsigned _integer_ types just add more value (V) bits.
 
 _Integer_ Memory Layout:
@@ -31,7 +33,7 @@ signed 8-bit integer:   SVVVVVVV
 8-bit signed integer examples:   00110110 = 54,   11111100 = -4
 ```
 
-Signed _integer's_ ise Two's Compliment: If you want to invert the sign of an integer then you flip all bits and add 1.
+Signed _integer's_ use Two's Compliment: If you want to invert the sign of an integer then you flip all bits and add 1.
 ```
 2's compliment example: 54 = 00110110 -(flip bits)-> 11001001 -(add 1)-> 11001010 = -54
 2's Compliment example: -4 = 11111100 -(flip bits)-> 00000011 -(add 1)-> 00000100 = 4
@@ -39,13 +41,13 @@ Signed _integer's_ ise Two's Compliment: If you want to invert the sign of an in
 
 Teir 1.01: Floating Point/Real Numbers
 ======================================
-Floating point or Real numbers have a level of precision proportional to the bits in the format. This means the format has a limited precision based on the number of bits the format uses. For 32-bit IEEE floats the precision level is ~7 decimals (ie. 1.234567) near 0-1 values and gets worse as you incrase in magnitude. This means that if we have a number which becomes more precise then 7 decimals during its calculation that precision will be lost when we store the number back into memory.
+Floating Point or Real numbers have a level of precision proportional to the bits in the format. This means the format has a limited precision based on the number of bits the format uses. For 32-bit IEEE floats the precision level is ~7 decimals (ie. 1.234567) near 0-1 values and gets progressivly worse as you increase in magnitude. This means that if we have a number which becomes more precise then 7 decimals during its calculation that precision will be lost when we store the number back into memory.
 
-Examples will be for 32-bit IEEE floating point. Floating point numbers with 16-bit and 64-bit have different ratios for each secton but follow the same guidelines.
+Examples will be for 32-bit IEEE floating point. Floating point numbers with 16-bit and 64-bit have different ratios for each secton but follow the same general guidelines.
 
  - S <- Signed bit (most significant). 0 = positive, 1 = negative.
  - E <- Exponent bits. An exponent of 0 is the value 127
- - F <- Fraction bit, Holds the fraction value
+ - F <- Fraction bits. Hold a fractional value based on bit position (ie. 1/2, 1/4, 1/8...)
 
 32-bit IEEE floating point (single-precision floating-point format)
 ```
@@ -55,26 +57,26 @@ Examples will be for 32-bit IEEE floating point. Floating point numbers with 16-
  |
  Signed bit
  
-value = (-1 * signed bit) * (2^(exponent-127)) * (1/fraction)
-
-Note: The '1/fraction' part is complicated. The above is a simplified lie.
+value = (-1 * Signed bit) * (2^(exponent-127)) * (1 + fractional value sum)
 ```
 
-(extra) Floats can represent these values which all have different bit-representations: 0, -0, NAN (Not a Number), -Nan, INF (Infinity), -INF. These values may need special handing/checking in your code.
+Note: The above is simplified and does not hold true for subnormal numbers. [Wikipedia](https://en.wikipedia.org/wiki/Single-precision_floating-point_format)
+
+(extra) Floats can represent these values which all have different bit-representations: +0, -0, NAN (Not a Number), -Nan, INF (Infinity), -INF. These values may need special handing/checking in your code.
 
 (extra) While doing floating point number operations the CPU may use much wider registers between floating point operations to reduce rouding errors. This means that the CPU may use a 76-bit wide float format internally and once its operations are completed in the registers it will round down to a 64-bit format to save to memory.
 
 Tier 1.02: Pointers
 ===================
-Pointers store an address value which can be used to access memory. The pointer's type how the memory is interpreted and  its stride when doing arithmatic operations. See @Pointers.txt for more details.
+Pointers store an address value which can be used to access memory. The pointer's type determines how the memory is interpreted and its stride when doing arithmatic operations. See [Pointers.md](https://github.com/Manquia/Distillery/blob/master/Pointer.md) for more details.
 
-Teir 1.03: enums and flags
-==========================
-An enum is a bit pattern of a specified length which represents some abstract information about your program.
+Teir 1.03: enums and enum flags
+===============================
+An _enum_ is a named bit pattern of a specified length which represents some information about your program.
 
-**Example:** Enum to hold state
+**Example:** _Enum_ used to represent an engine's status
 ```
-enum EngineState : u8   // use unsigned operations and bit pattern length of 8 bits
+enum EngineStatus : u8   // 'u8': Use unsigned integer operations and bit pattern length of 8 bits
 {
   None = 0,    // Pattern: 00000000
   Off = 1,     // Pattern: 00000001
@@ -82,11 +84,12 @@ enum EngineState : u8   // use unsigned operations and bit pattern length of 8 b
   Broken = 3,  // Pattern: 00000011
 }
 ```
-A flag is a enum in which each bit may have an implied addative property with all other bits in the bit pattern's length.
 
-**Example**: Flags used to store state
+An _enum_ flag is an _enum_ in which each bit may have an implied additive property with all other bits in the bit pattern's length.
+
+**Example**: Emum Flags used to represent a goblin's state
 ```
-enum GoblinState : u8  // use unsigned operations and bit pattern length of 8 bits
+enum GoblinState : u8   // 'u8': Use unsigned integer operations and bit pattern length of 8 bits
 {
   NoState  = 0,  // Bit: 00000000
   Alive    = 1,  // Bit: 00000001
@@ -99,17 +102,17 @@ enum GoblinState : u8  // use unsigned operations and bit pattern length of 8 bi
   Archor   = 128 // Bit: 10000000
 {
 ```
+
 This means we could have a GoblinState have in 256 different states all of which may have different meaning to our program.
 ```
 GoblinState Value:
 
- Value| Bits set         | Meaning                                   |
+ Value| Bits set         | Represented Meaning                       |
 ------+------------------+-------------------------------------------+
   163 = 128 | 32 | 2 | 1 = (Archor) | (Elite) | (Burning) | (Alive)  |
   113 = 64 | 32 | 16 | 1 = (Fighter) | (Elite) | (Leader) | (Alive)  |
 ------+------------------+-------------------------------------------+
 ```
-(extra) A single enum may include both flags and bit patterns but may require additional work to access/set the flags or patterns independently depending on their size and alignment.
 
 Teir 1.04: Custom/User-defined Types (struct/class/object)
 ======================================================
@@ -127,9 +130,9 @@ struct Person
 };
 ```
 
-(extra) User defined types often have their own namespace which may contain additional items such as global variables, constants, functions. See Namespaces for more details.
+(extra) User defined types often have their own namespace which may contain additional items such as global variables, constants, functions. See [Types.md:2.05](https://github.com/Manquia/Distillery/blob/master/Types.md#tier-205-namespaces-and-type-namespaces) for details.
 
-(extra) Some languages allow for user-defined types to inherit or include another types namespace and/or functions. See @Control.md 3.09: Inheritance.
+(extra) Some languages allow for user-defined types to inherit or include another types' namespace. See [Control.md:3.09 Inheritance](https://github.com/Manquia/Distillery/blob/master/Control.md#teir-309-inheritance) for details.
 
 Tier 2.00: Type Conversion: Implicit and Explicit
 =================================================
