@@ -45,7 +45,7 @@ string data| 01000001 01000010 01000101 = 65 66 69 = "A" "B" "E" |
 
 Tier 1.03: Memory Addresses/pointers
 ====================================
-Memory is a collection of bits, and we can look at a specific location in the memory by its address value. An address does not specify a location in bits, but rather its location in bytes. An address is logically just a number that we can use to look into the memory by x number of bytes from some known start point in memory. For this reason any number, both postive and negative, may represent a valid address. (extra) In most cases the known start point is 0, as it is for absolute pointers, but this is not the case for relative pointers.
+Memory is a collection of bits, and we can look at a specific location in the memory by its address value. An address does not specify a location in bits, but rather its location in bytes. An address is logically just a number that we can use to look into the memory by x number of bytes from some known start point in memory. For this reason any number, both postive and negative, may represent a valid address.
 
 **Example**: Address Space
 ```
@@ -56,11 +56,10 @@ Memory is a collection of bits, and we can look at a specific location in the me
   \______________________Memory_____________________/
 ```
 
+Looking at address 4 in the memory above, we see the _byte_ "01101101".
+Looking at address 0 in the memory above, we see the _byte_ "01111110".
 
-Looking at address 4 in the memory above, we see the byte "01101101".
-Looking at address 0 in the memory above, we see the byte "01111110".
-
-A pointer is basically an address location with a type which describes how to interpret that address's memory and move to other addresses of the same type which are next to it in memory. (See Pointers.txt for more details)
+A pointer is basically an address location with a type which describes how to interpret that address's memory and move to other addresses of the same type which are next to it in memory. (See [Pointers.md](https://github.com/Manquia/Distillery/blob/master/Pointer.md) for more details)
 
 Tier 2.00: Memory is Aligned
 ============================

@@ -1,10 +1,10 @@
 Summary
 =======
-Overview of intrinsic types, and common user-types seen computer programming. 
+Overview of intrinsic types and common user-types seen in computer programming. 
 
-Note: This section does not include any containers. (see [Containers.md](https://github.com/Manquia/Distillery/blob/master/Containers.md) for containers)
+Note: See [Containers.md](https://github.com/Manquia/Distillery/blob/master/Containers.md) for collection types.
 
-Pre-Requisite: Memory.md Tier 1
+Pre-Requisite: [Memory.md:Tier 1.xx](https://github.com/Manquia/Distillery/blob/master/Memory.md)
 
 Tier 1.00: Integers (Signed and Unsigned)
 =========================================
