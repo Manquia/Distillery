@@ -43,6 +43,8 @@ string data| 01000001 01000010 01000101 = 65 66 69 = "A" "B" "E" |
 -----------+----------------------------+----------+-------------+
 ```
 
+See [Types.md](https://github.com/Manquia/Distillery/blob/master/Types.md) for more examples of user-defined types.
+
 Tier 1.03: Memory Addresses/pointers
 ====================================
 Memory is a collection of bits, and we can look at a specific location in the memory by its address value. An address does not specify a location in bits, but rather its location in bytes. An address is logically just a number that we can use to look into the memory by x number of bytes from some known start point in memory. For this reason any number, both postive and negative, may represent a valid address.
