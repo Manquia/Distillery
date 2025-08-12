@@ -27,13 +27,13 @@ The topics may be read from your browser or other markdown viewing application. 
 Where to start:
 * Veteran Programmer (2+ years, _systems-level_ programming): Skim read teir 2 section titles. You likely know most everything below tier 3 topics.
 * Intermediate programmer (college grad, self-taught): Skim read teir 1 topics. Knowing the names for certain terms/concepts will be helpful in later tiers.
-* New programmer: Read everything in each tier of every document before proceeding to the next tier. [Starting Point](https://github.com/Manquia/Distillery/blob/master/Memory.md)
+* New programmer: Read everything in each tier of every document before proceeding to the next tier. [Starting Point](Memory.md)
 
 Topic Summary
-* [Control.md](https://github.com/Manquia/Distillery/blob/master/Control.md)    : Programming methods/designs/systems related to static and dynamic control of your program.
-* [Memory.md](https://github.com/Manquia/Distillery/blob/master/Memory.md)     : Programming memory layout and features
-* [Pointer.md](https://github.com/Manquia/Distillery/blob/master/Pointer.md)    : Programming access patterns/designs/systems for your memory.
-* [Types.md](https://github.com/Manquia/Distillery/blob/master/Types.md)      : Programming types as a CPU instruction interface and program design.
+* [Control.md](Control.md)    : Programming methods/designs/systems related to static and dynamic control of your program.
+* [Memory.md](Memory.md)     : Programming memory layout and features
+* [Pointer.md](Pointer.md)    : Programming access patterns/designs/systems for your memory.
+* [Types.md](Types.md)      : Programming types as a CPU instruction interface and program design.
 * [Containers.md](Containers.md) : Programming container concepts and a brief explanation of their function.
 
 Tier Explanation
