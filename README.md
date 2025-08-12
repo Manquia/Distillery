@@ -30,11 +30,11 @@ Where to start:
 * New programmer: Read everything in each tier of every document before proceeding to the next tier. [Starting Point](https://github.com/Manquia/Distillery/blob/master/Memory.md)
 
 Topic Summary
-* Control.md    : Programming methods/designs/systems related to static and dynamic control of your program.
-* Memory.md     : Programming memory layout and features
-* Pointer.md    : Programming access patterns/designs/systems for your memory.
-* Types.md      : Programming types as a CPU instruction interface and program design.
-* Containers.md : Programming container concepts and a brief explanation of their function.
+* [Control.md](https://github.com/Manquia/Distillery/blob/master/Control.md)    : Programming methods/designs/systems related to static and dynamic control of your program.
+* [Memory.md](https://github.com/Manquia/Distillery/blob/master/Memory.md)     : Programming memory layout and features
+* [Pointer.md](https://github.com/Manquia/Distillery/blob/master/Pointer.md)    : Programming access patterns/designs/systems for your memory.
+* [Types.md](https://github.com/Manquia/Distillery/blob/master/Types.md)      : Programming types as a CPU instruction interface and program design.
+* [Containers.md](Containers.md) : Programming container concepts and a brief explanation of their function.
 
 Tier Explanation
 * Tier 1.xx-2.xx : Foundational knowledge

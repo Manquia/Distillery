@@ -130,7 +130,7 @@ struct Person
 };
 ```
 
-(extra) User defined types often have their own namespace which may contain additional items such as global variables, constants, functions. See [Types.md:2.05](https://github.com/Manquia/Distillery/blob/master/Types.md#tier-205-namespaces-and-type-namespaces) for details.
+(extra) User defined types often have their own namespace which may contain additional items such as global variables, constants, functions. See [Types.md:2.05 Namespaces](https://github.com/Manquia/Distillery/blob/master/Types.md#tier-205-namespaces-and-type-namespaces) for details.
 
 (extra) Some languages allow for user-defined types to inherit or include another types' namespace. See [Control.md:3.09 Inheritance](https://github.com/Manquia/Distillery/blob/master/Control.md#teir-309-inheritance) for details.
 
