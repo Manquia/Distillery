@@ -114,17 +114,17 @@ GoblinState Value:
 ------+------------------+-------------------------------------------+
 ```
 
-Teir 1.04: Custom/User-defined Types (struct/class/object)
-======================================================
-A user-defined type is a collection of types packed in a layout with a given size. Most languages use the keyword **struct** and/or **class** and/or **object** to indicate the begining of a user defined type's definition. 
+Teir 1.04: Custom/User-defined Types (struct/class)
+===================================================
+A user-defined type is a collection of named types (ie. member variables) packed in a specific memory layout. Most languages use the keyword **struct** and/or **class** to indicate the begining of a user defined type's definition.
 
 **Example**: Person struct example
 ```
 struct Person
 {
 	int age;
-	int height;
-	int weight;
+	float height;
+	float weight;
 	int money;
 	string name;
 };
