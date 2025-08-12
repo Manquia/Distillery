@@ -27,7 +27,7 @@ The topics may be read from your browser or other markdown viewing application. 
 Where to start:
 * Veteran Programmer (2+ years, _systems-level_ programming): Skim read teir 2 section titles. You likely know most everything below tier 3 topics.
 * Intermediate programmer (college grad, self-taught): Skim read teir 1 topics. Knowing the names for certain terms/concepts will be helpful in later tiers.
-* New programmer: Read everything in each tier of every document before proceeding to the next tier.
+* New programmer: Read everything in each tier of every document before proceeding to the next tier. [Starting Point](https://github.com/Manquia/Distillery/blob/master/Memory.md)
 
 Topic Summary
 * Control.md    : Programming methods/designs/systems related to static and dynamic control of your program.

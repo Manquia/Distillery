@@ -1,5 +1,10 @@
+Summary
+=======
+Overview of intrinsic types, and common user-types seen computer programming. 
+
+Note: This section does not include any containers. (see [Containers.md](https://github.com/Manquia/Distillery/blob/master/Containers.md) for containers)
+
 Pre-Requisite: Memory.md Tier 1
-Summary: A basic overview of intrinsic types, and common user types seen in programming languages. This section does not include any containers (see @Containers.md for details on containers).
 
 Tier 1.00: Integers (Signed and Unsigned)
 =========================================
