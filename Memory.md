@@ -43,7 +43,7 @@ string data| 01000001 01000010 01000101 = 65 66 69 = "A" "B" "E" |
 -----------+----------------------------+----------+-------------+
 ```
 
-See [Types.md](https://github.com/Manquia/Distillery/blob/master/Types.md) for more examples of user-defined types.
+See [Types.md](Types.md) for more examples of user-defined types.
 
 Tier 1.03: Memory Addresses/pointers
 ====================================
@@ -61,7 +61,7 @@ Memory is a collection of bits, and we can look at a specific location in the me
 Looking at address 4 in the memory above, we see the _byte_ "01101101".
 Looking at address 0 in the memory above, we see the _byte_ "01111110".
 
-A pointer is basically an address location with a type which describes how to interpret that address's memory and move to other addresses of the same type which are next to it in memory. (See [Pointers.md](https://github.com/Manquia/Distillery/blob/master/Pointer.md) for more details)
+A pointer is basically an address location with a type which describes how to interpret that address's memory and move to other addresses of the same type which are next to it in memory. (See [Pointers.md](Pointer.md) for more details)
 
 Tier 2.00: Memory is Aligned
 ============================

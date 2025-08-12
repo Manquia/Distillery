@@ -2,9 +2,9 @@ Summary
 =======
 Overview of intrinsic types and common user-types seen in computer programming.
 
-Pre-Requisite: [Memory.md:1.XX](https://github.com/Manquia/Distillery/blob/master/Memory.md)
+Pre-Requisite: [Memory.md:1.XX](Memory.md)
 
-Note: See [Containers.md](https://github.com/Manquia/Distillery/blob/master/Containers.md) for collection types.
+Note: See [Containers.md](Containers.md) for collection types.
 
 Tier 1.00: Integers (Signed and Unsigned)
 =========================================
@@ -60,15 +60,15 @@ Examples will be for 32-bit IEEE floating point. Floating point numbers with 16-
 value = (-1 * Signed bit) * (2^(exponent-127)) * (1 + fractional value sum)
 ```
 
-Note: The above is simplified and does not hold true for subnormal numbers. [Wikipedia](https://en.wikipedia.org/wiki/Single-precision_floating-point_format)
+Note: The above is simplified and does not hold true for subnormal numbers. [Wikipedia IEEE Float 32](https://en.wikipedia.org/wiki/Single-precision_floating-point_format)
 
-(extra) Floats can represent these values which all have different bit-representations: +0, -0, NAN (Not a Number), -Nan, INF (Infinity), -INF. These values may need special handing/checking in your code.
+(extra) floating point numbers can represent the following values and have unique bit-representations: +0, -0, -NAN (Not a Number), -NAN, +INF (Infinity), -INF. These values may need special handing/checking in your code.
 
 (extra) While doing floating point number operations the CPU may use much wider registers between floating point operations to reduce rouding errors. This means that the CPU may use a 76-bit wide float format internally and once its operations are completed in the registers it will round down to a 64-bit format to save to memory.
 
 Tier 1.02: Pointers
 ===================
-Pointers store an address value which can be used to access memory. The pointer's type determines how the memory is interpreted and its stride when doing arithmatic operations. See [Pointers.md](https://github.com/Manquia/Distillery/blob/master/Pointer.md) for more details.
+Pointers store an address value which can be used to access memory. The pointer's type determines how the memory is interpreted and its stride when doing arithmatic operations. See [Pointers.md](Pointer.md) for more details.
 
 Teir 1.03: enums and enum flags
 ===============================
@@ -130,9 +130,9 @@ struct Person
 };
 ```
 
-(extra) User defined types often have their own namespace which may contain additional items such as global variables, constants, functions. See [Types.md:2.05 Namespaces](https://github.com/Manquia/Distillery/blob/master/Types.md#tier-205-namespaces-and-type-namespaces) for details.
+(extra) User defined types often have their own namespace which may contain additional items such as global variables, constants, functions. See [Types.md:2.05 Namespaces](Types.md#tier-205-namespaces-and-type-namespaces) for details.
 
-(extra) Some languages allow for user-defined types to inherit or include another types' namespace. See [Control.md:3.09 Inheritance](https://github.com/Manquia/Distillery/blob/master/Control.md#teir-309-inheritance) for details.
+(extra) Some languages allow for user-defined types to inherit or include another types' namespace. See [Control.md:3.09 Inheritance](Control.md#teir-309-inheritance) for details.
 
 Tier 2.00: Type Conversion: Implicit and Explicit
 =================================================
