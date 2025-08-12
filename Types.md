@@ -1,26 +1,25 @@
 Summary
 =======
-Overview of intrinsic types and common user-types seen in computer programming. 
+Overview of intrinsic types and common user-types seen in computer programming.
 
+Pre-Requisite: [Memory.md:1.XX](https://github.com/Manquia/Distillery/blob/master/Memory.md)
 Note: See [Containers.md](https://github.com/Manquia/Distillery/blob/master/Containers.md) for collection types.
-
-Pre-Requisite: [Memory.md:Tier 1.xx](https://github.com/Manquia/Distillery/blob/master/Memory.md)
 
 Tier 1.00: Integers (Signed and Unsigned)
 =========================================
-Examples are for 8-bit integers, but apply to 16,32,64,128 bit signed/unsigned integer types just add more value bits.
-
-Computers represent integers in base 2.
+CPU hardware computes _integer_ values in binary (base 2). In order to represent negative _integers_, two's compliment is used.
 
 Common intrinsic integer operations:
 
-* '+' Addition       - Adds 2 signed or unsigned integers together. If integers' signed-ness does not match, usually the unsigned integer will be converted to signed before doing a signed addition.
-* '-' Subtraction    - Subracts 1 signed or unsigned integer from another. Subtraction in most programming languages of unsigned or signed numbers will result in a signed integer.
-* '*' Multiplication - Multiply 2 signed or unsigned numbers together.
-* '/' Division       - Divides 1 signed or unsigned integer by another. Result m is also unsigned and takes logical floor of the result.
+* '+' Addition       - Adds 2 signed or unsigned _integers_ together.
+* '-' Subtraction    - Subracts 1 signed or unsigned _integer_ from another.
+* '*' Multiplication - Multiply 2 signed or unsigned _integers_ together.
+* '/' Division       - Divides 1 signed or unsigned _integer_ by another. The mathimatical floor is applied to the result.
 
+Note: If an operations _integers'_ signed-ness does not match, usually the unsigned _integer_ will be converted to signed before doing the operation.
+Note: Examples below use 8-bit _integers_, but also apply to 16, 32, 64, 128 bit signed/unsigned _integer_ types just add more value (V) bits.
 
-Integer Memory Layout:
+_Integer_ Memory Layout:
 ```
 S <- signed bit (most significant) determines if integer is positive or negative.
 V <- value bit in base 2.
@@ -31,7 +30,8 @@ signed 8-bit integer:   SVVVVVVV
 8 bit unsigned integer examples: 00110110 = 54,   11111100 = 252
 8-bit signed integer examples:   00110110 = 54,   11111100 = -4
 ```
-Signed integer's are Two's Compliment: If you want to invert the sign of an integer then you flip all bits and add 1.
+
+Signed _integer's_ ise Two's Compliment: If you want to invert the sign of an integer then you flip all bits and add 1.
 ```
 2's compliment example: 54 = 00110110 -(flip bits)-> 11001001 -(add 1)-> 11001010 = -54
 2's Compliment example: -4 = 11111100 -(flip bits)-> 00000011 -(add 1)-> 00000100 = 4
