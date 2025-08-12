@@ -109,8 +109,8 @@ A variable is a referencable section of memory that has an associated type and n
 {
   // By declaring 'myVariable' as an int we get memory from the stack of size int and then assign it the value 4.
   int myVariable = 4; 
-  
-  
+
+
   // Other language syntax
   myVariable : int = 4;
   var myVariable = 4;   // int type is infered by assigning the integer value of 4
@@ -139,7 +139,7 @@ void DoThing1()
 {
   {
     int myVar = 0; // Declare local varaible 'myVar' as an integer
-	
+
     // 'myVar' is destroyed before the end of this scope
   } 
   myVar = 1; // ERROR: 'myVar' is beyond its lifetime, accessing it is UB.
@@ -148,15 +148,17 @@ void DoThing1()
 
 **Example**: A variable may reference another variable in memory by pointer or reference. We may use the operating system to allocate persistent memory often called **heap** allocations.
 ```
-void DoThing3()
+void main()
 {
   int* myVarPtr = nullptr;  // Declare local variable 'myVarPtr' as a pointer to an integer that points to address 0 in memory.
   {
-    myVarPtr = new int(42); // Allocate an integer on the heap and assign our pointer with its address.
+    myVarPtr = new int(42); // Allocate (new/malloc) an integer on the heap and assign our pointer with its address.
   }
   *myVarPtr = 69;           // Accessing the interger that 'myVarPtr' is pointing to is fine.
-  
-  // We must explicitly return the memory to heap (delete) once we are done with it. Otherwise it will not be cleaned up until the end of the program. Lossing track of memory is called a memory leak and repeated leaks can result in degraded performance and program failure as resources dwindle.
+
+  // We must explicitly return the memory to heap (delete/free) once we are done with it.
+  // Otherwise it will not be cleaned up until the end of the program. Lossing track of memory is called a memory leak.
+  // Repeat memory leaks can result in degraded performance and program failure as memory resources dwindle.
   delete myVarPtr;
 }
 ```
@@ -164,22 +166,31 @@ void DoThing3()
 
 **Example**: A variable may be declared as a **global** in which case its lifetime matches the program. A global variable is created/allocated on program startup and destroyed/cleaned up when the program terminates.
 ```
-// To declare a global variable, programming languages often either use a keyword like static or global or they are located outside of a function or object scope.
+// To declare a global variable, programming languages often either use a keyword
+// like 'static', 'global', or they are located outside of a function or object scope.
 
 // declare 'g_myGlobalVar' as a global variable in the global namespace.
 static int g_myGlobalVar = 0;
 
-struct Penguin`2
-  // Declare a global variable inside 'DoThing' function.
-  static int g_Thingy = 0;
+struct Penguin
+{
+  // Declare 'g_cuteFactor' as a global variable inside Penguin struct's namespace.
+  static int g_cuteFactor = 0;
+}
+
+void main()
+{
+  // Declare 'g_secondsRun' as a global variable inside 'main' function.
+  static int g_secondsRun = 0;
+  
   
   // Example of accessing global variables
   g_myGlobalVar += 1;
   Penguin::g_cuteFactor += 1;
-  g_Thingy += 1;
+  g_secondsRun += 1;
 }
 ```
-* The 'g_' prefix is not required, but it is often good practice because global variables can be accessed from everywhere so its a warning to be careful.
+* The 'g_' prefix is not required, but it is often good practice to remind programmers. This is because global variables can be accessed from anywhere and match the program's lifespan.
 
 **Example**: Declaring a **member** variable in an object/class's scope bind's the variable's lifetime with that of the object. The object or type may be a local variable on the **stack**, memory in the **heap**, or a **global** variable.
 
@@ -195,7 +206,7 @@ class Ship
 // Declare a global Ship variable. Its captain member variable lifespan matches the program
 Ship g_TheLongGame;
 
-void DoThingy0()
+void DoThing4()
 {
   // Create a heap Ship variable. It's captain member variables matches the Ship
   Ship* shipInHeap = new Ship(); // shipInHeap's captain allocated/created
