@@ -1,9 +1,11 @@
-Control.txt
+Summary
+=======
+Overview of control flow operations and techniques in computer programming.
 
-Pre-requisite: Types.txt tier 1
+Pre-requisite: [Types.md:1.XX](Types.md)
 
 Tier 1.00: Executing Statements
-==============================
+===============================
 A statement is a section of code that is evaluated by the rules of the language. A statement may have:
  - 0 or more sub-statements (AND)
  - 0 or more expressions (AND)
@@ -13,22 +15,22 @@ A statement is a section of code that is evaluated by the rules of the language.
 
 ```
 // Mathimatical operation evaluation order follows the programming languages' rules.
-// The ordering is called the operator precedence.
-value : Integer;       // Evaluated first.   Reads: create a variable "value" of type Integer.
-value = 7;             // Evaluated second.  Reads: variable "value" is assigned the integer value of 7.
-value = value + 2;     // Evaluated thrid.   Reads: variable "value" plus integer value 2 is assigned to variable "value"
-value = value - value; // Evaluated fourth.  Reads: variable "value" is subtracted by variable "value" is assigned to variable "value"
+// The ordering is called the Operator Precedence.
+value : Integer;       // Evaluated first.   Read: create a variable "value" of type Integer.
+value = 7;             // Evaluated second.  Read: variable "value" is assigned the integer value of 7.
+value = value + 2;     // Evaluated thrid.   Read: variable "value" plus integer value 2 and then assigned to variable "value"
+value = value - value; // Evaluated fourth.  Read: variable "value" is subtracted by variable "value" and then assigned to variable "value"
 ```
 
 Tier 1.01: Conditional Expressions
 ==================================
-Programs can make a choice based on expressions which evaluate to a boolean of true or false. The selection of a section of code to run based on the value of the boolean is called a branch. To create a useful expression which evaluates to true or false there are many useful operators we can use.
+Programs can make a choices on any expression which evaluates to a boolean of **true** or **false**. The selection of a block of code to run based on the value of the boolean is called a branch. To create a useful expression which evaluates to true or false there are many useful _integer_ and _floating_ _point_ operators we can use.
 
 **Example**: List of common conditional operators
 ```
 Operator  Name             Result
 
-Comparables                          
+
 e0 == e1  Equals(E)        True when e0 and e1 are equal, else false.
 e0 != e1  Not Equals       True when e0 and e1 are not equal, else false.
 e0 >  e1  Greater Than(GT) True when e0 is greater than e1, else false.
@@ -42,19 +44,21 @@ e0 && e1  Logical AND      True when e0 and e1 are true, else false. See Short C
 e0 || e1  Logical OR       True when e0 or e1 are true, else false. See Short Circuit below.
 
 
-e0 &  e1  Bit-wise AND     True when e0 and e1 are true, else false. See Bit-wise Conditionals.
-e0 |  e1  Bit-wise OR      True when e0 or e1 are true, else false. See Bit-wise Conditionals.
+e0 &  e1  Bit-wise AND     True when e0 and e1 are true, else false. See Bit-wise Conditionals below.
+e0 |  e1  Bit-wise OR      True when e0 or e1 are true, else false. See Bit-wise Conditionals below.
 ```
-Most languages allow conversion from integer values into boolean. Most languages evaluate 0 as false, and non-zero integer values as true.
+[Short Circuit](Control.md#tier-200-short-circuit)
+[Bit-wise Conditionals](Control.md#tier-201-bit-wise-conditionals)
 
-(extra) Three-way comparison '<=>' is sometimes called the "spaceship" operator.
+Note: Some languages allow conversion from integer values into boolean. Most languages evaluate 0 as false and any non-zero integer values as true.
 
+(extra) Three-way comparison operator '<=>', sometimes called the "spaceship" operator, compares two variables and returns an _integer_ value of -1, 0, or +1 when the comparision is Less Than, Equal, or Greater Than.
 
 Tier 1.02: Grouping operator: '( ... )'
 =======================================
-The grouping operator may be used to denote the order in which an expression is evaluated. The order an expression is evaluated is otherwise language dependent based on the operators and sometimes types used in the expression.
+The grouping operator may be used to denote the order in which an expression is evaluated. The order an expression is evaluated is otherwise language dependent based on its Operator Precedence.
 
-**Example**: Below the expression '1)' may evaluate to either expression '2)' or '3)' depending on the language and type of e0,e1,e2.
+**Example**: Below the expression '1)' may evaluate to either expression '2)' or '3)' depending on the language.
 ```
 1)   e0 || e1 == e2    // Language dependent behavior
 2)   e0 ||(e1 == e2)   // (e1 == e2) will be executed before e0 || (result)
@@ -66,7 +70,8 @@ Tier 1.03: Scope: '\{ ... \}'
 Scope is a section or block of code denoted by some language semantics with a definite start and end.
 
 Common scope semantics:
-* Curly bracket: Newlines, Spaces, Tabs do not affect the scope
+
+Curly brackets: White space characters such as newlines, spaces, or tabs do not affect the scope
 * '{' is the start or opening of a new scope
 * '}' is the end or closing of the last open scope.
 ```
@@ -83,7 +88,8 @@ Common scope semantics:
   // Scope 1
 }
 ```
-* Tab/space-based: Tabs denote scope begin/end
+
+Tab/space-based: Tabs or spaces denote a scope's begin and end
 ```
 Scope 1
     Scope 1.a
@@ -96,7 +102,7 @@ Scope 1
 Tier 1.04: Variables
 ====================
 
-A variable is a referencable section of memory that is associated with a type. 
+A variable is a referencable section of memory that has an associated type and name.
 
 **Example**: Declaring a **local** variable common syntax
 ```
@@ -110,15 +116,15 @@ A variable is a referencable section of memory that is associated with a type.
   var myVariable = 4;   // int type is infered by assigning the integer value of 4
 }
 ```
-* The stack is a block of memory used by functions as a sketch pad. See Tier 4.00 for more details.
-* The memory size of a variable is often the same as the type but may vary depending on alignment requirements of the CPU instructions being used by the type.
+* Local variables are stored on the stack  which is a block of memory used by threads while executing instructions. See [Tier 4.00](Control.md#tier-400-execution-stack) for more details.
+* (extra) The memory size of a variable is often the same as the type but may vary depending on alignment requirements of the CPU instructions being used for the type.
 
-In most programming languages the location or scope in which you declare a variable defines that variable's **lifetime** and where its **memory is stored**. Once a variable goes beyond its lifetime,  accessing that variable results is undefined behavior (UB).
+In most programming languages the location or scope in which you declare a variable defines that variable's **lifetime** and where its **memory is stored**. Once a variable goes beyond its lifetime, accessing that variable results is undefined behavior (UB) or compile-time errors.
 
 **Example**: Declaring a variable in a function's scope or sub-scopes makes it a **local** variable with a lifetime lasting till the end of the scope. Memory is stored on the **stack**.
 ```
 // Example 1
-void DoThingy0()
+void DoThing0()
 {
   int myVar = 0; // Declare local variable 'myVar' as an integer
   {
@@ -129,7 +135,7 @@ void DoThingy0()
 }
 
 // Example 2
-void DoThingy1()
+void DoThing1()
 {
   {
     int myVar = 0; // Declare local varaible 'myVar' as an integer
@@ -142,22 +148,19 @@ void DoThingy1()
 
 **Example**: A variable may reference another variable in memory by pointer or reference. We may use the operating system to allocate persistent memory often called **heap** allocations.
 ```
-// Example 1
-void DoThingy0()
+void DoThing3()
 {
-  int* myVarPtr = nullptr; // Declare local variable 'myVarPtr' as a pointer to integer that points to 0 address in memory.
+  int* myVarPtr = nullptr;  // Declare local variable 'myVarPtr' as a pointer to an integer that points to address 0 in memory.
   {
-    myVarPtr = new int(1); // Allocate an integer on the heap and assign our pointer with its address.
+    myVarPtr = new int(42); // Allocate an integer on the heap and assign our pointer with its address.
   }
-  *myVarPtr = 2;           // Accessing the interger that 'myVarPtr' is pointing to is fine.
+  *myVarPtr = 69;           // Accessing the interger that 'myVarPtr' is pointing to is fine.
   
-  // We must explicitly delete the allocation otherwise it will not be cleaned up until the end of the program.
-  // Failures to clean up is called a **memory leak** and can result in severe performance degradation and failure in non-managed programming languages.
+  // We must explicitly return the memory to heap (delete) once we are done with it. Otherwise it will not be cleaned up until the end of the program. Lossing track of memory is called a memory leak and repeated leaks can result in degraded performance and program failure as resources dwindle.
   delete myVarPtr;
-  
-  // 'myVarPtr' is destroyed before the end of this scope
 }
 ```
+* (extra) In garbage collected languages you can still have memory leaks if two or more objects have cyclical references and it is not detected by the collector. In that case be sure to null out the cyclical object references before the objects are let go.
 
 **Example**: A variable may be declared as a **global** in which case its lifetime matches the program. A global variable is created/allocated on program startup and destroyed/cleaned up when the program terminates.
 ```
@@ -167,7 +170,7 @@ void DoThingy0()
 static int g_myGlobalVar = 0;
 
 struct Penguin`2
-  // Declare a global variable inside 'DoThingy' function.
+  // Declare a global variable inside 'DoThing' function.
   static int g_Thingy = 0;
   
   // Example of accessing global variables
@@ -178,39 +181,37 @@ struct Penguin`2
 ```
 * The 'g_' prefix is not required, but it is often good practice because global variables can be accessed from everywhere so its a warning to be careful.
 
-**Example**: Declaring a variable in an object/class's scope bind's the variable's lifetime with that of the object. The object or type may be a local variable on the **stack**, memory in the **heap**, or a **global** variable.
+**Example**: Declaring a **member** variable in an object/class's scope bind's the variable's lifetime with that of the object. The object or type may be a local variable on the **stack**, memory in the **heap**, or a **global** variable.
 
 ```
-struct Ship
+class Ship
 {
-  Sailor Julee;
-  
-  // The pointer address value lifespan is bound to this object. We will NOT clean up whatever
-  // we are pointing at. See Smart Pointers @Pointer.md 2.02 if automatic cleanup is desired.
-  Ship* enemyShip;
+  Sailor captain;
+
+  int hullStrength;
+  float maxSpeed;
 }
 
-// Declare ship as a global. Julee's lifespan matches the program.
+// Declare a global Ship variable. Its captain member variable lifespan matches the program
 Ship g_TheLongGame;
 
 void DoThingy0()
 {
-  
-  Ship* shipInHeap = new Ship(); // shipInHeap's Julee allocated/created
-  delete shipInHeap              // shipInHeap's Julee cleaned up/destroyed
-  
-  Ship shipOnStack;              // shipOnStack's Julee created
-  
-  // 'shipOnStack' is destroyed before the end of this scope Julee with it.
+  // Create a heap Ship variable. It's captain member variables matches the Ship
+  Ship* shipInHeap = new Ship(); // shipInHeap's captain allocated/created
+  delete shipInHeap              // shipInHeap's captain cleaned up/destroyed
+
+  // Create a local Ship variable. It's captain member variables dies at the end of its scope
+  Ship shipOnStack;              // shipOnStack's captain created
+  // 'shipOnStack' is destroyed before the end of this scope. captain is destroyed with it
 }
 ```
 
-(extra) A namespace is similar to a folder/category. Its a way of organizing types and functions.
-(extra) Some programming languages make it is possible to hide variables in a higher scope if the variables' names match. This is called a **shadow variable** and often the compiler will print a warning and/or choose the variable which is the least number of scope jumps away.
+(extra) Some programming languages make it is possible to hide variables in a higher scope if the variable names match. This is called a **shadow variable** and often the compiler will print a warning and/or choose the variable which is the least number of scope jumps away.
 
 Tier 1.05: Functions
-========================
-Functions encapsulate code and take inputs and outputs. Functions can be called in any order enabling linear calls, recursion, and cycles.
+====================
+Functions encapsulate code and take inputs and provide outputs. Functions can be called in any order enabling linear calls, recursion, and cycles.
 
 Most programs have a special entry point function, often called **main**, which is the logical starting point of the program.
 
@@ -223,31 +224,77 @@ Order     | Function call order
 Linear    | foo() -> bar() -> magic() -> king()
 Recursion | foo() -> foo() -> foo() -> foo() -> foo()
 Cycle     | foo() -> bar() -> foo() -> bar() -> foo() -> bar()
-hybrid    | foo() -> bar() -> king() -> foo() -> bar() -> magic()
+Mixed     | foo() -> bar() -> king() -> foo() -> bar() -> magic()
 ```
 
-Functions have a return point, local variables, inputs, or outputs per function call which are stored on the current thread's stack. A thread's stack memory is finite which can cause the action of calling a function to result in a stack overflow.
+Functions have a return point, local variables, inputs, and/or outputs per function call which are stored on the current thread's execution stack. A thread's stack memory is usually finite. The action of calling a function or creating a local variable fills this memory up and can cause a 'stack overflow' if it's full.
 
-A function may be in a user-defined or in a namespace in which case you may need to reference the namespace or type to call the function. **Member functions** are often defined inside the user-defined type's scope and take a pointer or refernce called 'this' or 'self' to the object they are inside.
+Functions exists in a namespace as a means to categorize them. To access a function you may need to prefix the namespace at the call site.
 
-(extra) Another name for a Function is a Callback or Callback Handler. A function is often refered to in this way when providing a reference to the function which may be executed later instead of immediatly.
+**Example**: Function inside namespace
+```
+namespace GXF_Math
+{
+  float CalculateWeight(PhysicsBody body) { ... }
+}
 
-(extra) main is rarely the 'start' of the program's execution as other parts of the program require execution to before the main entry point function is called. Some languages and compilers will include ways to modify the program's setup with other specially marked function that the programmer has access to modify/add.
+// Call site of 'CalculateWeight' is prefixed with 'GXF_Math::'
+GXF_Math::CalculateWeight(body);
+```
+* A function that has no encapsulating namespace is placed in the 'global' namespace and is accessible without a prefix.
+* Often classes and structs also have a namespace so any static member functions will also need a similar prefix to access.
 
-(extra) Function overloading allows the same function name to have multiple versions for different input types. This means that foo() and foo(int) are not the same functions. When calling the "foo" function the compiler will choose which overload is most appropriate. The compiler's choice can be unexpected if there are many reasonable choices, so it is advised to not overload too much on similar types (ie. The choice between u64,s64,size_t,uint_fast8_t would be hard to know without expert knowledge of the compiler and environment).
+**Member functions** are functions defined within a class or struct and recieve an implicit pointer or refernce called 'this' or 'self' to the instance of the object type they are inside.
 
-(extra) Functions may exhibit some of the following some qualities:
-* Pure: Function only modifies input and return values
-* Free: Function is not connected to any class/object and may be called from anywhere.
+**Example**: Calling Member Function
+```
+class BopItExtreme
+{
+  void AdvanceToNext() { ... }
+  void BopIt() { ... }
+  void TwistIt() { ... }
+
+  void PullIt()
+  {
+    // since 'Pullit' is a member function we can access this instance's 'm_timer'
+    m_timer = 0; 
+    // We can also call other member functions
+    AdvanceToNext();
+  }
+
+  float m_timer;
+};
+
+void main()
+{
+  BopItExtreme orangeToy;
+  BopItExtreme blueToy;
+
+  orangeToy.BopIt();   // Call the orange toy's BopIt() member function  
+  blueToy.PullIt();    // Call the blue toy's PullIt() member function
+
+  // Note: The call to BopIt and Pullit above are operating on different variables
+}
+```
+
+Properties a function may exhibit:
+* Pure: Function only modifies its input and return values.
+* Free/static: Function is not connected to any class/object and may be called from anywhere.
 * Member: Function is connected to a class/object and may use an implicit this pointer to access the class/object.
-* Lambda Capture: Creates an implicit class/object in a function when declared which then may be accessed when the function runs. The class/object may be allocated on the stack or heap depending on the limitations of the language and compiler and use-case.
+* Lambda Capture: Creates an implicit struct with initial values at the function declaration site which then may be accessed when the function runs at a later time. The class/object may be allocated on the stack or heap depending on the limitations of the language, compiler, and use-case.
+
+(extra) Another name for a function is a Callback or Callback Handler. A function is often refered to in this way when providing a reference to the function which may be executed later instead of immediatly.
+
+(extra) main is rarely the true 'start' of the program's execution as other parts of the program require execution before the main entry point function is called. Some languages and compilers will include ways to modify the program's setup with other specially marked functions that the programmer has access to modify/add.
+
+(extra) Function overloading allows the same function name to have multiple versions for different input types. This means that foo() and foo(int) are not the same function. When calling the "foo" function the compiler will choose which overload is most appropriate. The compiler's choice can be unexpected if there are many reasonable choices, so it is advised to not overload too much on similar types (ie. The choice between u64, s64, size_t, uint_fast8_t would be hard to know without expert knowledge of the compiler and environment).
 
 Tier 1.06: Control Statements
 =============================
 A control statement branches to a section of code (often a new scope) based on the result of its conditional expression.
 ```
 '...' <- Shorthand for insert code to run here
-{ }   <- Curly bracket pair often denote begin and end of a scope
+{   } <- Curly bracket pair denote begin and end of a scope
 ```
 **Example**: if
 
@@ -272,7 +319,7 @@ else if(cond1) // if cond0 was false AND cond1 is true,
 else if(cond2) // if cond0 and cond 1 were false AND cond 2 is true,
 { ... }        // then this scope will run.
 ```
-Chaining if else may chain as many conditions as you like, there is no limit.
+* There is no limit to how many chaining if else statements are allowed.
 
 **Example**: Switch (Basic)
 ```
@@ -284,19 +331,26 @@ if(cond0)      // conditional expression
   case 50:{ ... } // when cond0 equals 50, then this scope will run.
 }
 ```
-Note: Inside a switch "case:", most languages continue to run linearly through the code until a "break" is called to jump out of the switch statement. "case 0: { ... } break;" is commonly used to prevent the execution from falling through to other cases. @see Break
 
-(extra) Some languages impliment switch statements for other types such as strings or even expressions. These sorts of switch statements are not as fast as an integer-based solution, but can improve code readability and reduce complexity.
+Note: Inside a switch "case:", most languages continue to run linearly through the code until a "break" is called to jump out of the switch statement.
+```
+"case 0: { ... } break;
+```
 
-- strings: "case "Hello World":{ ... }"
-- expressions: "case value > 2:{ ... }"
+(extra) Some languages impliment switch statements for other types such as strings or even general expressions. These sorts of switch statements are often not as fast as an integer-based switch statements but can improve code readability and reduce complexity.
+```
+- strings:       case "Hello World":{ ... }
+- expressions:   case value > 2:    { ... }
+```
 
 Tier 1.07: Loops
 ================
 A loop contains a section of code (often a new scope) which the program may repeat 0 or more times depending on a given conditional expression.
+
 ```
 '...' <- Shorthand for insert code to run here
 ```
+
 **Example**: while
 ```
 while(cond)   // while cond is true, 
@@ -310,16 +364,17 @@ Used all index or items in a logical order or container whereby each index or it
 foreach 1..5   // for each index starting at 1 rising to 5 (1,2,3,4,5)
 { ... }        // evaluate scope with index until all selected index have run.
 ```
+
 **Example**: foreach (item in container)
 ```
 foreach (item in Container) // for each item in the container, (defaults to order when possible) @See types.md: iterators for more details
 { ... }                     // run scope with every item in the container.
 ```
-**Example**: for(init;cond;loop)
 
-- "init" expression will run ONLY once upon entering the "for" statement
-- "loop" expression will run after the scope has finished.
-- "cond" conditional expression will run after loop's scope, while true, the scope will run again.
+**Example**: for(init;cond;loop)
+* init: expression will run ONLY once upon entering the "for" statement
+* loop: expression will run after the loop scope has finished.
+* cond: conditional expression will run after loop's scope, while true, the scope will run again.
 ```
 for(init;cond;loop) // when cond is true,
 { ... }             // then this scope will run.
@@ -330,7 +385,10 @@ do                <- always execute scope atleast once.
 { ... }           <- scope to run.
 while(cond);      <- while cond is true, run scope again.
 ```
-(extra) do while loops sometimes have the cond always false and then use break statements to skip to the end of the scope.
+
+Note: Loop behavoir can further be altered by the 'break' and 'continue' keywords. See [2.03: Jump Statements](Control.md#tier-203-jump-statements
+
+(extra) 'do while loops' sometimes have the cond always set to false and then use 'break' statements to skip to the end of the scope at any point to emulate the behavoir of a goto/jump statement.
 
 Tier 1.08 Arithmatic Operators
 ===============================
@@ -460,6 +518,7 @@ for(int i = 0; i < 10; ++i)   // for i values 0-9
   print(i);                   // print i. Will print: 01346789
 }                             // end of scope that we skip to in continue
 ```
+
 **Example**: (extra) Switch (advanced)
 
 Preface: Labels are treated as a complete statement which can be placed anywhere within the function. Switch statements are often implemented to use labels. '%' is the modulo operator in the following examples (ex. 5 % 4 = 1, 7 % 4 = 3).
@@ -927,11 +986,11 @@ Common action system features:
  
 Tier 4.00: Execution Stack
 ==========================
-The stack refers to a block of memory that is used during execution to store local variables and return addresses all calls. A stack's size can range from a few hundred bytes to dynamically expanding to infinite size depending on your environment.
+The stack refers to a block of memory that is used during execution to store local variables. A stack's size can range from a few hundred bytes to many megabytes or even be setup to dynamically expand depending on your environment and programming language.
 
-The main thread (the execution line which calls the entry point) has a stack whose properties are often defined by the compiler.
+The main thread (the execution line which calls the program entry point) has a stack whose properties are often defined statically by at compile-time.
 
-(extra) On modern CPU's the stack's memory is often a block of contiguous memory in RAM. Nothing special about it aside from its purpose.
+In some environments you may change the read and write permissions on a stack's memory when it's thread is frozen or set to sleep. This can be useful for detecting memory corruption but tends to make context switching between threads more expensive.
 
 Teir 4.01: Long Jump
 ====================
