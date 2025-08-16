@@ -417,32 +417,30 @@ typedef struct {
 
 } TextElementOptions;
 
-void _DrawButton(TextElementOptions opts) { /* ... */ }
+void _DrawText(TextElementOptions opts) { /* ... */ }
 
 // A macro further simplifies the call and provides default values.
-#define DrawButton(...) _DrawButton((TextElementOptions){ \
+#define DrawText(...) _DrawText((TextElementOptions){ \
   .size = (Vec2){ .x = 100.0f, .y = 50.0f},               \
   __VA_ARGS__})
 
 int main(void)
 {
   // function call
-  _DrawButton((TextElementOptions){
+  _DrawText((TextElementOptions){
     .size = (Vec2){ 325, 150 }, // Order matters (Vec2){ x,y }
     .text = "Enter World",
     .layer = 1
   });
   
   // macro
-  DrawButton(
+  DrawText(
     .text = "Hello Macros!",
     .corner_radius = 2.0f);
 
   return 0;
 }
 ```
-* A C macro can also be used to farther simplify the example above to "DrawButton( .text = "Hello, .layer = 1);" and provide default values.
-
 
 @TODO @INCOMPLETE
 
