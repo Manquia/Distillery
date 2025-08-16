@@ -389,6 +389,84 @@ Vector2 contains elements: x, y
 "v2.xyxy" constructs a Vector4 from v2 with elements x,z holding v2's x value and y,w holding v2's y value.
 ```
 
+Tier 4.05: Compound Struct Assignment
+=====================================
+Some programming languages support assigning a value to member variables of a struct or class by name. This can provide some nice utility as only part of the object may be configured with specialized values while the rest are provided some default value.
+
+**Example**: C99 Text UI Options
+```c
+typedef struct {
+  float x;
+  float y;
+} Vec2;
+
+typedef struct { 
+  Vec2 position;
+  Vec2 size;
+  Vec2 anchor;
+  float corner_radius;
+  
+  const char* text;
+
+  // Note: unnamed union to provide multiple names for the same option
+  // this can make renaming an option or deprecating an old name easier.
+  union {
+    int layer;
+    int display_layer;
+  };
+
+} TextElementOptions;
+
+void _DrawButton(TextElementOptions opts) { /* ... */ }
+
+// A macro further simplifies the call and provides default values.
+#define DrawButton(...) _DrawButton((TextElementOptions){ \
+  .size = (Vec2){ .x = 100.0f, .y = 50.0f},               \
+  __VA_ARGS__})
+
+int main(void)
+{
+  // function call
+  _DrawButton((TextElementOptions){
+    .size = (Vec2){ 325, 150 }, // Order matters (Vec2){ x,y }
+    .text = "Enter World",
+    .layer = 1
+  });
+  
+  // macro
+  DrawButton(
+    .text = "Hello Macros!",
+    .corner_radius = 2.0f);
+
+  return 0;
+}
+```
+* A C macro can also be used to farther simplify the example above to "DrawButton( .text = "Hello, .layer = 1);" and provide default values.
+
+
+@TODO @INCOMPLETE
+
+struct FloatFormater
+{
+  int precision = 2;
+  bool scientific = false;
+  ...
+};
+
+
+struct ImageProcessorOpts
+{
+  bool isGeneratingMipMaps;
+  bool isMultithreaded;
+  ...
+};
+
+{
+  ImageProcessorOpts opt { .isMultithreaded = true };
+}
+
+
+
 # Incomplete
 
 
