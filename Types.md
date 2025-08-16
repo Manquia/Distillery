@@ -441,32 +441,3 @@ int main(void)
   return 0;
 }
 ```
-
-@TODO @INCOMPLETE
-
-struct FloatFormater
-{
-  int precision = 2;
-  bool scientific = false;
-  ...
-};
-
-
-struct ImageProcessorOpts
-{
-  bool isGeneratingMipMaps;
-  bool isMultithreaded;
-  ...
-};
-
-{
-  ImageProcessorOpts opt { .isMultithreaded = true };
-}
-
-
-
-# Incomplete
-
-
-#2
-@Intrinsic type conversion Behavior
