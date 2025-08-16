@@ -75,7 +75,7 @@ Teir 1.03: enums and enum flags
 An _enum_ is a named bit pattern of a specified length which represents some information about your program.
 
 **Example:** _Enum_ used to represent an engine's status
-```
+```c
 enum EngineStatus : u8   // 'u8': Use unsigned integer operations and bit pattern length of 8 bits
 {
   None = 0,    // Pattern: 00000000
@@ -88,7 +88,7 @@ enum EngineStatus : u8   // 'u8': Use unsigned integer operations and bit patter
 An _enum_ flag is an _enum_ in which each bit may have an implied additive property with all other bits in the bit pattern's length.
 
 **Example**: Emum Flags used to represent a goblin's state
-```
+```c
 enum GoblinState : u8   // 'u8': Use unsigned integer operations and bit pattern length of 8 bits
 {
   NoState  = 0,  // Bit: 00000000
@@ -119,7 +119,7 @@ Teir 1.04: Custom/User-defined Types (struct/class)
 A user-defined type is a collection of named types (ie. member variables) packed in a specific memory layout. Most languages use the keyword **struct** and/or **class** to indicate the begining of a user defined type's definition.
 
 **Example**: Person struct example
-```
+```cpp
 struct Person
 {
 	int age;
@@ -182,8 +182,8 @@ Tier 2.04: Iterators
 
 An **iterator** is a type used to traverse a collection of items often held within a container. Languages often provide a standard method/interface to get and operate iteration over a collection.
 
-**Example**: Iterators in C++
-```
+**Example**: C++ Iterators
+```cpp
 // Pass in MySpecialContainerType specialized to integers.
 void DoThing(MySpecialContainerType<int> collection)
 {
@@ -247,16 +247,18 @@ f ---(ANY)----> u: Convert as signed, then convert signed to unsigned.
 
 ```
 
-
 Tier 3.02: Getters/Setters
 ==========================
 Getters and Setters use value-like syntax to get and set data within an object. This allow the internal data representation of a value to be modified by many different input/output formats while its internal representation remains the same. It may also be helpful for debugging because we can add breakpoints, asserts, and trace/logging within a get or set function to provide information about who is accessing the value.
 
 **Example**: C# Temperature
-```
+```csharp
 class Temperature
 {
-  private Kelvin k; // internal data representation may be different than the user facing value getter and setter.
+  // internal data representation may be different than the user
+  // facing value getter and setter.
+  private Kelvin k;
+
   public float celcius
   {
     get { return k.ToCelcius(); }
@@ -272,13 +274,13 @@ class Temperature
 void UpdateWeather(Temperature temp, Weather weather)
 {
   if(weather == Weather.Cold)
-    temp.celcius -= 3; // I can refer to the celcius getter and setter here to use the "-=" operator
+    temp.celcius -= 3; // access celcius getter/setter and use the "-=" operator
   if(weather == Weather.Hot)
-    temp.fahrenheit += 10; // I can refer to the fahrenheit getter and setter here to use the "+=" operator
+    temp.fahrenheit += 10; // access fahrenheit getter/setter and use the "+=" operator
 }
 ```
 **Example**: C# Clock
-```
+```csharp
 class Clock
 {
   private Time t;  // Internal data representaion.
@@ -420,8 +422,8 @@ typedef struct {
 void _DrawText(TextElementOptions opts) { /* ... */ }
 
 // A macro further simplifies the call and provides default values.
-#define DrawText(...) _DrawText((TextElementOptions){ \
-  .size = (Vec2){ .x = 100.0f, .y = 50.0f},               \
+#define DrawText(...) _DrawText((TextElementOptions){   \
+  .size = (Vec2){ .x = 100.0f, .y = 50.0f },            \
   __VA_ARGS__})
 
 int main(void)
@@ -429,7 +431,7 @@ int main(void)
   // function call
   _DrawText((TextElementOptions){
     .size = (Vec2){ 325, 150 }, // Order matters (Vec2){ x,y }
-    .text = "Enter World",
+    .text = "Big Worlds",
     .layer = 1
   });
   
