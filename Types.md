@@ -443,3 +443,7 @@ int main(void)
   return 0;
 }
 ```
+
+Next To Add
+===========
+- Expains a few common and more exotic numbers formats: Base 64 Encoding, Unicode, Posit, etc...
