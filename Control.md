@@ -75,7 +75,7 @@ Curly brackets: White space characters such as newlines, spaces, or tabs do not 
 * '{' is the start or opening of a new scope
 * '}' is the end or closing of the last open scope.
 ```
-{ 
+{
   // Scope 1
   {
     // Scope 1.a
@@ -108,7 +108,7 @@ A variable is a referencable section of memory that has an associated type and n
 ```
 {
   // By declaring 'myVariable' as an int we get memory from the stack of size int and then assign it the value 4.
-  int myVariable = 4; 
+  int myVariable = 4;
 
 
   // Other language syntax
@@ -141,7 +141,7 @@ void DoThing1()
     int myVar = 0; // Declare local varaible 'myVar' as an integer
 
     // 'myVar' is destroyed before the end of this scope
-  } 
+  }
   myVar = 1; // ERROR: 'myVar' is beyond its lifetime, accessing it is UB.
 }
 ```
@@ -182,8 +182,8 @@ void main()
 {
   // Declare 'g_secondsRun' as a global variable inside 'main' function.
   static int g_secondsRun = 0;
-  
-  
+
+
   // Example of accessing global variables
   g_myGlobalVar += 1;
   Penguin::g_cuteFactor += 1;
@@ -268,7 +268,7 @@ class BopItExtreme
   void PullIt()
   {
     // since 'Pullit' is a member function we can access this instance's 'm_timer'
-    m_timer = 0; 
+    m_timer = 0;
     // We can also call other member functions
     AdvanceToNext();
   }
@@ -281,7 +281,7 @@ void main()
   BopItExtreme orangeToy;
   BopItExtreme blueToy;
 
-  orangeToy.BopIt();   // Call the orange toy's BopIt() member function  
+  orangeToy.BopIt();   // Call the orange toy's BopIt() member function
   blueToy.PullIt();    // Call the blue toy's PullIt() member function
 
   // Note: The call to BopIt and Pullit above are operating on different variables
@@ -364,7 +364,7 @@ A loop contains a section of code (often a new scope) which the program may repe
 
 **Example**: while
 ```
-while(cond)   // while cond is true, 
+while(cond)   // while cond is true,
 { ... }       // then run this scope again.
 ```
 
@@ -421,7 +421,7 @@ Tier 2.00: Short Circuit
 ========================
 The logical AND: '&&' and logical OR: '||' operators often support short-circuiting whereby not all expressions will be evaluated if the statement can no longer evaluate to true or false respectively.
 
-**Example**: 
+**Example**:
 
 Conditional expression evaluated:
 ```
@@ -439,13 +439,13 @@ The bit-wise AND: '&' and bit-wise OR" '|' can be used in a conditional, but mus
 
 Note: Bit-wise AND and bit-wise OR will operator on a per-bit basis doing the operation below to every bit between e0 and e1.
 ```
-bit-wise AND  e0    bit-wise OR  e0      
-            |0|1|              |0|1|
-0&0=0      -+-+-+   0|0=0     -+-+-+
-0&1=0      0|0|1|   0|1=1     0|0|1|
-1&0=0    e1-+-+-+   1|0=1   e1-+-+-+
-1&1=1      1|1|1|   1|1=1     1|1|1|
-           -+-+-+             -+-+-+
+bit-wise AND    e0             bit-wise OR    e0
+              |0|1|                         |0|1|
+0&0=0        -+-+-+            0|0=0       -+-+-+
+0&1=0        0|0|0|            0|1=1       0|0|1|
+1&0=0      e1-+-+-+            1|0=1     e1-+-+-+
+1&1=1        1|0|1|            1|1=1       1|1|1|
+             -+-+-+                        -+-+-+
 ```
 **Example**: using common true/false (T/F) values
 ```
@@ -474,7 +474,7 @@ binary  00000001 | 11111111 = 11111111
 T/F     true       true       true
 binary  10000001 | 00011001 = 10011001
 ```
-(extra) it should also be noted that we can use even more bit-wise operators in our conditionals so long as we understand and expect non-zero to evaluate to true and 0 to evaluate to false. Other bit-wise operations which may prove helpful are: bit-wise XOR, bit-wise NOT, Shift bits left/right, Count left/right side's number of consecutive zero/one bits, total count zero/one bits (popCount/hamming weight), Circular shift (rotation), 2's compliment, etc...
+Note: We can use even more bit-wise operators in our conditionals so long as we understand and expect non-zero to evaluate to true and 0 to evaluate to false. Other bit-wise operations which may prove helpful are: bit-wise XOR, bit-wise NOT, Shift bits left/right, Count left/right side's number of consecutive zero/one bits, total count zero/one bits (popCount/hamming weight), Circular shift (rotation), 2's compliment, etc...
 
 Tier 2.02: Label
 ================
@@ -483,7 +483,7 @@ Labels are constant compile-time referenceable markers in code. We can branch to
 
 Tier 2.03: Jump Statements
 ==========================
-Jump statements are control statement statements which use a label to branch. Jump statements can branch to any label within the function and as such can also create loops. 
+Jump statements are control statement statements which use a label to branch. Jump statements can branch to any label within the function and as such can also create loops.
 
 **Example**: goto (jump to the label)
 
@@ -494,7 +494,7 @@ goto MyLabel;          // jump to level called "MyLebel"
 ```
 The statement above is the same as the following:
 ```
-while(true) { }        // always, do nothing. 
+while(true) { }        // always, do nothing.
 ```
 Both statements will run the thread to forever doing nothing but jumping back to MyLebel and the conditional expression respectively.
 
@@ -503,18 +503,18 @@ Both statements will run the thread to forever doing nothing but jumping back to
 foreach (item in Container) // for each item in the container
 {
   if(item.value == 0)       // condition
-    break;                  // break out of the current loop, do not continue to next item. 
+    break;                  // break out of the current loop, do not continue to next item.
 }
 ...                         // After break OR every item in the container, run the following code
 ```
 **Example**:  break (jump out of multiple loops to named loop)
 ```
 foreach outer:(bucket in buckets) // for each bucket in buckets
-{                                 
+{
   foreach inner:(item in bucket)  // for each item in bucket
-  {                               
+  {
     if(item.value == 0)           // condition
-      break outer;                // break out of the inner loop and outer loop, do not continue to next bucket or item. 
+      break outer;                // break out of the inner loop and outer loop, do not continue to next bucket or item.
   }
 }
 ...                               // After break OR every item in the container, run the following code
@@ -539,9 +539,9 @@ switch(cond % 4)     // Switch conditionaly jumps to lebels below.
   case 0:
   while(i > 0)
   {
-            i -= 1;     
+            i -= 1;
     case 3: i -= 1;  // after 'i -= 1' statement, we fallthrough to the next statement
-    case 2: i -= 1; 
+    case 2: i -= 1;
     case 1: i -= 1;
   }
 }                    // at this point i will always be less than or equal to 0
@@ -556,15 +556,15 @@ An **iterator** is generally a user-defined type used to traverse a collection o
 Other purposes:
 * Providing Hints: Some search algorithms can be improved with a hint for closely related searches.
 * Safety Check: Many iterators will do safety checks when in a debug compile of the problem. These checks often include out of **bounds checks** (arrays), **iterator invalidation**
- 
+
 An iterator may become invalidated for various reasons, depending on the container, but often is a result of adding or removing an item from the container or destruction of the container while iterating. (extra) The iterator invalidation is because by adding or removing an item the container may need to reallocate the memory used which means all current iterators may be referencing invalid memory resulting in undefined behavior.
 
-**Example**: Iterate though array 
+**Example**: Iterate though array
 ```
 int main(void)
 {
     std::array<int, 8> myArray = GetArray();
-    
+
     // Many languages have syntactic sugar to utilize iterators.
     for(auto& item : myArray) // get object by reference
     {
@@ -594,7 +594,7 @@ struct GUIIcon : GUIElement  // (extra) Inheritance used here, see 3.09 for more
 GUIcon CreatePlayMovieIcon()
 {
     GUIIcon icon;
-    
+
     // Chain method calls to cusomize icon
     icon.SetSize(150,100)
         .SetDepth(1)
@@ -638,18 +638,18 @@ defer takes an expression or scope and executes it when the scope it is declared
 
 Tier 3.01: Polymorphism
 =======================
-Polymorphism is a catch-all term and can be broken down into compile-time (often zero-cost) and runtime (cheap) abstractions. Polymorphism, in general, is about changing forms/shapes to meet the needs of the program. It is worth noting that how these concepts work is highly language dependent.
+Polymorphism is a catch-all term and can be broken down into compile-time polymorphism (often zero-cost) and runtime polymorphism (cheap). Polymorphism, in general, is about changing the form of some code to meet the needs of the programmer. Polymorphisms' feature set is highly language dependent and in languages it is limited or non-existant.
 
-Compile-time Polymorphism: The addition, removal, modification, and generation of code and data at compile-time in a way that permutes the existing code of the program.
+Compile-time Polymorphism: The addition, removal, modification, and generation of code/data at compile-time. Generally in a way that permutes some existing code of the program to match a type or value.
 
-Runtime Polymorphism: hidden or inaccessible data added to the program which direct's program control at runtime.
+Runtime Polymorphism: Inserts hidden or inaccessible data that can then be used to direct's program control at runtime.
 
 Tier 3.02: Generics
 ===================
-Generics (aka templates) are a compile-time polymorphism language feature which allows a collection of code to specialize on a type and/or value. When specializing on a type it may have requirements (aka concepts) on its operations. When specializing on a value it must be of a specific type.
+Generics (aka templates) are a compile-time polymorphism language feature which allows a collection of code/functions or a type to specialize on another given type and/or value. When specializing on a type it may have requirements (aka concepts) on the type's namespaced functions/data or other global functions/data. When specializing on a value it must be of a specific compile-time known type so that it may be resolved at compilation.
 
 **Example**: function specialize on type
-```
+```cpp
 The function Add is a polymorphic function which is specialized on a given type T. A requirement of T is that it supports the binary '+' Operator.
 
 T Add<T>(T in0, T in1, T in2)
@@ -658,15 +658,15 @@ T Add<T>(T in0, T in1, T in2)
 }
 ```
 Specialization by type at call site:
-```
+```cpp
 Add(1,2,3);             // specialize to integers, returns 6
 Add(1.5, 2.5, 3.5);     // specialize to floats, returns 7.5
 Add("I", "Love", "U\n");// specialize to strings, returns "ILoveU\n"
 ```
-(extra) Often generics will let you specify the type explicitly at the call site to avoid ambiguity and for certain type conversions.
+(extra) Often generics will let you specify the type explicitly at the call site to avoid ambiguity and for certain type conversions. (ie. Add<int>(1,2,3) )
 
 **Example**: struct specialize on value
-```
+```cpp
 struct LeatherPouch<int CoinSlots, int ItemSlots>
 {
   CoinType coins[CoinSlots];
@@ -674,12 +674,14 @@ struct LeatherPouch<int CoinSlots, int ItemSlots>
 }
 ```
 Specialization by value at instantiation:
-```
+```cpp
 LeatherPouch<3,1> pouch;         // pouch is a value of type LeathPouch<3,1>
 pouch.coins[2] = CoinType.Gold;  // we can access the last coin and make it gold
 pouch.items[0] = MakeSwordItem();// Only 1 item, lets make it a sword.
 ```
 (extra) It is important to note, that struct specialization creates a new type per set of specialization values and/or types.
+
+(extra) Above we specialized the generic's parameters all at once. However, some languages allow partial specializations of their types. These partial  specialized types can then be used as a simplified form of the more complex generic while still allowing some customization to the programmer.
 
 Tier 3.03: Macros
 =================
@@ -691,7 +693,7 @@ Macros range in functionality between languages, but effectively give the progra
 
 #if defined(USE_HARDWARE)  // USE_HARDWARE is defined above, so this is true
 ...                        // Code will be compiled and run
-#else                    
+#else
 ...                        // Code will not be compiled or run.
 #endif                     // end point for #if's #else
 ```
@@ -767,7 +769,7 @@ void print(AnyPointer any)
   {
     case typeid(int):   printInteger(any.GetPointer()); break;
     case typeid(float): printFloat(any.GetPointer()); break;
-    case typeid(string):printString(any.GetPointer()); break;  
+    case typeid(string):printString(any.GetPointer()); break;
   }
 }
 ```
@@ -843,11 +845,11 @@ struct SuperClass : public BaseClass // publically inheret BaseClass
 void example()
 {
   SuperClass superClass;
-  
+
   BaseClass* pBaseClass = &superClass;
   SuperClass* pSuperClass = &superClass;
-  
-  pBaseClass->foo();   
+
+  pBaseClass->foo();
   pSuperClass->foo();
   superClass.foo();
 }
@@ -873,14 +875,14 @@ interface Door // interface called Door
 }
 interface Powered
 {
-  void TogglePower(bool on); 
+  void TogglePower(bool on);
 }
 
 struct GarageDoor : Door, Powered // inherit interface: Door and Powered
 {
   void Open() override { ... }
   void Close() override { ... }
-  
+
   void TogglePower override (bool on) { ... }
 }
 
@@ -889,7 +891,7 @@ void example()
   GarageDoor garageDoor;
   Door* door = garageDoor;
   Powerd* powered = garageDoor;
-  
+
   door->Open();
   door->TogglePower(false);
 }
@@ -927,11 +929,11 @@ void example()
   Animal animal;
   Cat cat;
   Garfield garfield;
-  
+
   Animal* pAnimal0 = &animal;
   Animal* pAnimal1 = &cat;
   Animal* pAnimal2 = &garfield;
-  
+
   pAnimal0->Eat();
   pAnimal0->Sleep();
   pAnimal1->Eat();
@@ -944,7 +946,7 @@ example prints: Eat | Sleep | Cat eat | Sleep | Cat eat | Garfield sleep |
 
 Tier 3.12: Event Systems (aka. message systems)
 ===============================================
-Event systems are used to notify the program about specific events or triggers that have happened in the program. These notifications may be internal to the program, such as a shutdown message, or external, such as the OS indicating that the keyboard key 'K' was pressed. Event systems are extremely varied but have some common configurable segments of functionality which are described below. In general, all event systems basically call a function at a specific time. 
+Event systems are used to notify the program about specific events or triggers that have happened in the program. These notifications may be internal to the program, such as a shutdown message, or external, such as the OS indicating that the keyboard key 'K' was pressed. Event systems are extremely varied but have some common configurable segments of functionality which are described below. In general, all event systems basically call a function at a specific time.
 
 * A "listener" refers to a function and/or function and associated data (object) that logically "receives" the event.
 * An "event type" refers to a specific event in the program (ie. Key Pressed, Mouse Moved) that may also relate to a specialized listener function signature.
@@ -994,7 +996,7 @@ Common action system features:
  * Call: Call a given function once.
  * CallTillSync: call a given function each update until the next sync point.
  * Sync: Delimits the end of an execution queue. (ie. All previously given actions must be completed before any future actions beyond this point will execute).
- 
+
 Tier 4.00: Execution Stack
 ==========================
 The stack refers to a block of memory that is used during execution to store local variables. A stack's size can range from a few hundred bytes to many megabytes or even be setup to dynamically expand depending on your environment and programming language.
@@ -1074,7 +1076,7 @@ Tier 4.04: Threads and data
 ===========================
 threads may run different hardware threads, cores, or even CPUs all of which may have access to different copies of the same memory. This means that an operation taken on the same memory address may not be correctly applied if done from multiple threads simultaneously.
 
-**Example**: 
+**Example**:
 ```
 void example()        // called by multiple thread simultaniously
 {
@@ -1121,7 +1123,7 @@ The code in exampleIncrement() and exampleDecrement() have their access patterns
 
 Tier 4.06: Spinlock (aka: Mutex)
 ================================
-A spinlock is a mutex which does not yield to the OS's execution in a sleep/wait routine when the lock cannot be acquired but instead attempts repeatedly to acquire the mutex in the loop. The loop may run millions of times and often have a timeout feature. A spinlock implementation may be the same as a mutex but include the added functionality to TryLock in a loop. 
+A spinlock is a mutex which does not yield to the OS's execution in a sleep/wait routine when the lock cannot be acquired but instead attempts repeatedly to acquire the mutex in the loop. The loop may run millions of times and often have a timeout feature. A spinlock implementation may be the same as a mutex but include the added functionality to TryLock in a loop.
 
 Tier 4.07: Semaphore
 ====================
@@ -1143,10 +1145,10 @@ Semaphore g_workSemaphore(4); // Initial counter of 4.
 void ResourceLimitExample()  // may be called by many threads, but supports a maximum of workerSemaphore's counter.
 {
   g_workSemaphore.Acquire();  // Ensure our thread is not above max supported of 4.
-  
+
   // Maximum of 4 threads may be running this code in parralell
   DoWork(); // Only supports 4 max concurrent threads.
-  
+
   g_workSemaphore.Release();
 }
 ```
@@ -1159,18 +1161,18 @@ Mutex g_workQueueMutex;
 void WorkerWaitForJob() // Worker threads wait in this function when not activly doing a job.
 {
   // Wait for semaphore to be incremented.
-  g_workSemaphore.Acquire();  
-  
+  g_workSemaphore.Acquire();
+
   // There is 1 or more Job(s) to claim
   ClaimJob();
-  
+
   return; // return and start the claimed job.
 }
 
 void PostJob()
 {
   AddJob();
-  
+
   g_workSemaphore.Release(); // Increment semaphore to wake a worker thread.
 }
 
@@ -1222,7 +1224,7 @@ void exampleWait(ConditionalVariable& cv)
 void exampleNotify(ConditionalVariable& cv)
 {
   while(g_waiters < 5) { Sleep(1); } // do nothing (spin) until we have 5 or more threads waiting on the CV
-  
+
   cvMutex.Lock()         // Lock the connected mutex
   for(1..5)              // Iterate 5 times.
     cv.NotifyCV();       // notify thread to wake up.
@@ -1240,7 +1242,7 @@ Name             Description (All atomic operations)
 Increment        Increment an integer value.
 Decrement        Decrement an integer value.
 Add              Add 2 integers and store the result.
-Subtract         Subtract an integer from another and store the result. 
+Subtract         Subtract an integer from another and store the result.
 Bit-wise AND     bit-wise AND 2 integers and store the result
 Bit-wise OR      bit-wise OR 2 integers and store the result
 ```
@@ -1252,7 +1254,7 @@ CompareAndExchangeStrong
 Tier 4.10: Threading Models
 ===========================
 
-Multitasking is when you have multiple tasks being executed concurrently (ie. threads, processes). 
+Multitasking is when you have multiple tasks being executed concurrently (ie. threads, processes).
 - **Cooperative** multitasking refers to a threading model in which a process/thread chooses when to yield to other processes.
 - **Preemptive** multitasking refers to a threading model in which a process/thread may be interrupted at any time by the operating system.
 
@@ -1313,7 +1315,7 @@ Common communicated Signal Codes
 
 - **Pipes**: Pipes are byte streams which may be read/written to by other programs to communicate. Common pipes include stdin, stdout, and stderr which may also be accessed from most command lines.
 
-- **File System**: Write/Read to files to communicate between programs. This can be useful in some special cases of high latency and/or when memory is highly constrainted. 
+- **File System**: Write/Read to files to communicate between programs. This can be useful in some special cases of high latency and/or when memory is highly constrainted.
 
 (extra) Pipes and files must be "flushed" to ensure the byte stream gets pushed out of the local cache.
 
@@ -1326,7 +1328,7 @@ A mutex which is used to synchronize an object and all of its sub-objects' memor
 
 **Example**: Example Network Client ManagerSystem
 
-We see the following example which is a network client manager system which can add clients and initialize their state. To do this we need to first synchronize the Client Manager to add the client. Then we must Initialize the sub-objects. 
+We see the following example which is a network client manager system which can add clients and initialize their state. To do this we need to first synchronize the Client Manager to add the client. Then we must Initialize the sub-objects.
 
 By locking the Manager we ensure we can Add or Remove clients.
 By locking the Client we ensure we can initialize, modify, or finalize the client's state
@@ -1354,12 +1356,12 @@ ManagerDestroyClient() Calls  |  RemoveClient()   | CleanupClient()  |
 Client Manager Sustem (Mutex) |(1)Lock   (3)Unlock|                  |
 Client Object (Mutex)         |(2)Remove (4)Lock  |(2)Clean (3)Unlock|
 Client Resources              |                   |(1)Clean          |
-------------------------------+-------------------+------------------+		
+------------------------------+-------------------+------------------+
 ```
 
 With a hierarchical design we can not only ensure sychronization but with careful design can ensure that higher level locks may be released while the child objects are still locked. In the example above this means that even if ```Init()``` takes a long time to complete other threads may use the Client Manager Sustem while work is being done. If they attempt to access the newly created client they will have to wait, but for all other clients they can continue running.
 
-(extra) In the example above you MUST be careful on the order in which you lock/unlock because improper lock/unlock order may lead to a deadlock. 
+(extra) In the example above you MUST be careful on the order in which you lock/unlock because improper lock/unlock order may lead to a deadlock.
 (extra) A good thought experiment for the example above to think about what should happen when the Setup step fails.
 
 
@@ -1382,7 +1384,7 @@ Semi-random key or index
 -- Post-Lock: Check for a changed index value. If changed unlock and lock the new index else increment mutex lock count and total mapped mutex array count.
 
 CorrectionFraction(CF): Ideal value will depend on your access patterns and thread count. Maybe 1/3?
- 
+
 Tier 5.03: Reader-writer locks (aka rwlock, reader-writer mutex)
 ============================================
 A reader-writer lock is a specialized implimentation of a mutex which allows the locking thread to specify if it intends to read or write to the memory protected by the mutex. Most OS/CPUs support multple threads to read from the same address in memory in parralell and at less than or equal to cost the cost of a serial read. In contrast it is expensive for most CPU's to synchronize a write across multiple threads and may result in CPU stalls and/or write failures depending the CPU/OS architecture. This type of mutex is highly valued in the case that a mutex's protected memory is read frequently and written to infrequently.
@@ -1399,9 +1401,9 @@ UW = Unlock as writer
 W = Writing (lock held)
 
 Time          0   1   2   3   4   5   6   7   8   9  10  11
---------------+---+---+---+---+---+---+---+---+---+---+---+     
+--------------+---+---+---+---+---+---+---+---+---+---+---+
 rwlock Mode   |   |LR |LR |LR |   |LW |LW |LW |LW |LW |LW |
---------------+---+---+---+---+---+---+---+---+---+---+---+    
+--------------+---+---+---+---+---+---+---+---+---+---+---+
 Thread 0      |LR |R  |R  |UR |LW |LW |LW |LW |W  |UW |UW |
 Thread 1      |   |LR |R  |UR |   |   |   |   |   |   |   |
 Thread 2      |   |LR |R  |UR |   |   |   |   |   |   |   |
@@ -1418,7 +1420,7 @@ TODO Add: conditional ? 456 : -1; conditinal Ternery
 #2
 #3
 3.03 @TODO @INCOMPLETE investigate macros in Rust/D and see if I should add a section here to talk about their particular varieties.
- 
+
 @Exceptions & Exception Handling
 @Regex Search Format
 

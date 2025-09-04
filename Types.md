@@ -156,6 +156,8 @@ dynamic/object cast - This cast takes in a pointer/reference to a user-defined t
 
 Reinterpret/raw cast - This cast does no modification to the data and will simply start treating the memory as a different type without consideration for the needs of the conversion. This means a raw cast from 1.234 float to integer will not be 1, but instead 1067316150 since the bit representation for floating point numbers and Integers do not match. Also most languages will force you to to a raw cast via pointer so that if you are moving between types of different size the programer excplicity "gives" the pointer value.
 
+(extra): In some languages casting down integer types will check to see if data is lost. It will generally throw an error or exception in that case so you may need to explicitly mark it as "no_check" to avoid that error if/when you desire that behavior.
+
 Tier 2.02: Operator Overloading
 ===============================
 Operator overloading is a programming language feature whereby a user-defined types can have operators defined on how certain operators interact with other types/operand(s).

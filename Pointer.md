@@ -40,7 +40,7 @@ Teir 1.02: Pointers and Index/Offset
 Often you will see pointers used in conjunction with an index of offset integer variable. This plays out the same as above with the pointer arithmatic. The index or offset are integers and provide a way to move through memory which is populated by one type.
 
 **Example**: Sum array of integers
-```
+```cpp
 int SumArrayOfIntegers(int* array, int size)
 {
   int returnSum = 0;
@@ -71,22 +71,22 @@ else
 
 Teir 2.01: Pointer to class/object
 ==================================
-Adding into the pointer concept further we can specify pointers as pointing to a "class" or "Object" type. The class or object types can contain extra data at the begining of the memory, usually another pointer, which allows the program to run specialized code on that object.
+Adding into the pointer concept further we can specify pointers as pointing to a "class" or "object" type. The class or object types can contain extra data at the begining of their memory, usually another pointer/vtable, which allows the program to run specialized code on that object.
 
 Most programming languages call this sort of functionality a "virtual function", or an "interface".
 
-Given a collection of objects which supports an interface may then generically run some function on without needing to know any specifics about the object's actual memory.
+Given a collection of objects which support an interface we may then generically run some function on the collection without needing to know any specifics about the object's actual or specific type.
 
 **Example**: Virtual Interface
 
-I have three pointers to a type which supports the vehicle interface. One points to a car, another a truck, and the last a motorcycle. I want to run the function TurnOnEngine(...) on each through the pointers to vehicles. I can do this because the extra data on the car, truck, and motorcycle can then be used to select the correct instructions to call its version of TurnOnEngine(...)
-```
+I have three pointers to a type which supports the vehicle interface in a vehicleCollection. One points to a car, another a truck, and the last a motorcycle. Below is how we might run the function TurnOnEngine(...) for each through the pointers which is the interface type. We can do this because the extra data on the car, truck, and motorcycle is then be used to select the correct function to call for their respective version of TurnOnEngine(...)
+```cpp
 for(pointerToVehicle in vehicleCollection)
     pointerToVehicle.TurnOnEngine(...);
 	// Can call car's TurnOnEngine(...), or truck's TurnOnEngine(...), or motorcycle's TurnOneEngine(...)
 ```
 
-Some languages/implimentations allow you to get and check the actual type of a pointer to a class.
+Note: Some languages/implimentations allow you to get and check the actual type of a pointer/referece to a class.
 * Common ways to get type info id/pointer from pointer to class: .GetType()
 * Common ways to get specific pointer from base pointer: dynamic_cast<SpecificType>(pointerValue), pointerValue as SpecificType, (SpecificType)pointerValue <- will return an non null value when the pointerValue is pointing to the SpecificType.
 
